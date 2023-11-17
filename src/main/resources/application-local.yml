@@ -1,0 +1,55 @@
+#application.yml
+
+
+---
+#로컬 환경.
+server:
+  port: 8080
+  tomcat:
+    use-relative-redirects: true
+
+#spring.profiles.include: console-logging
+
+spring:
+  datasource: 
+    hikari:
+      pool-name: HikariPool-SmartFactoryWeb
+      maximum-pool-size: 16
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://222.106.31.248:3306/smartfactory?characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: smartfactory
+    password: miracom123!@#
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 5GB
+      max-request-size: 5GB
+      
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false      #운영시 (true)
+    check-template-location: true
+    mode: HTML
+    encoding: UTF-8
+
+  config:
+    activate:
+      on-profile: local
+
+  devtools:
+    livereload:
+      enabled: true
+stockmore:
+  file:
+    base-path: d:/data/stockmore/media
+    download-base-url : http://localhost:8080/file/download?
+
+
+#mybatis:
+#  type-aliases-package: com.ngs.liveML.mapper
+#  mapper-locations: /mapper/*.xml
+
+

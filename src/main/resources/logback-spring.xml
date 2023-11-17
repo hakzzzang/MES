@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<configuration>
+	<springProfile name="local"> 
+		<appender name="LOCAL_CONSOLE_POLICY" class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout"> 
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M [%L]- %msg%n</Pattern>
+			</layout> 
+		</appender>
+	</springProfile> 
+	
+	<springProfile name="dev"> 
+		<appender name="INFO_FILE_POLICY" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter" > 
+				<level>DEBUG</level> 
+			</filter> 
+			<file>c:\log/server.log</file>
+			<encoder> 
+				<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] [%logger{36}] - %m%n</pattern> 
+			</encoder> 
+			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+				<fileNamePattern>c:\log/log/dateLog/%d{yyyy_MM_dd}_%i.keyword-monitor.log</fileNamePattern>
+				<maxFileSize>50MB</maxFileSize> 
+				<maxHistory>14</maxHistory> 
+				<totalSizeCap>1GB</totalSizeCap> 
+			</rollingPolicy> 
+		</appender>
+	</springProfile> 
+	
+	<springProfile name="prod">
+		<appender name="ERROR_FILE_POLICY" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter" > 
+				<level>INFO</level> 
+			</filter> 
+			<file>/home/ec2-user/keyword-api/log/server.log</file>
+			<encoder> 
+				<pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] [%logger{36}] - %m%n</pattern> 
+			</encoder> 
+			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+				<fileNamePattern>/home/ec2-user/keyword-api/log/dateLog/%d{yyyy_MM_dd}_%i.keyword-monitor.log</fileNamePattern>
+				<maxFileSize>50MB</maxFileSize> 
+				<maxHistory>14</maxHistory> 
+				<totalSizeCap>1GB</totalSizeCap> 
+			</rollingPolicy> 
+		</appender> 
+	</springProfile>
+	
+	<!-- <logger name="com.netflix">
+		<appender-ref ref="LOCAL_CONSOLE_POLICY"/>
+		<level value="off"/>
+	</logger> -->
+
+	<root level="DEBUG"> 
+		<springProfile name="local"> 
+			<appender-ref ref="LOCAL_CONSOLE_POLICY"/>
+		</springProfile> 
+		<springProfile name="dev"> 
+			<appender-ref ref="INFO_FILE_POLICY"/>
+		</springProfile> 
+		<springProfile name="prod">
+			<appender-ref ref="ERROR_FILE_POLICY"/> 
+		</springProfile> 
+	</root> 
+	
+</configuration>
