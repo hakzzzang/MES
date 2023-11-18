@@ -15,6 +15,9 @@ public class SampleController {
         log.debug("SampelGetMappingTest");
         log.debug("SampelGetMappingTest");
 
+        // 안녕
+        // 하세요
+
         return "success";
     }
 
