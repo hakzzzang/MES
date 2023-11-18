@@ -29,4 +29,8 @@ public class SampleController {
     public void SampleGet(){
     }
 
+    @GetMapping("/get3")
+    public void SampleGet3(){
+    }
+
 }
