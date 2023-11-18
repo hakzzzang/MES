@@ -42,11 +42,6 @@ spring:
   devtools:
     livereload:
       enabled: true
-stockmore:
-  file:
-    base-path: d:/data/stockmore/media
-    download-base-url : http://localhost:8080/file/download?
-
 
 #mybatis:
 #  type-aliases-package: com.ngs.liveML.mapper
