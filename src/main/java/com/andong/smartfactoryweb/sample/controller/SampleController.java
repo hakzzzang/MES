@@ -33,4 +33,8 @@ public class SampleController {
     public void SampleGe2t(){
     }
 
+    @GetMapping("/get4")
+    public void SampleGe4t(){
+    }
+
 }
