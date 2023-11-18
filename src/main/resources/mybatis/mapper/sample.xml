@@ -6,4 +6,17 @@
     	select * from sample
     </select>
      -->
+    <select id="getUser" parameterType="String" resultType="com.andong.smartfactoryweb.sample.vo.UserVO">
+        SELECT
+            user_seq
+            , user_id
+            , user_type
+            , user_name
+            , phome_number
+            , email_address
+            , create_at
+            , create_id
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
 </mapper>
