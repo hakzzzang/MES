@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SampleController {
     private final SampleService sampleService;
     @GetMapping("/getMapping")
-    public String SampelGetMappingTest(@RequestParam String param, @RequestParam String param2, Model model){
+    public String SampelGetMappingTest(@RequestParam String param, @RequestParam String param2, Model model) {
 
         log.debug("SampelGetMappingTest");
         log.debug("SampelGetMappingTest");
