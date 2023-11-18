@@ -1,14 +1,14 @@
 package com.andong.smartfactoryweb.sample.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/sample")
+@RestController
+@RequestMapping("/rest")
 @Slf4j
-public class SampleController {
+public class RestSampleController {
     @GetMapping("/getMapping")
     public String SampelGetMappingTest(){
         log.debug("SampelGetMappingTest");
@@ -17,12 +17,4 @@ public class SampleController {
 
         return "success";
     }
-
-    @GetMapping("/get")
-    public void SampleGet(){
-        log.debug("GETGETGET");
-        log.debug("GETGETGET");
-        log.debug("GETGETGET");
-    }
-
 }

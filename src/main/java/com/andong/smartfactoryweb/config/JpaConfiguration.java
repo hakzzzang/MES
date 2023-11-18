@@ -39,7 +39,7 @@ public class JpaConfiguration {
 
 		LocalContainerEntityManagerFactoryBean rep =
 				builder.dataSource(datasource)
-				.packages("com.psy.taxpoon.entity")
+				.packages("com.andong.smartfactoryweb.entity")
 				//domain(Entity)을 관리할 패키지 경로 명시 (domain = DO 파일, Entity = Entity파일)
 				.properties(propertiesHashMap)
 				.build();
