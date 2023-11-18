@@ -33,8 +33,10 @@ public class SampleController {
     public void SampleGet3(){
 
     }
-    @GetMapping("/get2")
-    public void SampleGe2t(){
+
+
+    @GetMapping("/get5")
+    public void SampleGe5t(){
 
     }
 
