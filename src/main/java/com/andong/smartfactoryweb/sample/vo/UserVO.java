@@ -1,10 +1,13 @@
 package com.andong.smartfactoryweb.sample.vo;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 public class UserVO {
     private Long userSeq;
     private String userId;
@@ -14,4 +17,5 @@ public class UserVO {
     private String emailAddress;
     private Date createAt;
     private String createId;
+
 }

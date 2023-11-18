@@ -18,22 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SampleController {
     private final SampleService sampleService;
     @GetMapping("/getMapping")
-    public String SampelGetMappingTest(@RequestParam String param, @RequestParam String param2, Model model) {
-
-        log.debug("SampelGetMappingTest");
-        log.debug("SampelGetMappingTest");
-        log.debug("SampelGetMappingTest");
-        model.addAttribute("param1", param);
-        model.addAttribute("param2", param2);
+    public String SampelGetMappingTest(/*@RequestParam String param, @RequestParam String param2, Model model*/) {
+       // model.addAttribute("param1", param);
+       // model.addAttribute("param2", param2);
         UserVO user = sampleService.getSample();
         return "/success";
     }
 
     @GetMapping("/get")
     public void SampleGet(){
-        log.debug("GETGETGET");
-        log.debug("GETGETGET");
-        log.debug("GETGETGET");
     }
 
 }

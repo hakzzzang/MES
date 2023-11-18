@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestSampleController {
     @GetMapping("/getMapping")
     public String SampelGetMappingTest(){
-        log.debug("SampelGetMappingTest");
-        log.debug("SampelGetMappingTest");
-        log.debug("SampelGetMappingTest");
-
         return "success";
     }
 }
