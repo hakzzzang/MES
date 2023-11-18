@@ -1,4 +1,7 @@
 package com.andong.smartfactoryweb.sample.service;
 
-public class SampleServiceImple {
+import org.springframework.stereotype.Service;
+
+@Service("sampleService")
+public class SampleServiceImple implements SampleService{
 }
