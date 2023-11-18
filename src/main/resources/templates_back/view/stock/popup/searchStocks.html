@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup}"
+      th:with="popupId='searchStockPopupWrap'">
+<head>
+</head>
+
+<body>
+
+<th:block layout:fragment="content">
+    <div id="searchStockPopup" class="modalpop sample_pop search_popup" style="display:none;">
+        <div class="modalcont">
+            <div class="con">
+                <h1 class="tle">종목 검색
+                    <a href="javascript:" id="searchStockModalCloseButton" class="bt_close">닫기</a>
+                </h1>
+                <div class="inner">
+                    <!-- search -->
+                    <form id="searchStockForm" class="search">
+                        <div class="search_box">
+                            <div class="single">
+                                <input type="text" id="searchStockSearchValue" name="searchValue" placeholder="종목코드/종목명">
+                                <a href="javascript:" id="searchStockSearchButton" class="btns_default btn_submit">검색</a>
+                            </div>
+                            <div class="single">
+                                <div id="searchStockSelectedItemWrap" class="tag_wrap">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- search //-->
+
+                    <div class="tblutils">
+                        <p class="cnt">총 <strong id="searchStockTotalCount"></strong>건 / 검색결과 <strong id="searchStockSearchCount"></strong>건</p>
+                    </div>
+
+                    <table id="searchStockListTable" class="tblist">
+                    </table>
+                    <div id="searchStockPagingWrap" class="paging" role="navigation" aria-label="페이지 선택">
+                    </div>
+                    <div class="btn_area">
+                        <a href="javascript:" id="searchStockModalCancelButton" class="btns_default">취소</a>
+                        <a href="javascript:" id="searchStockModalOkButton" class="btns_default btn_submit">확인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="custom_js">
+    <script th:inline="javascript" >
+        function searchStockPopupFunc(userData, callback) {
+            console.log('searchStockPopup');
+            //Modal
+            const listAjaxUrl = '/stock/stock-list';
+            let page = 0;
+            let pageSize = 5;
+            const modalId = 'searchStockPopup';
+            const pagingId = 'searchStockPagingWrap';
+            const tableId = 'searchStockListTable';
+            const $searchPopup = $('#' + modalId);
+            const $selectedItemWrap = $searchPopup.find('#searchStockSelectedItemWrap');
+            const $searchButton = $searchPopup.find('#searchStockSearchButton');
+            const $searchValueInput = $searchPopup.find('#searchStockSearchValue');
+            const $searchForm = $searchPopup.find('#searchStockForm');
+            const $totalCount = $searchPopup.find('#searchStockTotalCount');
+            const $searchCount = $searchPopup.find('#searchStockSearchCount');
+
+            const $modalCloseButton = $searchPopup.find('#searchStockModalCloseButton');
+            const $modalCancelButton = $searchPopup.find('#searchStockModalCancelButton');
+            const $modalOkButton = $searchPopup.find('#searchStockModalOkButton');
+
+
+            function init() {
+                initData();
+                event();
+
+                search();
+            }
+
+            function initData() {
+                common.ui.table.init(tableId, {
+                    columns: getHeaderInfo(),
+                    isSelectItem: false,
+                    isSorting: true,
+                    onHeaderClick: function(e, key, sorting) {
+                        search();
+                    }
+                });
+
+                if(userData?.isMultiSelect === false) {
+                    $selectedItemWrap.hide();
+                    $modalOkButton.hide();
+                    $modalCancelButton.hide();
+                }
+            }
+
+            function event() {
+                $modalCloseButton.on('click', function() {
+                    common.ui.layerPopup.closeUrl($searchPopup);
+                });
+                $modalCancelButton.on('click', function() {
+                    common.ui.layerPopup.closeUrl($searchPopup);
+                });
+                $modalOkButton.on('click', function() {
+                    const changeItems = $selectedItemWrap.find('.tag');
+                    const result = [];
+                    changeItems.each((index,item) => {
+                        const dataSet = item.dataset;
+                        result.push({
+                            stockCode : dataSet.stockCode,
+                            stockName : dataSet.stockName
+                        });
+                    });
+
+                    console.log(result)
+                    $selectedItemWrap.empty();
+
+                    callback && callback(result);
+                    common.ui.layerPopup.closeUrl($searchPopup);
+                });
+
+                $searchButton.on('click', function() {
+                    search();
+
+                    return false;
+                });
+
+                $searchValueInput.keypress(function (e) {
+                    if (e.which == 13){
+                        $searchButton.trigger('click');
+                        return false;
+                    }
+                });
+            }
+
+            //Modal Table
+            function search(pageNumber) {
+                page = pageNumber || 0;
+                const params = {
+                    page : page,
+                    limit : pageSize
+                }
+
+                const searchObj = $searchForm.serializeObject();
+                $.extend(params, searchObj);
+
+                const sorting = common.ui.table.getHeaderSorting(tableId);
+                if(!sorting === false) {
+                    params.order = sorting;
+                }
+
+                common.ajax.get(listAjaxUrl, params, function(response) {
+                    console.log(response);
+                    if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+                        const searchData = response.data || {};
+                        common.ui.table.setData(tableId, searchData.data);
+                        setPaging(searchData);
+                    } else {
+                        common.modal.error(response);
+                    }
+                })
+            }
+
+            function setPaging(searchData) {
+                $totalCount.html(searchData.totalCount);
+                $searchCount.html(searchData.filterTotalCount);
+
+                common.ui.paging.init(pagingId, {
+                    page: page,
+                    totalCount: searchData.filterTotalCount,
+                    onMovePageNumber: function(number) {
+                        search(number - 1);
+                    }
+                });
+            }
+
+            function getHeaderInfo() {
+                return [
+                    { key: 'stockCode', name: '종목코드', width: '15%'},
+                    { key: 'stockName', name: '종목명', isSorting: true},
+                    { key: 'marketType', name: '시장구분', width: '20%', isSorting: true
+                        , createdCell: function(value) {
+                            /*<![CDATA[*/
+                            /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$MarketType).values()}"]*/
+                            if((/*[[${tmp}]]*/ '') === value) {
+                                return  /*[[${tmp.getDesc()}]]*/ '';
+                            }
+                            /*[/]*/
+                            /*]]*/
+                        }
+                    },
+                    { key: 'sectorName', name: '소속부', width: '20%', isSorting: true},
+                    { key: 'custom', name: '', width: '20%'
+                        , createdCell : function(value, data) {
+                            const $button = $('<a href="javascript:" class="btns_default btn_submit">선택</a>');
+                            $button.on('click', function(){
+                                if(userData?.isMultiSelect === false) {
+                                    callback && callback(data);
+                                    common.ui.layerPopup.closeUrl($searchPopup);
+                                    return false;
+                                }
+
+                                const $target = $selectedItemWrap.find('[data-stock-code="'+ data.stockCode +'"]');
+                                if($target.length > 0) {
+                                    $target.remove();
+                                } else {
+                                    const $tag = getTagDom(data);
+                                    $selectedItemWrap.append($tag);
+                                }
+                            })
+
+                            return $button;
+                        }
+                    },
+                ]
+            }
+
+            function getTagDom(data) {
+                const $tag = $('<span class="tag" data-stock-code="'+ data.stockCode +'" data-stock-name="'+ data.stockName +'">' +
+                    data.stockName +
+                    '	<span data-role="remove"></span>\n' +
+                    '</span>');
+
+                $tag.find('span[data-role="remove"]').on('click', function() {
+                    const $this = $(this);
+                    const mode = $this.closest('.tag_wrap').data('mode');
+                    if(mode === 'detail') {
+                        return false;
+                    }
+
+                    $this.closest('.tag').remove();
+                });
+
+                return $tag;
+            }
+
+            init();
+        }
+    </script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

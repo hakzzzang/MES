@@ -1,0 +1,39 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <th:block th:fragment="header">
+        <div id="header" class="header">
+            <div id="headerWrap">
+                <h1 class="logo"><!--<img th:src="@{/static/assets/img/logo.png}" alt="" />--></h1>
+                <div class="gnb">
+                    <ul id="headerMenuWrap">
+                        <li th:classappend="${#request.getServletPath().contains('/stock') ? 'active' : ''}" >
+                            <a href="javascript:" data-href="/stock/stocks">주식정보</a>
+                        </li>
+                        <li th:classappend="${#request.getServletPath().contains('/board') ? 'active' : ''}" >
+                            <a href="javascript:" data-href="/board/community-board">게시판</a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_SUPER_ADMIN')"
+                            th:classappend="${#request.getServletPath().contains('/user') ? 'active' : ''}" >
+                            <a href="javascript:" data-href="/user/admin-user">사용자 관리</a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_SUPER_ADMIN')"
+                            th:classappend="${#request.getServletPath().contains('/config') ? 'active' : ''}" >
+                            <a href="javascript:" data-href="/config/app-config">설정 관리</a>
+                        </li>
+                    </ul>
+                    <div class="logout">
+                        <form id="logoutForm" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                            <a href="javascript:;" onclick="document.getElementById('logoutForm').submit();">로그아웃</a>
+                        </form>
+                    </div>
+                    <div class="user">
+                        <a href="javascript:" class="btn_infovw" id="userInfo">
+                            <span sec:authentication="name">사용자</span> 님
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</html>

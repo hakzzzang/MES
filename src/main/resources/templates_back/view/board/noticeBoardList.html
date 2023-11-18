@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='게시판'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">공지 목록</div>
+		<!--// pagetle -->
+		<div id="noticeBoardWrap">
+			<form class="search">
+				<div class="search_box">
+					<th:block th:replace="view/component/searchItem :: searchValue(placeholder='제목/내용')"></th:block>
+					<th:block th:replace="view/component/searchItem :: searchDate(searchDateType='createAt,updateAt')"></th:block>
+					<th:block th:replace="view/component/searchItem :: useFlag"></th:block>
+				</div>
+				<th:block th:replace="view/component/searchItem :: searchButton"></th:block>
+			</form>
+			<div class="tblutils">
+				<th:block th:replace="view/component/tableWrap :: tableInfo"></th:block>
+				<a href="javascript:" id="addButton" class="btns_default btn_submit">신규등록</a>
+			</div>
+			<!-- search //-->
+
+			<th:block th:replace="view/component/tableWrap :: table(tableId='noticeBoardListTable')"></th:block>
+			<th:block th:replace="view/component/tableWrap :: paging"></th:block>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/list-view.js}"></script>
+	<script th:inline="javascript">
+
+		$(document).ready(function() {
+			class NoticeBoardListView extends CommonListView {
+				constructor(data) {
+					super(data);
+				}
+
+				get headerInfo() {
+					const self = this;
+					return [
+						{ key: 'no', name: 'No.', width: '5%'},
+						{ key: 'title', name: '제목', isSorting: true, customClass: 'text_ellipsis', align: 'left'
+							, createdCell: function(value, data) {
+								return `<a href="${self.baseUrl}/${data.noticeBoardSeq}">${value}</a>`;
+							}
+						},
+						{ key: 'contentSummary', name: '내용', customClass: 'text_ellipsis', align: 'left', width: '20%'},
+						{ key: 'viewCount', name: '조회수', width: '10%', isSorting: true},
+						{ key: 'useFlag', name: '사용여부', width: '10%', isSorting: true
+							, createdCell: function(value) {
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"]*/
+								if((/*[[${tmp}]]*/ '') === value) {
+									return  /*[[${tmp.getDesc()}]]*/ '';
+								}
+								/*[/]*/
+								/*]]*/
+							}
+						},
+						{ key: 'createAt', name: '등록일', width: '10%', isSorting: true
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+						},
+						{ key: 'updateAt', name: '수정일', width: '10%', isSorting: true, initSortClass: 'sorting_desc'
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}},
+						{ key: 'updateId', name: '수정 아이디', width: '12%', isSorting: true},
+						{ key: 'userId', name: '생성 아이디', width: '12%', isSorting: true},
+					]
+				}
+			}
+
+			const listView = new NoticeBoardListView({
+				baseUrl : '/board/notice-board'
+				, wrapId : 'noticeBoardWrap'
+				, pagingId : 'pagingWrap'
+				, tableId : 'noticeBoardListTable'
+			})
+
+			listView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

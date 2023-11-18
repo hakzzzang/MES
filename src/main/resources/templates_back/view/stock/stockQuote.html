@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='주식정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">시세정보</div>
+		<!--// pagetle -->
+		<div id="stockQuoteWrap">
+			<form class="search">
+				<div class="search_box">
+					<th:block th:replace="view/component/searchItem :: searchValue(placeholder='종목코드/종목명')"></th:block>
+					<th:block th:replace="view/component/searchItem :: statusType"></th:block>
+				</div>
+				<th:block th:replace="view/component/searchItem :: searchButton"></th:block>
+			</form>
+			<div class="tblutils">
+				<th:block th:replace="view/component/tableWrap :: tableInfo"></th:block>
+				<a sec:authorize="hasRole('ROLE_SUPER_ADMIN')" href="javascript:" id="reloadButton" class="btns_default btn_submit">갱신</a>
+			</div>
+			<!-- search //-->
+
+			<th:block th:replace="view/component/tableWrap :: table(tableId='stockQuoteListTable')"></th:block>
+			<th:block th:replace="view/component/tableWrap :: paging"></th:block>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/list-view.js}"></script>
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			class StockQuoteListView extends CommonListView {
+				constructor(data) {
+					super(data);
+
+					this.$reloadButton = $('#reloadButton');
+				}
+
+				event() {
+					super.event()
+
+					const self = this;
+
+					this.$reloadButton.on('click', function() {
+						common.ajax.post('/stock/update-base', null, function(response) {
+							if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+								self.search();
+							} else {
+								common.modal.error(response);
+							}
+						})
+					});
+				}
+
+				get headerInfo() {
+					const self = this;
+					return  [
+						{ key: 'no', name: 'No.', width: '5%'},
+						{ key: 'stockCode', name: '종목코드', width: '10%', isSorting: true},
+						{ key: 'stockName', name: '종목명', width: '15%', align: 'left', isSorting: true},
+						{ key: 'dodPrice', name: '대비', width: '8%', align: 'right', isSorting: true, sortingType: 'number'},
+						{ key: 'statusType', name: '등락률',isSorting: true, width: '9%'
+							, createdCell: function(value) {
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$StockStatusType).values()}"]*/
+								if((/*[[${tmp}]]*/ '') === value) {
+									return  /*[[${tmp.getDesc()}]]*/ '';
+								}
+								/*[/]*/
+								/*]]*/
+							}
+						},
+						{ key: 'openPrice', name: '시가', align: 'right', width: '10%', isSorting: true, sortingType: 'number'},
+						{ key: 'highPrice', name: '고가', align: 'right', width: '10%', isSorting: true, sortingType: 'number'},
+						{ key: 'lowPrice', name: '저가', align: 'right', width: '10%', isSorting: true, sortingType: 'number'},
+						{ key: 'closePrice', name: '종가', align: 'right', width: '10%', isSorting: true, sortingType: 'number'},
+						{ key: 'tradingVolume', name: '거래량', align: 'right', width: '10%', isSorting: true, sortingType: 'number'},
+					]
+				}
+			}
+
+			const listView = new StockQuoteListView({
+				baseUrl : '/stock/stock-quote'
+				, wrapId : 'stockQuoteWrap'
+				, pagingId : 'pagingWrap'
+				, tableId : 'stockQuoteListTable'
+			})
+
+			listView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

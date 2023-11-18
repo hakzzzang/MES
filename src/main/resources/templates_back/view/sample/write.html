@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">팝업 등록/수정/상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th class="require">Title</th> <!-- 필수항목 .require -->
+					<td><input type="text" placeholder="제목을 입력해주세요"></td>
+				</tr>
+				<tr>
+					<th>Sub Title</th>
+					<td><input type="text" placeholder="입력해주세요"><span class="smt">※ 80Byte 이내 입력 권장합니다.</span></td>
+				</tr>
+				<tr>
+					<th class="require">채널</th>
+					<td>
+						<label><input type="radio" name="channel02" checked> 전체</label>
+						<label><input type="radio" name="channel02"> PC</label>
+						<label><input type="radio" name="channel02"> MOBILE</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">게시 기간</th>
+					<td>
+						<input type="text" id="from02" name="from02" class="datepicker" title="검색 시작일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+						~
+						<input type="text" id="to02" name="to02" class="datepicker" title="검색 종료일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+						<label class="smt"><input type="checkbox" /> 기간 미설정</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">내용</th>
+					<td>
+						<div class="editor-wrap">
+							<div id="editor" class="editer">
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th class="require">노출 여부</th> <!-- 필수항목 .require -->
+					<td>
+						<label><input type="radio" name="exposure02" checked> Y</label>
+						<label><input type="radio" name="exposure02"> N</label>
+					</td>
+				</tr>
+				<tr>
+					<th>연결 링크</th>
+					<td><input type="text" placeholder="동영상의 URL을 입력하세요."><span class="smt">※ 256Byte 이내 입력 권장합니다.</span></td>
+				</tr>
+				<tr>
+					<th>썸네일</th>
+					<td>
+						<div class="fileui">
+							<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+							<input type="file"> <a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>
+							<span class="smt">000*000 권장 (등록 가능 확장자 : pdf,doc,xls,ppt,jpg,gif,png)</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<ul class="fileui">
+							<li><input type="file"> <a href="javascript:;" onclick="addFile(this);" class="btn_add">추가</a></li>
+						</ul>
+						<span class="smt">※ 00MB미만으로 등록 가능합니다. (등록 가능한 확장자 : jpg,gif,png)</span>
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th>게시 대상(구분)</th>
+					<td>
+						<select>
+							<option value="">지주사</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th>팝업 대상</th>
+					<td>
+						<select>
+							<option value="">지주사</option>
+						</select>
+					</td>
+					<th>채널</th>
+					<td>
+						<label><input type="radio" name="channel03" checked> 전체</label>
+						<label><input type="radio" name="channel03"> PC</label>
+						<label><input type="radio" name="channel03"> MOBILE</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">팝업명</th> <!-- 필수항목 .require -->
+					<td><input type="text" placeholder="제목을 입력해주세요"></td>
+					<th>타입</th>
+					<td>
+						<label><input type="radio" name="type" checked> 전체</label>
+						<label><input type="radio" name="type"> 상단배너</label>
+						<label><input type="radio" name="type"> 메인팝업</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">게시 기간</th>
+					<td colspan="3">
+						<input type="text" id="from03" name="from03" class="datepicker" title="검색 시작일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+						~
+						<input type="text" id="to03" name="to03" class="datepicker" title="검색 종료일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+						<label class="smt"><input type="checkbox" /> 기간 미설정</label>
+					</td>
+				</tr>
+				<tr>
+					<th>노출 여부</th>
+					<td colspan="3">
+						<label><input type="radio" name="exposure03" checked> Y</label>
+						<label><input type="radio" name="exposure03"> N</label>
+					</td>
+				</tr>
+				<tr>
+					<th>노출 위치</th>
+					<td colspan="3">
+						<label><input type="radio" name="exposure04" checked> 메인</label>
+						<label><input type="radio" name="exposure04"> 주문/결제 완료</label>
+						<label><input type="radio" name="exposure04"> 장바구니</label>
+						<label><input type="radio" name="exposure04"> 위시리스트</label>
+						<label><input type="radio" name="exposure04"> 직접입력</label>
+						<input type="text" style="min-width:30%;">
+					</td>
+				</tr>
+				<tr>
+					<th>팝업 이미지</th>
+					<td colspan="3">
+						<ul class="fileui">
+							<li><input type="file"> <a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a> <span class="smt">640*720 권장 (등록 가능한 확장자 : jpg,gif,png)</span></li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th>연결링크</th>
+					<td colspan="3"><input type="text"></td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="#" class="btns_default">삭제</a>
+				<a href="#" class="btns_default btn_submit">저장</a>
+				<a href="#" class="btns_default btn_cancel">취소</a>
+				<a href="#" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+				initData();
+			}
+
+			function initData() {
+				common.ui.editor.init("editor");
+				common.ui.datepicker.initFromTo($('#from02'), $('#to02'))
+				common.ui.datepicker.initFromTo($('#from03'), $('#to03'))
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

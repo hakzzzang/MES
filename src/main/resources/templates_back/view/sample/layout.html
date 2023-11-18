@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+	<!-- content -->
+	<th:block layout:fragment="content">
+		<div class="conts">
+			<div style="padding-bottom:15px;">
+				<a href="#" class="btns_default btn_submit">작은버튼(class="btns_default btn_submit")</a>
+				<a href="#" class="btns_default">작은버튼(class="btns_default")</a>
+				<a href="#" class="btns_default btn_cancel">작은버튼(취소 또는 삭제)(class="btns_default btn_cancel")</a>
+			</div>
+			<div style="padding-bottom:50px;">
+				<a href="#" class="btn_default btn_submit">큰버튼(class="btn_default btn_submit")</a> <br /><br />
+				<a href="#" class="btn_default">큰버튼(class="btn_default")</a> <br /><br />
+				<a href="#" class="btn_default btn_cancel">큰버튼(취소 또는 삭제)(class="btn_default btn_cancel")</a>
+			</div>
+			<div style="padding-bottom:50px;">
+				<a href="#" class="btn_del">삭제</a> <span>테이블 내 삭제 버튼(class="btn_del")</span> <br /><br />
+				<a href="#" class="btn_add">추가</a> <span>테이블 내 추가 버튼(class="btn_add")</span> <br /><br />
+			</div>
+			<div style="padding-bottom:50px;">
+				<a href="#" onclick="common.ui.loadingBar.open();" class="btn_default">loading call(loadingCall())</a>
+				<p>
+					loading call : loadingCall()<br />
+					loading hide : loadingHide()<br />
+				</p>
+			</div>
+			<div style="padding-bottom:50px;">
+				<a id="openLayerPoopup" href="javascript:" class="btns_default">레이어팝업</a>
+				<p style="padding:5px 0;">레이어팝업 기본 사이즈 : w 700px</p>
+				<p style="padding:5px 0;">레이어팝업 열기 : popOpen('sample_pop')</p>
+				<p style="padding:5px 0;">레이어팝업 닫기 : popOpen('sample_pop')</p>
+
+				<!-- layer pop sample -->
+				<div id="layerPopup1" class="modalpop sample_pop">
+					<div class="modalcont">
+						<!-- <div class="modalcont" style="width:500px;"> 사이즈 변경 필요한 경우 -->
+						<div class="con">
+							<h1 class="tle">팝업 타이틀
+								<a id="layerPopupCloseBtn" href="javascript:;" class="bt_close">닫기</a>
+							</h1>
+							<div class="inner">
+								팝업 내용
+							</div>
+							<div class="btn_area">
+								<a href="#" class="btns_default">취소</a>
+								<a href="#" class="btns_default btn_submit">확인</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--// layer pop sample -->
+
+			</div>
+
+			<div style="padding-bottom:50px;">
+				기본 이미지 정사각형(추후 이미지 변경예정) : 이미지원본사이즈 512x512 <br />/assets/img/thumb01.gif<br />
+				<div style="width:200px;height:200px;"><img th:src="@{/static/assets/img/thumb01.gif}" alt="기본이미지" /></div>
+				<br />
+				기본 이미지 직사각형(추후 이미지 변경예정) : 이미지원본사이즈 784x368 <br />/assets/img/thumb02.gif<br />
+				<div style="width:400px;height:200px;"><img src="../assets/img/thumb02.gif" alt="기본이미지" /></div>
+
+			</div>
+
+			<div style="padding-bottom:15px;">
+				<a href="javascript:;" id="winPopupOpenButton" class="btns_default btn_submit">윈도우팝업(임시) : onclick="windowPop('./html/popup.html', 'popup', 600, 200)"</a>
+			</div>
+		</div>
+    </th:block>
+	<!-- //content -->
+
+	<!-- script -->
+	<th:block layout:fragment="custom_js">
+		<script th:inline="javascript" >
+			$(document).ready(function() {
+				function init() {
+					event();
+				}
+				
+				function event() {
+					console.log('content');
+					$('#openLayerPoopup').on('click', function() {
+						console.log('test');
+						common.ui.layerPopup.open($('#layerPopup1'));
+					});
+
+					$('#layerPopup1').find('#layerPopupCloseBtn').on('click', function() {
+						console.log('test');
+						common.ui.layerPopup.close($('#layerPopup1'));
+					});
+
+					$('#winPopupOpenButton').on('click', function() {
+						common.ui.windowPopup.open('/sample/popup', 'popup', 600, 300)
+					});
+				}
+				
+				init();
+			});
+		</script>
+	</th:block>
+	<!-- //script -->
+</body>
+</html>
+

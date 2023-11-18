@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">콘텐츠 목록</div>
+		<!--// pagetle -->
+		<div>
+			<!-- search -->
+			<div class="search">
+				<div class="search_box">
+					<div>
+						<label for="pop_name" class="search_tit">제목</label>
+						<input type="text" id="pop_name">
+					</div>
+					<div>
+						<label for="hashtag" class="search_tit">해시태그</label>
+						<select id="hashtag">
+							<option>선택</option>
+						</select>
+					</div>
+					<div>
+						<label for="write_name" class="search_tit">작성자</label>
+						<input type="text" id="write_name">
+					</div>
+					<div>
+						<span class="search_tit">노출여부</span>
+						<label><input type="radio" name="exposure" checked> Y</label>
+						<label><input type="radio" name="exposure"> N</label>
+					</div>
+					<div class="single">
+						<span class="search_tit">기간</span>
+						<select>
+							<option>등록/수정일</option>
+						</select>
+						<input type="text" id="from01" name="from01" class="datepicker" title="검색 시작일"> ~
+						<input type="text" id="to01" name="to01" class="datepicker" title="검색 종료일">
+						<select>
+							<option>최근3개월</option>
+						</select>
+					</div>
+				</div>
+				<div class="btn_area">
+					<a href="#" class="btns_default btn_submit">검색</a>
+				</div>
+			</div>
+			<!-- search //-->
+			<div class="tblutils">
+				<p class="cnt">총 <strong>100</strong>건 / 검색결과 <strong>2</strong>건</p>
+				<a href="#" class="btns_default btn_submit">콘텐츠 등록</a>
+			</div>
+			<!-- table list -->
+			<table class="tblist">
+				<colgroup>
+					<col style="width:5%">
+					<col>
+					<col style="width:9%">
+					<col style="width:12%">
+					<col style="width:12%">
+					<col style="width:12%">
+					<col style="width:8%">
+					<col style="width:11%">
+				</colgroup>
+				<thead>
+				<tr>
+					<th>NO</th>
+					<th>제목/해시태그</th>
+					<th>작성자</th>
+					<th>시작일시</th>
+					<th>종료일시</th>
+					<th>등록/수정일</th>
+					<th>노출여부</th>
+					<th>보기</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>10</td>
+					<td class="left"><a href="#" class="tbtit">Cutting Adge Cutting AdgeCutting #Startup, #Culture, #Art & Architecture</a></td>
+					<td>전정국<br>(kookey)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2016-04-16 19:42</td>
+					<td class="accept">Y</td> <!-- Y일 경우 .accept / N일 경우 .deny 추가 -->
+					<td><a href="#" class="btns_default">view</a></td>
+				</tr>
+				<tr>
+					<td>9</td>
+					<td class="left"><a href="#" class="tbtit">Cutting Adge Cutting AdgeCutting #Startup, #Culture, #Art & Architecture</a></td>
+					<td>박지민<br>(chimmy)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2016-04-16 19:42</td>
+					<td class="accept">Y</td>
+					<td><a href="#" class="btns_default">view</a></td>
+				</tr>
+				<tr>
+					<td>8</td>
+					<td class="left"><a href="#" class="tbtit">Cutting Adge Cutting AdgeCutting #Startup, #Culture, #Art & Architecture</a></td>
+					<td>김태형<br>(tata)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2016-04-16 19:42</td>
+					<td class="accept">Y</td>
+					<td><a href="#" class="btns_default">view</a></td>
+				</tr>
+				<tr>
+					<td>7</td>
+					<td class="left"><a href="#" class="tbtit">Cutting Adge Cutting AdgeCutting #Startup, #Culture, #Art & Architecture</a></td>
+					<td>김남준<br>(koya)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2016-04-16 19:42</td>
+					<td class="deny">N</td>
+					<td><a href="#" class="btns_default">view</a></td>
+				</tr>
+				<tr>
+					<td>6</td>
+					<td class="left"><a href="#" class="tbtit">Cutting Adge Cutting AdgeCutting #Startup, #Culture, #Art & Architecture</a></td>
+					<td>김석진<br>(rj)</td>
+					<td>-</td>
+					<td>-</td>
+					<td>2016-04-16 19:42</td>
+					<td class="accept">Y</td>
+					<td><a href="#" class="btns_default">view</a></td>
+				</tr>
+				<tr>
+					<td colspan="8" class="nodata">해당하는 내용이 없습니다.</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- // table list -->
+			<!-- paging -->
+			<div class="paging" role="navigation" aria-label="페이지 선택">
+				<a href="#" class="btn_first">&lt;&lt;<i></i><span class="a11y_sr-only">처음</span></a>
+				<a href="#" class="btn_prev">&lt;<i></i><span class="a11y_sr-only">이전</span></a>
+				<a href="#" class="now" aria-label="현재페이지"><span>1</span></a>
+				<a href="#" aria-label="2페이지"><span>2</span></a>
+				<a href="#" aria-label="3페이지"><span>3</span></a>
+				<a href="#" aria-label="4페이지"><span>4</span></a>
+				<a href="#" aria-label="5페이지"><span>5</span></a>
+				<a href="#" aria-label="6페이지"><span>6</span></a>
+				<a href="#" aria-label="7페이지"><span>7</span></a>
+				<a href="#" aria-label="8페이지"><span>8</span></a>
+				<a href="#" aria-label="9페이지"><span>9</span></a>
+				<a href="#" aria-label="10페이지"><span>10</span></a>
+				<a href="#" class="btn_next">&gt;<i></i><span class="a11y_sr-only">다음</span></a>
+				<a href="#" class="btn_last">&gt;&gt;<i></i><span class="a11y_sr-only">끝</span></a>
+			</div>
+			<!--// paging -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

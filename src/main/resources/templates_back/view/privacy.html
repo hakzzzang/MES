@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/empty}"
+      th:with="metaTitle='Privacy'">
+<head>
+</head>
+
+<body>
+	<!-- content -->
+	<th:block layout:fragment="content">
+		<div class="privacy">
+			<p class="title">
+				개인정보 처리 방침
+			</p>
+			<p class="wrap">
+				엠피스㈜ (이하 회사)는 아래와 같이 개인정보를 수집합니다.
+				<br/><br/>
+				수집대상
+				<br/>
+					이름, 전화번호, IP주소, 유입경로, 이용자의 접속 기기 및 브라우저의 정보
+				<br/><br/>
+
+				수집목적
+				<br/>
+				수집된 정보는 보안 및 이용자의 상담을 위해서만 사용됩니다.
+				<br/><br/>
+
+				개인정보보유기간
+				<br/>
+				상기 수집 대상의 내용을 5년간 보존하며 이후 안전하게 삭제 처리됩니다.
+				또한 이용자의 요청 시 즉시 삭제처리 될 수 있습니다.
+				<br/><br/>
+
+
+				최초시행일: 2021.11.02
+				<br/><br/>
+
+
+				개인정보 관리책임자:  김두현<br/>
+				대표번호: 0000-0000<br/>
+				이메일: stockmore119@gmail.com<br/>
+				<br/><br/>
+
+				이용자는 회사의 서비스를 이용하며 발생하는 모든 개인정보 보호 관련 민원을 개인정보 관리책임자 혹은 담당부서로 신고할 수 있으며, 회사는 이용자들의 신고사항에 대해 신속하게 답변을 드릴 것입니다.
+				<br/>
+				기타 개인정보 침해에 대한 신고나 상담이 필요한 경우에는 아래 기관에 문의하시기 바랍니다.
+				<br/><br/>
+				1.개인정보침해신고회사 (www.1336.or.kr/국번없이 118)<br/>
+				2.정보보호마크인증위원회 (www.eprivacy.or.kr/02-580-0533~4)<br/>
+				3.대검찰청 인터넷범죄수사회사 (http://icic.sppo.go.kr/02-3480-3600)<br/>
+				4.경찰청 사이버테러대응회사 (www.ctrc.go.kr/02-392-0330)<br/>
+			</p>
+		</div>
+    </th:block>
+	<!-- //content -->
+
+	<!-- script -->
+	<th:block layout:fragment="custom_js">
+		<script th:inline="javascript" >
+			$(document).ready(function() {
+
+			});
+		</script>
+	</th:block>
+	<!-- //script -->
+</body>
+</html>
+

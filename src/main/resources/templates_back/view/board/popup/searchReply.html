@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup}"
+      th:with="popupId='searchReplyListPopupWrap'">
+<head>
+</head>
+
+<body>
+
+<th:block layout:fragment="content">
+    <div id="searchReplyListPopup" class="modalpop sample_pop search_popup" style="display:none;">
+        <div class="modalcont">
+            <div class="con">
+                <h1 class="tle">댓글 목록
+                    <a href="javascript:" id="searchReplyModalCloseButton" class="bt_close">닫기</a>
+                </h1>
+                <div class="inner">
+                    <!-- search -->
+                    <form id="searchReplyForm" class="search">
+                        <div class="search_box">
+                            <div class="single">
+                                <label class="search_tit">검색</label>
+                                <input type="text" id="searchReplySearchValue" name="searchValue" placeholder="아이디/내용">
+                            </div>
+                            <div class="">
+                                <span class="search_tit">사용여부</span>
+                                <select id="searchUseFlag" name="useFlag">
+                                    <option value="">전체</option>
+                                    <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                                            th:value="${code}" th:text="${code.getDesc()}"></option>
+                                </select>
+                            </div>
+                            <div class="">
+                                <span class="search_tit">오픈여부</span>
+                                <select id="searchBlindFlag" name="blindFlag">
+                                    <option value="">전체</option>
+                                    <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"
+                                            th:value="${code}" th:text="${code.getDesc()}"></option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="btn_area">
+                            <a href="javascript:" id="searchReplySearchButton" class="btns_default btn_submit">검색</a>
+                        </div>
+                    </form>
+                    <!-- search //-->
+
+                    <div class="tblutils">
+                        <p class="cnt">총 <strong id="searchReplyTotalCount"></strong>건 / 검색결과 <strong id="searchReplySearchCount"></strong>건</p>
+                        <a href="javascript:" id="addButton" class="btns_default btn_submit">신규댓글</a>
+                    </div>
+
+                    <table id="searchReplyListTable" class="tblist">
+                    </table>
+                    <div id="searchReplyPagingWrap" class="paging" role="navigation" aria-label="페이지 선택">
+                    </div>
+                    <div class="btn_area">
+                        <a href="javascript:" id="searchReplyModalOkButton" class="btns_default btn_submit">확인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="custom_js">
+    <script th:inline="javascript" >
+        function searchReplyListPopupFunc(userData, callback) {
+            console.log('searchReplyListPopup');
+            //Modal
+            const baseUrl = '/board/community-board-reply';
+
+            let page = 0;
+            let pageSize = 5;
+            const modalId = 'searchReplyListPopup';
+            const pagingId = 'searchReplyPagingWrap';
+            const tableId = 'searchReplyListTable';
+            const $searchPopup = $('#' + modalId);
+            const $table = $searchPopup.find('#searchReplyListTable');
+            const $addButton = $searchPopup.find('#addButton');
+            const $searchValueInput = $searchPopup.find('#searchReplySearchValue');
+            const $searchButton = $searchPopup.find('#searchReplySearchButton');
+            const $searchForm = $searchPopup.find('#searchReplyForm');
+            const $totalCount = $searchPopup.find('#searchReplyTotalCount');
+            const $searchCount = $searchPopup.find('#searchReplySearchCount');
+
+
+            const $modalCloseButton = $searchPopup.find('#searchReplyModalCloseButton');
+            const $modalOkButton = $searchPopup.find('#searchReplyModalOkButton');
+
+            let replySubMenuSeq = -1;
+
+            console.log(userData)
+
+            function init() {
+                initData();
+                event();
+
+                search();
+            }
+
+            function initData() {
+                common.ui.table.init(tableId, {
+                    columns: getHeaderInfo(),
+                    isSelectItem: false,
+                    isSorting: true,
+                    onHeaderClick: function(e, key, sorting) {
+                        search();
+                    }
+                });
+
+                if(userData?.isMultiSelect === false) {
+                    $modalOkButton.hide();
+                    $modalCancelButton.hide();
+                }
+            }
+
+            function event() {
+                $modalCloseButton.on('click', function() {
+                    common.ui.layerPopup.closeUrl($searchPopup);
+                });
+                $modalOkButton.on('click', function() {
+                    callback && callback();
+                    common.ui.layerPopup.closeUrl($searchPopup);
+                });
+
+                $searchButton.on('click', function() {
+                    search();
+                });
+
+                $searchValueInput.keypress(function (e) {
+                    if (e.which == 13){
+                        $searchButton.trigger('click');
+                        return false;
+                    }
+                });
+
+                $addButton.on('click', function() {
+                    common.ui.layerPopup.openUrl(baseUrl + '/new/popup'
+                        , userData
+                        , function(data) {
+                            if(data === true){
+                                search(page);
+                            }
+                        });
+                })
+            }
+
+            //Modal Table
+            function search(pageNumber) {
+                page = pageNumber || 0;
+                const params = {
+                    page : page,
+                    limit : pageSize,
+                    communityBoardSeq: userData.communityBoardSeq
+                }
+
+                const searchObj = $searchForm.serializeObject();
+                $.extend(params, searchObj);
+
+                const sorting = common.ui.table.getHeaderSorting(tableId);
+                if(!sorting === false) {
+                    params.order = sorting;
+                }
+
+                common.ajax.get(baseUrl + '-list', params, function(response) {
+                    console.log(response);
+                    if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+                        const searchData = response.data || {};
+                        common.ui.table.setData(tableId, searchData.data);
+                        setPaging(searchData);
+
+                        //특수한 경우
+                        if(replySubMenuSeq != -1) {
+                            $searchPopup.find(`#openSubReply_${replySubMenuSeq}`).trigger('click');
+                        }
+                    } else {
+                        common.modal.error(response);
+                    }
+                })
+            }
+
+            function setPaging(searchData) {
+                $totalCount.html(searchData.totalCount);
+                $searchCount.html(searchData.filterTotalCount);
+
+                common.ui.paging.init(pagingId, {
+                    page: page,
+                    pageSize: pageSize,
+                    totalCount: searchData.filterTotalCount,
+                    onMovePageNumber: function(number) {
+                        search(number - 1);
+                    }
+                });
+            }
+
+            function getHeaderInfo() {
+                return [
+                    { key: 'custom', name: '대댓글', width: '5%'
+                        , createdCell : function(value, data) {
+                            const subReplyList = data?.subReplyList;
+                            if(subReplyList === null || subReplyList.length <= 0) {
+                                return '<button class="btn_maintenance"><i></i></button>';
+                            }
+
+                            const subReplyId = 'subReply_' + data.replySeq;
+                            const $button = $(`<button id="openSubReply_${data.replySeq}" class="btn_up"><i></i></button>`);
+                            $button.on('click', function() {
+                                const $this = $(this);
+                                if($this.hasClass('btn_up')) {
+                                    replySubMenuSeq = data.replySeq;
+                                    $this.removeClass('btn_up').addClass('btn_down');
+                                    const domList = getSubRpleyDomList(subReplyId, data);
+                                    const $tr = $this.closest('tr');
+                                    $tr.after(domList);
+                                } else {
+                                    replySubMenuSeq = -1;
+                                    $table.find('[id^="'+ subReplyId +'"]').remove();
+                                    $this.removeClass('btn_down').addClass('btn_up');
+                                }
+                            })
+
+                            return $button;
+                        }
+                    },
+                    { key: 'userId', name: '아이디', width: '12%', isSorting: true, align: 'left'},
+                    { key: 'content', name: '내용', isSorting: true, align: 'left', customClass: 'text_ellipsis'
+                        , createdCell: function(value, data) {
+                            const $aTag = $('<a href="javascript:">'+ value +'</a>');
+                            $aTag.on('click', function() {
+                                common.ui.layerPopup.openUrl(baseUrl + '/' +data.replySeq + '/popup'
+                                    , userData
+                                    , function(data) {
+                                        if(data === true){
+                                            search(page);
+                                        }
+                                    });
+                            })
+
+                            return $aTag;
+                        }
+                    },
+                    { key: 'createAt', name: '등록일', width: '10%', isSorting: true, initSortClass: 'sorting_desc'
+                        , createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+                    },
+                    { key: 'updateAt', name: '수정일', width: '10%', isSorting: true
+                        , createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+                    },
+                    { key: 'useFlag', name: '사용여부', width: '9%', isSorting: true
+                        , createdCell: function(value) {
+                            /*<![CDATA[*/
+                            /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"]*/
+                            if((/*[[${tmp}]]*/ '') === value) {
+                                return  /*[[${tmp.getDesc()}]]*/ '';
+                            }
+                            /*[/]*/
+                            /*]]*/
+                        }
+                    },
+                    { key: 'blindFlag', name: '오픈여부', width: '9%', isSorting: true
+                        , createdCell: function(value) {
+                            /*<![CDATA[*/
+                            /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"]*/
+                            if((/*[[${tmp}]]*/ '') === value) {
+                                return  /*[[${tmp.getDesc()}]]*/ '';
+                            }
+                            /*[/]*/
+                            /*]]*/
+                        }
+                    },
+                    { key: 'custom', name: '액션', width: '18%'
+                        , createdCell : function(value, data) {
+                            return getReplyButtonDom(data);
+                        }
+                    },
+                ]
+            }
+
+            function getSubRpleyDomList(subReplyId, replyData) {
+
+                const subReplyList = replyData.subReplyList || [];
+                const totalLength = subReplyList.length;
+                const domList = [];
+
+                subReplyList.forEach((subReply, index) => {
+                    const id = subReplyId + '_' + index;
+                    let template =  '<tr id="'+ id +'" class="addItem">'
+                    if(index == 0) {
+                        template += '     <td rowspan="'+ totalLength +'" data-index="0" class="">'
+                        template += '대댓글'
+                        template += '     </td>'
+                    } else {
+
+                    }
+
+                    const $tr = $('<tr id="'+ id +'" class="addItem"></tr>');
+                    const $content = $('<a href="javascript:">'+ subReply.content +'</a>');
+                    const $buttonArea = getReplyButtonDom(subReply);
+
+                    const $td2 = $('<td data-index="2" class="left text_ellipsis"></td>')
+                    const $td7 = $('<td data-index="7" class=""></td>')
+
+
+                    const sendData = {
+                        'communityBoardSeq': userData.communityBoardSeq
+                        , 'title': userData.title
+                        , 'parentReplySeq' : replyData.replySeq
+                        , 'parentReplyContent' : replyData.content
+                    };
+                    $content.on('click', function() {
+                        common.ui.layerPopup.openUrl(baseUrl + '/' +subReply.replySeq + '/popup'
+                            , sendData
+                            , function(data) {
+                                if(data === true){
+                                    search(page);
+                                }
+                            });
+                    })
+
+                    $td2.append($content)
+                    $td7.append($buttonArea)
+
+                    if(index == 0) {
+                        $tr.append('<td rowspan="'+ totalLength +'" data-index="0" class="">대댓글</td>')
+                    }
+
+                    $tr.append('<td data-index="1" class="left">'+ subReply.userId +'</td>')
+                    $tr.append($td2)
+
+                    $tr.append('<td data-index="3" class="">'+ new Date(subReply.createAt).format('yyyy-MM-dd') +'</td>')
+                    $tr.append('<td data-index="4" class="">'+ new Date(subReply.updateAt).format('yyyy-MM-dd') +'</td>')
+
+                    /*<![CDATA[*/
+                    /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"]*/
+                    if((/*[[${tmp}]]*/ '') === subReply.useFlag) {
+                        $tr.append('<td data-index="5" class="">'+ /*[[${tmp.getDesc()}]]*/ '' +'</td>')
+                    }
+                    /*[/]*/
+
+                    /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"]*/
+                    if((/*[[${tmp}]]*/ '') === subReply.blindFlag) {
+                        $tr.append('<td data-index="6" class="">'+ (/*[[${tmp.getDesc()}]]*/ '') +'</td>')
+                    }
+                    /*[/]*/
+                    /*]]*/
+
+                    $tr.append($td7);
+
+                    domList.push($tr);
+                });
+
+                return domList;
+            }
+
+            function getSubRpleyDom(id, data, index, totalLength) {
+                let template =  '<tr id="'+ id +'" class="addItem">'
+                if(index == 0) {
+                    template += '     <td rowspan="'+ totalLength +'" data-index="0" class="">'
+                    template += '대댓글'
+                    template += '     </td>'
+                } else {
+
+                }
+
+                const $tr = $('<tr id="'+ id +'" class="addItem"></tr>');
+                const $content = $('<a href="javascript:">'+ data.content +'</a>');
+                const $buttonArea = getReplyButtonDom(data);
+
+                const $td2 = $('<td data-index="2" class="left text_ellipsis"></td>')
+                const $td7 = $('<td data-index="7" class=""></td>')
+
+
+                const sendData = {
+                    'communityBoardSeq': userData.communityBoardSeq
+                    , 'title': userData.title
+                    , 'parentReplySeq' : data.replySeq
+                    , 'parentReplyContent' : data.content
+                };
+                $content.on('click', function() {
+                    common.ui.layerPopup.openUrl(baseUrl + '/' +data.replySeq + '/popup'
+                        , sendData
+                        , function(data) {
+                            if(data === true){
+                                search(page);
+                            }
+                        });
+                })
+
+                $td2.append($content)
+                $td7.append($buttonArea)
+
+                if(index == 0) {
+                    $tr.append('<td rowspan="'+ totalLength +'" data-index="0" class="">대댓글</td>')
+                }
+
+                $tr.append('<td data-index="1" class="left">'+ data.userId +'</td>')
+                $tr.append($td2)
+
+                $tr.append('<td data-index="3" class="">'+ new Date(data.createAt).format('yyyy-MM-dd') +'</td>')
+                $tr.append('<td data-index="4" class="">'+ new Date(data.updateAt).format('yyyy-MM-dd') +'</td>')
+
+                /*<![CDATA[*/
+                /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"]*/
+                if((/*[[${tmp}]]*/ '') === data.useFlag) {
+                    $tr.append('<td data-index="5" class="">'+ /*[[${tmp.getDesc()}]]*/ '' +'</td>')
+                }
+                /*[/]*/
+
+                /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"]*/
+                if((/*[[${tmp}]]*/ '') === data.blindFlag) {
+                    $tr.append('<td data-index="6" class="">'+ (/*[[${tmp.getDesc()}]]*/ '') +'</td>')
+                }
+                /*[/]*/
+                /*]]*/
+
+                $tr.append($td7);
+
+                return $tr;
+            }
+
+            function getReplyButtonDom(data) {
+                let template = '<div class="btn_area">'
+                /*<![CDATA[*/
+                /*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"]*/
+                if((/*[[${tmp}]]*/ '') !== data.blindFlag) {
+                    template += '   <a href="javascript:" class="btns_default btn_submit edit" style="margin-left: 5px;">'+ /*[[${tmp.getDesc()}]]*/ '' + '</a>'
+                }
+                /*[/]*/
+                /*]]*/
+
+                if(!data.parentReplySeq == true) {
+                    template += '   <a href="javascript:" class="btns_default btn_submit new" style="margin-left: 5px;">댓글달기</a>'
+                }
+
+                template += '</div>'
+
+                const $btnArea = $(template);
+
+                $btnArea.find('a.edit').on('click', function() {
+                    /*<![CDATA[*/
+                    const blindYDesc = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).Y.getDesc()} ]]*/ null;
+                    const blindNDesc = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).N.getDesc()} ]]*/ null;
+                    /*]]*/
+                    const currentBlindFlag = data.blindFlag;
+                    const params = {
+                        'replySeq' : data.replySeq,
+                        'useFlag': data.useFlag,
+                        'content': data.content,
+                        'blindFlag': currentBlindFlag === 'Y' ? 'N' : 'Y'
+                    }
+
+                    updateAjax(params, '오픈여부를 ' + (currentBlindFlag === 'Y' ? blindNDesc : blindYDesc) + ' 로 변경하시겠습니까?'
+                        , '오픈여부를 ' + (currentBlindFlag === 'Y' ? blindNDesc : blindYDesc) + ' 로 변경하였습니다.');
+
+                });
+
+                $btnArea.find('a.new').on('click', function() {
+                    const sendData = {
+                        'communityBoardSeq': userData.communityBoardSeq
+                        , 'title': userData.title
+                        , 'parentReplySeq' : data.replySeq
+                        , 'parentReplyContent' : data.content
+                    };
+
+                    common.ui.layerPopup.openUrl(baseUrl + '/new/popup'
+                        , sendData
+                        , function(data) {
+                            if(data === true){
+                                search(page);
+                            }
+                        });
+                });
+
+                return $btnArea;
+            }
+
+            function updateAjax(params, sendMessage, resultMessage) {
+                common.ui.modal.confirm('안내', sendMessage, function(ret) {
+                    if(ret) {
+                        console.log(params);
+                        common.ajax.uploadFile('POST', baseUrl, params, function(response) {
+                            ajaxResult(response, resultMessage);
+                        });
+                    }
+                })
+            }
+
+            function ajaxResult(response, message) {
+                if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+                    common.ui.modal.alert("안내", message, function() {
+                        search(page);
+                    });
+                } else {
+                    common.ui.modal.error(response.result);
+                }
+            }
+
+            init();
+        }
+    </script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

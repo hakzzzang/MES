@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='주식정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">수급Y</div>
+		<!--// pagetle -->
+		<div id="supplyWhyWrap">
+			<form class="search">
+				<div class="search_box">
+					<th:block th:replace="view/component/searchItem :: searchValue(placeholder='제목')"></th:block>
+					<th:block th:replace="view/component/searchItem :: searchDate(searchDateType='supplyWhyDate,createAt,updateAt')"></th:block>
+					<th:block th:replace="view/component/searchItem :: useFlag"></th:block>
+					<th:block th:replace="view/component/searchItem :: primaryFlag"></th:block>
+				</div>
+				<th:block th:replace="view/component/searchItem :: searchButton"></th:block>
+			</form>
+			<div class="tblutils">
+				<th:block th:replace="view/component/tableWrap :: tableInfo"></th:block>
+				<a href="javascript:" id="addButton" class="btns_default btn_submit">신규등록</a>
+			</div>
+			<!-- search //-->
+
+			<th:block th:replace="view/component/tableWrap :: table(tableId='supplyWhyTable')"></th:block>
+			<th:block th:replace="view/component/tableWrap :: paging"></th:block>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/list-view.js}"></script>
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			class StockResultListView extends CommonListView {
+				constructor(data) {
+					super(data);
+				}
+
+				get headerInfo() {
+					const self = this;
+					return [
+						{ key: 'no', name: 'No.', width: '5%'},
+						{ key: 'title', name: '제목', isSorting: true, customClass: 'text_ellipsis', align: 'left'
+							, createdCell: function(value, data) {
+								return `<a href="${self.baseUrl}/${data.supplyWhySeq}">${value}</a>`;
+							}
+						},
+						{ key: 'supplyWhyDate', name: '증시일', width: '9%', isSorting: true
+							, createdCell: function(value) {
+								return new Date(value).format('yyyy-MM-dd');
+							}
+						},
+						{ key: 'useFlag', name: '사용여부', width: '9%', isSorting: true
+							, createdCell: function(value) {
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"]*/
+								if((/*[[${tmp}]]*/ '') === value) {
+									return  /*[[${tmp.getDesc()}]]*/ '';
+								}
+								/*[/]*/
+								/*]]*/
+							}
+						},
+						{ key: 'primaryFlag', name: '노출여부', width: '9%', isSorting: true
+							, createdCell: function(value) {
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"]*/
+								if((/*[[${tmp}]]*/ '') === value) {
+									return  /*[[${tmp.getDesc()}]]*/ '';
+								}
+								/*[/]*/
+								/*]]*/
+							}
+						},
+						{ key: 'createAt', name: '생성일', width: '9%', isSorting: true, initSortClass: 'sorting_desc'
+							, createdCell: function(value) {
+								return new Date(value).format('yyyy-MM-dd');
+							}
+						},
+						{ key: 'updateAt', name: '수정일', width: '9%', isSorting: true
+							, createdCell: function(value) {
+								return new Date(value).format('yyyy-MM-dd');
+							}
+						},
+						{ key: 'createId', name: '생성 ID', width: '9%', isSorting: true },
+					]
+				}
+			}
+
+			const listView = new StockResultListView({
+				baseUrl : '/stock/supply-why'
+				, wrapId : 'supplyWhyWrap'
+				, pagingId : 'pagingWrap'
+				, tableId : 'supplyWhyTable'
+			})
+
+			listView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

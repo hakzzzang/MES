@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">콘텐츠 등록/수정</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th class="require">Title</th> <!-- 필수항목 .require -->
+					<td><input type="text" style="width:50%;" placeholder="제목을 입력해주세요"></td>
+				</tr>
+				<tr>
+					<th class="require">PC HTML</th>
+					<td><input type="text" style="width:50%;" placeholder="내용을 입력해주세요"></td>
+				</tr>
+				<tr>
+					<th class="require">모바일 HTML</th>
+					<td><input type="text" style="width:50%;" placeholder="내용을 입력해주세요"></td>
+				</tr>
+				<tr>
+					<th class="require">모바일 HTML</th>
+					<td>
+						<input type="text" placeholder="내용을 입력해주세요">
+						<input type="text" placeholder="내용을 입력해주세요">
+						<input type="text" placeholder="내용을 입력해주세요">
+						<input type="text" placeholder="내용을 입력해주세요">
+					</td>
+				</tr>
+				<tr>
+					<th class="require">해시태그 등록</th>
+					<td>
+						<!-- sort list -->
+						<div class="sortList">
+							<ul class="sortTable" id="sortTable2">
+								<li class="handle">
+									<span class="rowidx hidden">1</span>
+									<select name="" id="">
+										<option value="선택">선택</option>
+									</select>
+									<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+									<a href="javascript:;" onclick="addHashDel(this);" class="btn_del">삭제</a>
+								</li>
+								<li class="handle">
+									<span class="rowidx hidden">2</span>
+									<span class="btn_handle"><img th:src="@{/static/assets/img/ico_handle.gif}" alt=""></span>
+									<select name="" id="">
+										<option value="선택">선택</option>
+									</select>
+									<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+									<a href="javascript:;" onclick="addHashDel(this);" class="btn_del">삭제</a>
+								</li>
+							</ul>
+							<a href="javascript:;" onclick="addHash(this);" class="btns_default btn_submit">해시태그 추가</a>
+						</div>
+						<!-- //sort list -->
+					</td>
+				</tr>
+				<tr>
+					<th>연재물설정</th>
+					<td>
+						<label><input type="radio" name="set"> 미설정</label>
+						<label><input type="radio" name="set"> 설정</label> &nbsp;
+						<a href="javascript:;" class="btns_default btn_submit">콘텐츠 선택</a>
+						<input type="text" readonly>
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+			<h2 class="subTit">PC 썸네일 이미지</h2>
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th rowspan="3" class="require">목록썸네일 (대)</th> <!-- 필수항목 .require -->
+					<td>
+						<div class="fileui">
+							<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+							<input type="file"> <a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>  <span class="smt">※ 000*000 이미지를 등록해주세요 (등록 가능한 확장자 : jpg,gif,png)</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="" class="require">대체텍스트</label>
+						<input type="text" style="width:50%;" placeholder="대체텍스트를 입력해주세요">
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th class="require">게시 기간</th>
+					<td>
+						<label><input type="radio" name="set"> 미설정</label>
+						<label><input type="radio" name="set"> 설정</label>
+						<input type="text" id="from03" name="from03" class="datepicker" title="검색 시작일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+						~
+						<input type="text" id="to03" name="to03" class="datepicker" title="검색 종료일">
+						<select>
+							<option value="">시 선택</option>
+						</select>
+						<select>
+							<option value="">분 선택</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>노출여부</th>
+					<td>
+						<label><input type="radio" name="exposure03" checked> Y</label>
+						<label><input type="radio" name="exposure03"> N</label>
+					</td>
+				</tr>
+			</table>
+
+			<ul class="writer">
+				<li>최초작성 : <span>강백호  2016-04-16 19:42</span></li>
+				<li>최근수정 : <span>아이유  2016-04-16 20:11</span></li>
+			</ul>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="#" class="btns_default">삭제</a>
+				<a href="#" class="btns_default btn_cancel">취소</a>
+				<a href="#" class="btns_default btn_submit">저장</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

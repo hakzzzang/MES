@@ -1,0 +1,177 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="searchValue(placeholder)">
+    <div class="single">
+        <label for="searchValue" class="search_tit">검색</label>
+        <input type="text" id="searchValue" name="searchValue" th:placeholder="${placeholder}">
+    </div>
+</th:block>
+
+<th:block th:fragment="searchDate(searchDateType)">
+    <div class="single" >
+        <span class="search_tit">기간</span>
+        <select id="searchDateType" name="searchDateType">
+            <option th:if="${#strings.contains(searchDateType,'marketDate')}" value="marketDate">증시일</option>
+            <option th:if="${#strings.contains(searchDateType,'seeChartDate')}" value="seeChartDate">증시일</option>
+            <option th:if="${#strings.contains(searchDateType,'seeResultDate')}" value="seeResultDate">증시일</option>
+            <option th:if="${#strings.contains(searchDateType,'reportSniperDate')}" value="reportSniperDate">증시일</option>
+            <option th:if="${#strings.contains(searchDateType,'supplyWhyDate')}" value="supplyWhyDate">증시일</option>
+            <option th:if="${#strings.contains(searchDateType,'postStartDate')}" value="postStartDate">시작일</option>
+            <option th:if="${#strings.contains(searchDateType,'postEndDate')}" value="postEndDate">종료일</option>
+            <option th:if="${#strings.contains(searchDateType,'issueDate')}" value="issueDate">이슈일</option>
+            <option th:if="${#strings.contains(searchDateType,'createAt')}" value="createAt">생성일</option>
+            <option th:if="${#strings.contains(searchDateType,'updateAt')}" value="updateAt">수정일</option>
+        </select>
+
+
+        <input type="text" id="startDate" name="startDate" class="datepicker" autocomplete="off" title="검색 시작일"> ~
+        <input type="text" id="endDate" name="endDate" class="datepicker" autocomplete="off" title="검색 종료일">
+        <select id="searchMonth" name="searchMonth">
+            <option value="">전체</option>
+            <option value="3">최근3개월</option>
+            <option value="6">최근6개월</option>
+            <option value="12">최근12개월</option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="useFlag">
+    <div>
+        <span class="search_tit">사용여부</span>
+        <select name="useFlag">
+            <option value="">전체</option>
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="primaryFlag">
+    <div>
+        <span class="search_tit">노출여부</span>
+        <select name="primaryFlag">
+            <option value="">전체</option>
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="statusType">
+    <div>
+        <span class="search_tit">등락률</span>
+        <select name="statusType">
+            <option value="">전체</option>
+            <option th:each="statusType : ${T(com.stockmore.admin.common.constants.CommonCode$StockStatusType).values()}"
+                    th:value="${statusType}" th:text="${statusType.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+<th:block th:fragment="marketType">
+    <div>
+        <span class="search_tit">시장구분</span>
+        <select name="marketType">
+            <option value="">전체</option>
+            <option th:each="marketType : ${T(com.stockmore.admin.common.constants.CommonCode$MarketType).values()}"
+                    th:value="${marketType}" th:text="${marketType.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="snsType">
+    <div>
+        <span class="search_tit">SNS 타입</span>
+        <select name="snsType">
+            <option value="">전체</option>
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$SnsType).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="agreeUsage">
+    <div>
+        <span class="search_tit">사용동의</span>
+        <select name="agreeUsage">
+            <option value="">전체</option>
+            <option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                    th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="privacyUsage">
+    <div>
+        <span class="search_tit">개인정보</span>
+        <select name="privacyUsage">
+            <option value="">전체</option>
+            <option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                    th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="marketingUsage">
+    <div>
+        <span class="search_tit">마케팅</span>
+        <select name="marketingUsage">
+            <option value="">전체</option>
+            <option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                    th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="activeFlag">
+    <div>
+        <span class="search_tit">활성여부</span>
+        <select name="activeFlag">
+            <option value="">전체</option>
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$StatusYN).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="deleteFlag">
+    <div>
+        <span class="search_tit">삭제여부</span>
+        <select name="deleteFlag">
+            <option value="">전체</option>
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$StatusYN).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="blindFlag">
+    <div>
+        <span class="search_tit">오픈여부</span>
+        <select name="blindFlag">
+            <option value="">전체</option>
+            <option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"
+                    th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+<th:block th:fragment="configType">
+    <div>
+        <span class="search_tit">설정타입</span>
+        <select name="configType">
+            <option value="">전체</option>
+            <option th:each="flag : ${T(com.stockmore.admin.common.constants.CommonCode$CONFIG_TYPE).values()}"
+                    th:value="${flag}" th:text="${flag.getDesc()}"></option>
+        </select>
+    </div>
+</th:block>
+
+
+
+<th:block th:fragment="searchButton">
+    <div class="btn_area">
+        <a href="javascript:" id="searchButton" class="btns_default btn_submit">검색</a>
+    </div>
+</th:block>
+
+</html>

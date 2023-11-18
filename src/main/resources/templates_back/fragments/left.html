@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
+	<th:block th:fragment="left">
+		<div id="left" class="lnb">
+			<ul sec:authorize="hasRole('ROLE_SUPER_ADMIN')"
+				th:if="${#httpServletRequest.getServletPath().contains('/user')}">
+				<li th:classappend="${#request.getServletPath().contains('/user/admin-user') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/user/admin-user">관리자</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/user/user') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/user/user">사용자</a>
+				</li>
+			</ul>
+			<ul sec:authorize="hasRole('ROLE_SUPER_ADMIN')"
+				th:if="${#httpServletRequest.getServletPath().contains('/config')}">
+				<li th:classappend="${#request.getServletPath().contains('/config/app-config') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/config/app-config">설정</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/config/config-history') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/config/config-history">설정 히스토리</a>
+				</li>
+			</ul>
+			<ul th:if="${#request.getServletPath().contains('/stock')}">
+				<li th:classappend="${#request.getServletPath().contains('/stock/stocks') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/stocks">종목</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().equals('/stock/stock-quote') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/stock-quote">시세</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/stock-market-condition') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/stock-market-condition">119 시황</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/stock-issue') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/stock-issue">이슈/테마주</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/see-chart') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/see-chart">차트만 보자</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/see-result') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/see-result">실적만 보자</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/supply-why') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/supply-why">수급Y</a>
+				</li>
+				<li th:classappend="${#request.getServletPath().contains('/stock/report-sniper') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/stock/report-sniper">VIP 레포트 스나이퍼</a>
+				</li>
+			</ul>
+			<ul th:if="${#httpServletRequest.getServletPath().contains('/board')}">
+				<li th:classappend="${#request.getServletPath().contains('/board/community-board') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/board/community-board">게시판</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_SUPER_ADMIN')"
+					th:classappend="${#request.getServletPath().contains('/board/notice-board') ? 'active' : ''}" >
+					<a href="javascript:" data-href="/board/notice-board">공지</a>
+				</li>
+			</ul>
+			<ul th:if="${#request.getServletPath().contains('/my-page')}">
+				<li></li>
+			</ul>
+		</div>
+
+	</th:block>
+</html>

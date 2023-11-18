@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      th:with="metaTitle='메인'">
+<head>
+</head>
+
+<body>
+	<!-- content -->
+	<th:block layout:fragment="content">
+		<div class="conts">
+			메인
+		</div>
+    </th:block>
+	<!-- //content -->
+
+	<!-- script -->
+	<th:block layout:fragment="custom_js">
+		<script th:inline="javascript" >
+			$(document).ready(function() {
+				function init() {
+					event();
+				}
+				
+				function event() {
+					console.log('content');
+				}
+				
+				init();
+			});
+		</script>
+	</th:block>
+	<!-- //script -->
+</body>
+</html>
+

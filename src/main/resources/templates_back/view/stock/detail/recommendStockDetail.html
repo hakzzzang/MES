@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='주식정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">실시간 추천 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">실시간 추천 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr class="title">
+						<th class="require">종목</th> <!-- 필수항목 .require -->
+						<td colspan="">
+							<input readonly='readonly' type="text" id="stockCode" name="stockCode" th:data-mode="${mode}"
+								   style="min-width: unset;width: 80px;"></input>
+							<input readonly='readonly' type="text" id="stockName" name="stockName" th:data-mode="${mode}"></input>
+						</td>
+						<td colspan="2">
+							<a href="javascript:" id="openSearchStockPopupButton" class="btn_add" data-mode="new">추가</a>
+						</td>
+					</tr>
+
+					<tr>
+						<th class="require">추천가</th>
+						<td>
+							<input type="text" name="recommendPrice" th:data-mode="${mode}">
+						</td>
+						<th class="require">매도가</th>
+						<td>
+							<input type="text" name="sellPrice" th:data-mode="${mode}">
+						</td>
+					</tr>
+					<tr>
+						<th class="require">매수일</th>
+						<td>
+							<input type="text" id="buyAt" name="buyAt" class="datepicker" title="매수일" th:data-mode="${mode}" >
+						</td>
+						<th class="require">매도일</th>
+						<td>
+							<input type="text" id="sellAt" name="sellAt" class="datepicker" title="매도일" th:data-mode="${mode}" >
+						</td>
+					</tr>
+					<tr class="title">
+						<th class="require">추천 이유</th>
+						<td colspan="3">
+							<input type="text" id="recommendReason" name="recommendReason" title="추천이유" th:data-mode="${mode}" >
+						</td>
+					</tr>
+					<tr>
+						<th class="require">매도 여부</th>
+						<td colspan="3">
+							<label type="radio" th:each="sellYn : ${T(com.stockmore.admin.common.constants.CommonCode$SellYN).values()}"
+								   th:data-mode="${mode}" th:value="${sellYn}">
+								<input type="radio" name="sellFlag" th:data-mode="${mode}"  th:text=${sellYn.getDesc()} th:value="${sellYn}">
+							</label>
+						</td>
+					</tr>
+
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성 ID</th>
+						<td>
+							<input readonly='readonly' name="createId" />
+						</td>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+					</tr>
+					<tr>
+						<th>수정 ID</th>
+						<td>
+							<input readonly='readonly' name="updateId" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+
+		<div id="layerPopupWrap"></div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton')
+			const $saveButton = $('#saveButton')
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton')
+			const $cancelButton = $('#cancelButton')
+			const $listButton = $('#listButton')
+
+			const $buyAt = $('#buyAt');
+			const $sellAt = $('#sellAt');
+			const $stockCode = $('#stockCode');
+			const $stockName = $('#stockName');
+
+			const $openSearchStockPopupButton = $('#openSearchStockPopupButton');
+
+			const baseUrl = '/stock/recommend-stock';
+
+			/*<![CDATA[*/
+			const recommendStock = /*[[ ${recommendStock} ]]*/ null;
+			/*]]*/
+			console.log(recommendStock)
+
+
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				common.ui.datepicker.initFromTo($buyAt, $sellAt);
+
+				if(recommendStock !== null) {
+					initDom();
+					setDetailMode();
+					$cancelButton.hide();
+					$modifyButton.show();
+				}
+			}
+
+			function initDom() {
+				Object.keys(recommendStock).forEach(key => {
+					let value = recommendStock[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'buyAt' || key === 'sellAt') {
+							value = new Date(value).format('yyyy-MM-dd');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'sellFlag') {
+							$editForm.find('[name="'+ key +'"]').each((index, item) => {
+								if(item.value === value) {
+									item.checked = true;
+								}
+							})
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					}
+				})
+			}
+
+			function event() {
+				$openSearchStockPopupButton.on('click', function() {
+					if(this.dataset.mode === 'detail') {
+						return false;
+					}
+
+					const userData = {
+						isMultiSelect : false
+					}
+
+					common.ui.layerPopup.openUrl('/stock/popup/search-stocks', userData, function(data) {
+						$stockCode.val(data.stockCode);
+						$stockName.val(data.stockName);
+					});
+				})
+
+				$deleteButton.on('click', function() {
+					if(recommendStock === null) {
+						return;
+					}
+					const params = {
+						recommendStockSeq : recommendStock['recommendStockSeq']
+					}
+					common.ui.modal.confirm('안내', '삭제 하시겠습니까?', function(ret) {
+						if(ret) {
+							common.ajax.del(baseUrl, params, function(response) {
+								if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+									common.ui.modal.alert("안내", "정상적으로 삭제 되었습니다.", function() {
+										common.navi.open(baseUrl);
+									});
+								} else {
+									common.ui.modal.error(response.result);
+								}
+							});
+						}
+					})
+				});
+				$saveButton.on('click', function() {
+					const params = $editForm.serializeObject();
+					common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+						if(ret) {
+							common.ajax.put(baseUrl, params, function(response) {
+								if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+									common.ui.modal.alert("안내", "정상적으로 저장 되었습니다.", function() {
+										common.navi.open(baseUrl);
+									});
+								} else {
+									common.ui.modal.error(response.result);
+								}
+							});
+						}
+					})
+
+				});
+
+				$editButton.on('click', function() {
+					if(recommendStock === null) {
+						return;
+					}
+
+					const params = $editForm.serializeObject();
+					params['recommendStockSeq'] = recommendStock['recommendStockSeq'];
+					common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+						if(ret) {
+							console.log(params);
+							common.ajax.post(baseUrl, params, function(response) {
+								if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+									common.ui.modal.alert("안내", "정상적으로 수정 되었습니다.", function() {
+										common.navi.open(baseUrl);
+									});
+								} else {
+									common.ui.modal.error(response.result);
+								}
+							});
+						}
+					})
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+					$modifyButton.hide();
+					$editButton.show();
+					$cancelButton.show();
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+					$cancelButton.hide();
+					$editButton.hide();
+					$modifyButton.show();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open('/stock/stock-market-condition', false);
+				});
+			}
+
+			function setEditMode() {
+				$editForm.find('input,textarea,label[type="radio"]').not('input[readonly="readonly"]').removeAttr('data-mode');
+
+				$openSearchStockPopupButton.show();
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+			}
+
+			function setDetailMode() {
+				$editForm.find('input,textarea,label[type="radio"]').not('input[readonly="readonly"]').attr('data-mode', 'detail');
+
+				$openSearchStockPopupButton.hide();
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+			}
+
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<div class="popup sample_pop">
+			<div class="modalcont">
+				<div class="con">
+					<h1 class="tle">팝업 타이틀
+						<a href="javascript:;" onclick="window.close()" class="bt_close">닫기</a>
+					</h1>
+					<div class="inner">
+						팝업 내용
+					</div>
+					<div class="btn_area">
+						<a href="#" class="btns_default">취소</a>
+						<a href="#" class="btns_default btn_submit">확인</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

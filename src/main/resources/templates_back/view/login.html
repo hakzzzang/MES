@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/empty}"
+      th:with="metaTitle='로그인'">
+<head>
+</head>
+
+<body>
+	<!-- content -->
+	<th:block layout:fragment="content">
+		<div class="loginbx">
+			<div class="tlogo" title="Stock More">
+				<!--<img th:src="@{/static/assets/img/logo.png}" alt="" />-->
+			</div>
+			<form role="form" id="loginForm" action="/login" method="post">
+				<div class="in">
+					<div class="uid">
+						<span class="t">ID</span>
+						<input id="idInput" name="username" type="text">
+					</div>
+					<div class="upwd">
+						<span class="t">Password</span>
+						<input id="pwInput" name="password" type="password">
+					</div>
+					<a id="loginButton" href="javascript:;" class="btlogin">LOGIN</a>
+
+					<div class="login-error hidden">
+					</div>
+				</div>
+			</form>
+		</div>
+    </th:block>
+	<!-- //content -->
+
+	<!-- script -->
+	<th:block layout:fragment="custom_js">
+		<script th:inline="javascript" >
+			$(document).ready(function() {
+				$('.container').addClass('loginbody');
+
+
+				const $idInput = $('#idInput');
+				const $pwInput = $('#pwInput');
+				const $loginForm = $('#loginForm');
+				const $loginButton = $('#loginButton');
+
+
+				/*<![CDATA[*/
+				const errorCode = /*[[ ${param.errorCode != null ? param.errorCode[0] : null} ]]*/ null;
+				const loginUser = /*[[ ${param.errorCode != null ? param.errorCode[0] : null} ]]*/ null;
+				/*]]*/
+
+				console.log(errorCode)
+				function init() {
+					initData();
+					event();
+				}
+
+				function initData() {
+					if(!errorCode == false) {
+						//common.ui.modal.error({code : errorCode});
+						const apiCode = Object.keys(API_RESPONSE_CDOE).find(key => API_RESPONSE_CDOE[key].code === errorCode);
+						const message = API_RESPONSE_CDOE[apiCode].message || '';
+						$('.login-error').html("* " + message).show();
+					}
+				}
+				
+				function event() {
+					$loginButton.on('click', function() {
+						const id = $idInput.val();
+						const pw = $pwInput.val();
+
+						$loginForm.submit();
+					});
+
+					$idInput.keyup(function(e) {
+						if(!this.value === true || !$pwInput.val() === true ) {
+							return false;
+						}
+
+						if(e.keyCode === 13) {
+							$loginForm.submit();
+						}
+					});
+
+					$pwInput.keyup(function(e) {
+						if(!this.value === true|| !$idInput.val() === true ) {
+							return false;
+						}
+
+						if(e.keyCode === 13) {
+							$loginForm.submit();
+						}
+					})
+				}
+				
+				init();
+			});
+		</script>
+	</th:block>
+	<!-- //script -->
+</body>
+</html>
+

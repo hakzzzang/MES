@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">관리자 관리</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<table class="tbview">
+				<colgroup>
+					<col style="width:15%;" />
+					<col>
+				</colgroup>
+				<tr>
+					<th class="require">아이디</th> <!-- 필수항목 .require -->
+					<td>
+						<input type="text" value="" maxlength="" style="min-width:200px;">
+						<a href="#" class="btns_default">아이디중복체크</a>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">이름</th>
+					<td>
+						<input type="text" value="" maxlength="" style="min-width:200px;">
+					</td>
+				</tr>
+				<tr>
+					<th class="require">소속</th>
+					<td>
+						<input type="text" value="" maxlength="" style="min-width:200px;">
+					</td>
+				</tr>
+				<tr>
+					<th class="require">비밀번호</th>
+					<td>
+						<input type="password" value="" maxlength="" style="min-width:200px;">
+					</td>
+				</tr>
+				<tr>
+					<th class="require">비밀번호재입력</th>
+					<td>
+						<input type="password" value="" maxlength="" style="min-width:200px;">
+					</td>
+				</tr>
+				<tr>
+					<th class="require">이메일</th>
+					<td>
+						<input type="text" value="" style="min-width:200px;"> @
+						<input type="text" value="" style="min-width:200px;">
+						<select>
+							<option>직접입력</option>
+							<option>hankooktire.com</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th class="require">사용여부</th>
+					<td>
+						<label><input type="radio" name="use" checked> 사용</label>
+						<label><input type="radio" name="use"> 중지</label>
+					</td>
+				</tr>
+			</table>
+			<!-- // table edit -->
+
+			<div class="tblutils">
+				<p><label><input type="checkbox"> 전체선택</label></p>
+			</div>
+			<!-- table list -->
+			<table class="tblist type02">
+				<colgroup>
+					<col style="width:20%">
+					<col>
+					<col style="width:10%">
+				</colgroup>
+				<thead>
+				<tr>
+					<th colspan="2">관리자 메뉴</th>
+					<th>권한설정</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td class="left thead" rowspan="8">STORY관리</td>
+					<td class="left">[국문] 콘텐츠</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 해시태그/목록 전시</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 메인 해시태그</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 전체메뉴 전시</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[영문] 콘텐츠</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[영문] 해시태그/목록 전시</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[영문] 메인 해시태그</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[영문] 전체메뉴 전시</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left thead" rowspan="4">게시물관리</td>
+					<td class="left">[국문] NEWS</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 공고</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 분기보고서</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[국문] 정기보고서</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left thead" rowspan="2">팝업관리</td>
+					<td class="left">[국문] 팝업</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left">[영문] 팝업</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				<tr>
+					<td class="left thead">관리자관리</td>
+					<td class="left">운영로그</td>
+					<td><label><input type="checkbox"></label></td>
+				</tr>
+				</tbody>
+			</table>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="#" class="btns_default">삭제</a>
+				<a href="#" class="btns_default btn_cancel">취소</a>
+				<a href="#" class="btns_default btn_submit">저장</a>
+			</div>
+			<!-- // btn area -->
+
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

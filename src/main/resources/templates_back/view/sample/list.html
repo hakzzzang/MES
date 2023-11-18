@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">[기본] 목록</div>
+		<!--// pagetle -->
+		<div>
+			<!-- search -->
+			<div class="search">
+				<div class="search_box">
+					<div class="single">
+						<label for="pop_name" class="search_tit">팝업명 검색</label>
+						<input type="text" id="pop_name">
+					</div>
+					<div class="single">
+						<span class="search_tit">기간</span>
+						<select>
+							<option>등록일</option>
+						</select>
+						<input type="text" id="from01" name="from01" class="datepicker" title="검색 시작일"> ~
+						<input type="text" id="to01" name="to01" class="datepicker" title="검색 종료일">
+						<select id="searchMonth">
+							<option value="">전체</option>
+							<option value="3">최근3개월</option>
+							<option value="6">최근6개월</option>
+							<option value="12">최근12개월</option>
+						</select>
+					</div>
+					<div>
+						<span class="search_tit">상태</span>
+						<label><input type="radio" name="state" checked> 전체</label>
+						<label><input type="radio" name="state"> 진행중</label>
+						<label><input type="radio" name="state"> 예정</label>
+						<label><input type="radio" name="state"> 종료</label>
+					</div>
+					<div>
+						<span class="search_tit">노출여부</span>
+						<label><input type="radio" name="exposure" checked> Y</label>
+						<label><input type="radio" name="exposure"> N</label>
+					</div>
+					<div>
+						<span class="search_tit">타입</span>
+						<label><input type="radio" name="type" checked> 전체</label>
+						<label><input type="radio" name="type"> 상단배너</label>
+						<label><input type="radio" name="type"> 메인팝업</label>
+					</div>
+					<div>
+						<span class="search_tit">채널</span>
+						<label><input type="radio" name="channel01" checked> 전체</label>
+						<label><input type="radio" name="channel01"> PC</label>
+						<label><input type="radio" name="channel01"> MOBILE</label>
+					</div>
+				</div>
+				<div class="btn_area">
+					<a href="#" class="btns_default btn_submit">검색</a>
+				</div>
+			</div>
+			<!-- search //-->
+			<div class="tblutils">
+				<p class="cnt">총 <strong>100</strong>건 / 검색결과 <strong>2</strong>건</p>
+				<div class="btn_group">
+					<a href="javascript:;" class="btns_default btn_submit" onclick="windowPop('popup.html', 'popup', 600, 200)">신규등록</a>
+					<a href="#" class="btns_default">노출여부(Y)</a>
+					<a href="#" class="btns_default">노출여부(N)</a>
+				</div>
+				<a href="#" class="btns_default btn_submit">삭제</a>
+			</div>
+			<!-- table list -->
+			<table class="tblist">
+				<colgroup>
+					<col style="width:4%">
+					<col style="width:5%">
+					<col style="width:9%">
+					<col style="width:8%">
+					<col>
+					<col style="width:12%">
+					<col style="width:12%">
+					<col style="width:7%">
+					<col style="width:12%">
+				</colgroup>
+				<thead>
+				<tr>
+					<th><label><input type="checkbox"><span class="a11y_sr-only">전체선택</span></label></th>
+					<th>NO</th>
+					<th>채널</th>
+					<th>작성자</th>
+					<th>제목</th>
+					<th>시작일시</th>
+					<th>종료일시</th>
+					<th>노출여부</th>
+					<th>등록/수정일</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td><label><input type="checkbox"></label></td>
+					<td>10</td>
+					<td>전체</td>
+					<td>전정국</td>
+					<td class="left"><a href="#" class="tbtit">제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.제목입니다. 제목입니다.</a></td>
+					<td>2019-04-16 19:42</td>
+					<td>2019-04-16 19:42</td>
+					<td class="accept">Y</td> <!-- Y일 경우 .accept / N일 경우 .deny 추가 -->
+					<td>2016-04-16 19:42</td>
+				</tr>
+				<tr>
+					<td><label><input type="checkbox"></label></td>
+					<td>9</td>
+					<td>MOBILE</td>
+					<td>김태형</td>
+					<td class="left"><a href="#">제목입니다. 제목입니다.</a></td>
+					<td>2019-04-16 19:42</td>
+					<td>2019-04-16 19:42</td>
+					<td class="deny">N</td>
+					<td>2016-04-16 19:42</td>
+				</tr>
+				<tr>
+					<td><label><input type="checkbox"></label></td>
+					<td>8</td>
+					<td>PC</td>
+					<td>박지민</td>
+					<td class="left"><a href="#">제목입니다. 제목입니다.</a></td>
+					<td>2019-04-16 19:42</td>
+					<td>2019-04-16 19:42</td>
+					<td class="accept">Y</td>
+					<td>2016-04-16 19:42</td>
+				</tr>
+				<tr>
+					<td><label><input type="checkbox"></label></td>
+					<td>7</td>
+					<td>전체</td>
+					<td>정호석</td>
+					<td class="left"><a href="#">제목입니다. 제목입니다.</a></td>
+					<td>2019-04-16 19:42</td>
+					<td>2019-04-16 19:42</td>
+					<td class="deny">N</td>
+					<td>2016-04-16 19:42</td>
+				</tr>
+				<tr>
+					<td colspan="9" class="nodata">해당하는 내용이 없습니다.</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- // table list -->
+			<!-- paging -->
+			<div id="pagingWrap" class="paging" role="navigation" aria-label="페이지 선택">
+			</div>
+			<!--// paging -->
+
+			<br /><br />
+
+
+			<table id="testTableWrap" class="tblist multihead"> <!-- thead에 tr이 여러개 일 경우 -->
+			</table>
+
+
+
+			<br /><br />
+
+
+			<!-- table list -->
+			<table class="tblist multihead"> <!-- thead에 tr이 여러개 일 경우 -->
+				<colgroup>
+					<col style="width:8%">
+					<col>
+					<col style="width:10%">
+					<col style="width:8%">
+					<col style="width:8%">
+					<col style="width:11%">
+					<col style="width:11%">
+					<col style="width:5%">
+					<col style="width:5%">
+					<col style="width:5%">
+				</colgroup>
+				<thead>
+				<tr>
+					<th rowspan="2">노출순서</th>
+					<th rowspan="2">해시태그명</th>
+					<th rowspan="2">순서설정</th>
+					<th rowspan="2">등록된<br>콘텐츠</th>
+					<th rowspan="2">사용여부</th>
+					<th rowspan="2">목록보기</th>
+					<th rowspan="2">팝업보기</th>
+					<th colspan="3">첨부파일</th>
+				</tr>
+				<tr>
+					<th>국문</th>
+					<th>영문</th>
+					<th>음성</th>
+				</tr>
+				</thead>
+				<tbody class="sortTable" id="sortTable1">
+				<tr>
+					<td><span class="rowidx">1</span></td>
+					<td class="left"><a href="#" class="tbtit">RE-Branding</a></td>
+					<td class="handle"><span class="btn_handle"><img th:src="@{/static/assets/img/ico_handle.gif}"  alt=""></span></td> <!-- 드래그 사용 시 -->
+					<!-- <td class="handle"><button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button></td> --> <!-- 버튼 사용 시 -->
+					<td>35</td>
+					<td class="accept">Y</td> <!-- Y일 경우 .accept / N일 경우 .deny 추가 -->
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="ico_attach" onclick="popOpen('file_pop');return false;"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach" onclick="popOpen('file_pop');return false;"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach" onclick="popOpen('file_pop');return false;"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+				</tr>
+				<tr>
+					<td><span class="rowidx">2</span></td>
+					<td class="left"><a href="#">Philosophy</a></td>
+					<td class="handle"><button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button></td>
+					<td>2</td>
+					<td class="deny">N</td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+				</tr>
+				<tr>
+					<td><span class="rowidx">3</span></td>
+					<td class="left"><a href="#">Startup</a></td>
+					<td class="handle"><button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button></td>
+					<td>30</td>
+					<td class="accept">Y</td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+				</tr>
+				<tr>
+					<td><span class="rowidx">4</span></td>
+					<td class="left"><a href="#">Digital Transformation</a></td>
+					<td class="handle"><button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button></td>
+					<td>1</td>
+					<td class="deny">N</td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="btns_default">view</a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+					<td><a href="#" class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></a></td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- // table list -->
+		</div>
+
+		<!-- layer pop sample -->
+		<div class="modalpop file_pop">
+			<div class="modalcont">
+				<!-- <div class="modalcont" style="width:500px;"> 사이즈 변경 필요한 경우 -->
+				<div class="con">
+					<h1 class="tle">첨부파일
+						<a href="javascript:;" onclick="popClose('file_pop');" class="bt_close">닫기</a>
+					</h1>
+					<div class="inner">
+						<ul class="file_list">
+							<li><a href="#"><span class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></span> 국문파일01.txt</a></li>
+							<li><a href="#"><span class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></span> 국문파일02.txt</a></li>
+							<li><a href="#"><span class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></span> 국문파일03.txt</a></li>
+							<li><a href="#"><span class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></span> 국문파일04.txt</a></li>
+							<li><a href="#"><span class="ico_attach"><img src="../assets/img/ico_attach.png" alt=""></span> 국문파일05.txt</a></li>
+						</ul>
+					</div>
+					<div class="btn_area">
+						<a href="#" class="btns_default">취소</a>
+						<a href="#" class="btns_default btn_submit">확인</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// layer pop sample -->
+
+
+		<br /><br /><br /><br />
+
+
+		<!-- pagetle -->
+		<div class="pagetle">메인 해시태그</div>
+		<!--// pagetle -->
+		<div>
+			<!-- sort list -->
+			<div class="sortList">
+				<ul class="sortTable" id="sortTable2">
+					<li class="handle">
+						<span class="rowidx hidden">1</span>
+						<select name="" id="">
+							<option value="선택">선택</option>
+						</select>
+						<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+						<a href="javascript:;" onclick="addHashDel(this);" class="btn_del">삭제</a>
+					</li>
+					<li class="handle">
+						<span class="rowidx hidden">2</span>
+						<span class="btn_handle"><img th:src="@{/static/assets/img/ico_handle.gif}"  alt=""></span>
+						<select name="" id="">
+							<option value="선택">선택</option>
+						</select>
+						<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+						<a href="javascript:;" onclick="addHashDel(this);" class="btn_del">삭제</a>
+					</li>
+				</ul>
+				<a href="javascript:;" id="addHashButton" class="btns_default btn_submit">해시태그 추가</a>
+			</div>
+			<!-- //sort list -->
+
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+				initData();
+			}
+
+			function initData() {
+				common.ui.paging.init('pagingWrap', {
+					pageable : {
+						number: 1,
+						totalPages: 20,
+						first: false,
+						last: false
+					},
+					onMovePageNumber: function(number) {
+						console.log(number);
+					}
+				});
+
+				common.ui.datepicker.initFromTo($('#from01'), $('#to01'));
+
+				//Table init
+				common.ui.table.init('testTableWrap', {
+					columns: headerInfo,
+					isSelectItem: true,
+					onClick: function(e, rowData, cellData) {
+						console.log(rowData, cellData);
+					}
+				});
+
+				//Ajax 후에 설정
+				common.ui.table.setData('testTableWrap', dummyData)
+			}
+
+			function event() {
+				$(".sortTable").each(function() {
+					var sortId = '#' + $(this).attr('id');
+
+					$(this).sortable({
+						axis: "y",
+						connectWith: sortId,
+						cursor: "move",
+						forceHelperSize: true,
+						helper: function(e, ui) {
+							ui.children().each(function() {
+								$(this).width($(this).width());
+							});
+							return ui;
+						},
+						update: function(event, ui) {
+							$(this).find("tr, li").each(function() {
+								var rowIndex = $(this).index();
+								$(this).find('.rowidx').html(rowIndex + 1);
+							});
+						}
+					});
+				});
+
+				$('#addHashButton').on('click', function() {
+					addHash(this);
+				})
+			}
+
+			function sortRefresh(){
+				$(".sortTable").each(function() {
+					var sortId = '#' + $(this).attr('id');
+
+					$(this).sortable({
+						connectWith: sortId,
+						update: function(event, ui) {
+							$(this).find("tr, li").each(function() {
+								var rowIndex = $(this).index();
+								$(this).find('.rowidx').html(rowIndex + 1);
+							});
+						}
+					});
+				});
+			}
+
+			function addHash(set){ // 해쉬태그 추가
+				var html = $(set).siblings('ul').find('li').html();
+				$(set).siblings('ul').append('<li class="handle">' + html + '</li>');
+
+				$(set).siblings('ul').find("li").each(function() {
+					var rowIndex = $(this).index();
+					$(this).find('.rowidx').html(rowIndex + 1);
+				});
+			}
+			function addHashDel(set){ // 해쉬태그 삭제
+				var leng = $(set).parents('li').index();
+				if (leng > 0) {
+					$(set).parents('li').remove();
+				}
+			}
+
+			init();
+		});
+
+		const headerInfo = [
+			{ key: 'no', name: 'NO', width: '5%'},
+			{ key: 'channel', name: '채널', width: '9%'},
+			{ key: 'writer', name: '작성자', width: '8%'},
+			{ key: 'title', name: '제목', align: 'left', createdCell: function(value) { return '<a href="#" class="tbtit">'+ value + '</a>'} },
+			{ key: 'startTime', name: '시작일시', width: '12%'
+				, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+			},
+			{ key: 'endTime', name: '종료일시', width: '12%', createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}},
+			{ key: 'isVisible', name: '노출여부', width: '7%'},
+			{ key: 'regTime', name: '등록/수정일', width: '12%', createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}},
+		]
+
+		const dummyData = [
+			{ no: 10, channel: '전체', writer: '전정국', title: '제목입니다. 제목입니다. 제목입니다. 제목입니다. 제목'
+				, startTime: new Date().getTime(), endTime: new Date().getTime(), isVisible: "Y", regTime: new Date().getTime() },
+			{ no: 9, channel: 'MOBILE', writer: '김태형', title: '제목입니다. 제목입니다. 제목입니다. 제목입니다. 제목'
+				, startTime: new Date().getTime(), endTime: new Date().getTime(), isVisible: "N", regTime: new Date().getTime() },
+			{ no: 8, channel: 'PC', writer: '박지민', title: '제목입니다. 제목입니다. 제목입니다. 제목입니다. 제목'
+				, startTime: new Date().getTime(), endTime: new Date().getTime(), isVisible: "Y", regTime: new Date().getTime() },
+			{ no: 7, channel: '전체', writer: '정호석', title: '제목입니다. 제목입니다. 제목입니다. 제목입니다. 제목'
+				, startTime: new Date().getTime(), endTime: new Date().getTime(), isVisible: "N", regTime: new Date().getTime() },
+		]
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='게시판'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">게시판 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">게시판 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col style="width:35%;">
+						<col style="width:15%;" />
+						<col style="width:35%;">
+					</colgroup>
+					<tr class="title">
+						<th class="require">Title</th> <!-- 필수항목 .require -->
+						<td colspan="3"><input type="text" name="title" th:data-mode="${mode}" placeholder="제목을 입력해주세요"></td>
+					</tr>
+					<tr>
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div>
+								<textarea id="communityBoardEditor" name="content" class="editor" th:data-mode="${mode}" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="require">노출 여부</th>
+						<td>
+							<label type="radio" th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+								   th:data-mode="${mode}" th:value="${useYn}">
+								<input type="radio" name="blindFlag" th:data-mode="${mode}"  th:text=${useYn.getDesc()} th:value="${useYn}">
+							</label>
+						</td>
+						<th class="require">사용 여부</th>
+						<td>
+							<label type="radio" th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+								   th:data-mode="${mode}" th:value="${useYn}">
+								<input type="radio" name="useFlag" th:data-mode="${mode}"  th:text=${useYn.getDesc()} th:value="${useYn}">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th>View Count</th>
+						<td><input type="number" name="viewCount" value="0"></td>
+						<th>Reply Count</th>
+						<td><input type="number" name="replyCount" value="0"></td>
+					</tr>
+					<tr>
+						<th>
+							태그 등록
+							<a href="javascript:" id="openSearchStockPopupButton" class="btn_tag_add btn_add" >추가</a>
+						</th>
+						<td colspan="3">
+							<div id="tagWrap" class="tag_wrap" th:data-mode="${mode}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							이미지
+							<a href="javascript:" id="addImageButton" class="btn_tag_add btn_add" >추가</a>
+						</th>
+						<td colspan="3">
+							<div class="sortList image">
+								<ul class="sortTable" id="sortTable">
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성 ID</th>
+						<td colspan="3">
+							<input readonly='readonly' name="createId" />
+						</td>
+
+					</tr>
+					<tr>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+				<a href="javascript:" id="replyListButton" class="btns_default float-left" th:if="${mode != 'new'}">댓글 목록</a>
+				<a href="javascript:" id="replySaveButton" class="btns_default float-left" th:if="${mode != 'new'}">댓글 작성</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+
+		<div id="layerPopupWrap"></div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton')
+			const $saveButton = $('#saveButton')
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton')
+			const $cancelButton = $('#cancelButton')
+			const $listButton = $('#listButton')
+			const $tagWrap = $('#tagWrap');
+
+			const baseUrl = '/board/community-board';
+			const baseReplyUrl = '/board/community-board-reply'
+			const modeItems = 'input,textarea,label[type="radio"]';
+			const modeNotItems = 'input[readonly="readonly"]';
+			const editorId = 'communityBoardEditor';
+
+			//Sort
+			const $sortTable = $('#sortTable');
+			const $addImageButton = $('#addImageButton');
+			const sortingId = 'sortTable';
+			let uploadFileList = [];
+
+			/*<![CDATA[*/
+			const mode = /*[[ ${mode} ]]*/ null;
+			const communityBoard = /*[[ ${communityBoard} ]]*/ null;
+			const fileUploadMenuType = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$MenuPathType).COMMUNITY_BOARD_PATH} ]]*/ null;
+			/*]]*/
+			console.log(communityBoard)
+
+			//Modal
+			const $openSearchStockPopupButton = $('#openSearchStockPopupButton');
+			const $openSearchReplyPopupButton = $('#replyListButton');
+			const $openSaveReplyPopupButton = $('#replySaveButton');
+
+			let editor = null;
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				if(communityBoard !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				/*
+				//editor init
+				common.ui.editor.init(editorId, {
+					uploadFileMenuType: fileUploadMenuType,
+					onInstanceReady: function(ev) {
+						editor = ev.editor;
+						if(!mode == false && mode != 'new') {
+							editor.setReadOnly(true);
+							const content = decodeURIComponent(atob(stockMarketCondition['content']));
+							editor.setData(content);
+						}
+					}
+				});
+				 */
+
+				//sortable init
+				common.ui.sorting.init(sortingId, {
+					onChange: onChangeFile,
+					onUpdate: onUpdateSort
+				});
+			}
+
+			function initDom() {
+				Object.keys(communityBoard).forEach(key => {
+					let value = communityBoard[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'useFlag' || key === 'blindFlag') {
+							$editForm.find('[name="' + key + '"]').each((index, item) => {
+								if (item.value === value) {
+									item.checked = true;
+								}
+							})
+						} else  if(key === 'contentTag') {
+							console.log(value);
+							const $domList = [];
+							const splitStr = value.split(',') || [];
+							splitStr.forEach(item => {
+								$domList.push(getTagDom(item));
+							});
+
+							$tagWrap.html($domList);
+						} else if(key === "content") {
+							const content = decodeURIComponent(atob(value));
+							$editForm.find('[name="'+ key +'"]').val(content);
+						} else if(key === "fileList") {
+							console.log('init FileList : ', value);
+							const domList = [];
+							value.forEach(item => {
+								const id = common.file.makeFileId('IMAGE');
+								const $tamplate = common.ui.sorting.getImageTemplate(id, item.fileOrder, item.fileSeq, onClickDeleteImage);
+								domList.push($tamplate);
+
+								item.id = id;
+							});
+
+							$sortTable.empty().append(domList);
+							uploadFileList = value.slice();
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					} else {
+						if(key === "viewCount" || key === 'replyCount') {
+							$editForm.find('[name="'+ key +'"]').val(0);
+						}
+					}
+				})
+			}
+
+			function event() {
+				$saveButton.on('click', function() {
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					let _contentTag = '';
+					$tagWrap.find('.tag').each((index, item) => {
+						const dataset = item.dataset;
+						_contentTag += dataset.stockName + ',';
+					});
+
+					params['contentSummary'] = getContentSummary(params['content']);
+					params['content'] = btoa(encodeURIComponent(params['content']));
+					params['contentTag'] = common.utils.removeLastComma(_contentTag);
+					params['uploadFiles'] = uploadFileList;
+
+					saveAjax(params);
+				});
+
+				$editButton.on('click', function() {
+					if(communityBoard === null) {
+						return;
+					}
+
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					let _contentTag = '';
+					$tagWrap.find('.tag').each((index, item) => {
+						const dataset = item.dataset;
+						_contentTag += dataset.stockName + ',';
+					});
+					params['communityBoardSeq'] = communityBoard['communityBoardSeq'];
+					params['contentSummary'] = getContentSummary(params['content']);
+					params['content'] = btoa(encodeURIComponent(params['content']));
+					params['contentTag'] = common.utils.removeLastComma(_contentTag);
+					params['fileIndex'] = communityBoard['fileIndex'] || 0;
+					params['uploadFiles'] = uploadFileList;
+
+					updateAjax(params);
+				});
+
+				$deleteButton.on('click', function() {
+					if(communityBoard === null) {
+						return;
+					}
+					const params = {
+						communityBoardSeq : communityBoard['communityBoardSeq'],
+						fileIndex: communityBoard['fileIndex'] || 0
+					}
+
+					deleteAjax(params);
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+
+				$addImageButton.on('click', function() {
+					common.ui.sorting.openFileMenu(sortingId);
+				});
+
+				$openSearchStockPopupButton.on('click', function() {
+					common.ui.layerPopup.openUrl('/stock/popup/search-stocks', null, function(data) {
+						const currentItems = $tagWrap.find('.tag');
+						const resultItem = [];
+
+						data.forEach(item => {
+							const target = currentItems.toArray().find(current => current.dataset.stockName === item);
+							if(!target === true) {
+								const $tagDom = getTagDom(item.stockName)
+								resultItem.push($tagDom);
+							}
+						});
+
+						$tagWrap.append(resultItem);
+					});
+				});
+
+				$openSearchReplyPopupButton.on('click', function() {
+					common.ui.layerPopup.openUrl('/board/popup/search-reply'
+							, communityBoard
+							, function(data) {
+									//
+							}, { width: '1300px'});
+				});
+
+				$openSaveReplyPopupButton.on('click', function() {
+					common.ui.layerPopup.openUrl(baseReplyUrl + '/new/popup'
+							, communityBoard
+							, function(data) {
+
+							});
+				});
+			}
+
+			function saveAjax(params) {
+				common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('PUT', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 저장 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function updateAjax(params) {
+				common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('POST', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 수정 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function deleteAjax(params) {
+				common.ui.modal.confirm('안내', '삭제 하시겠습니까?', function(ret) {
+					if(ret) {
+						common.ajax.del(baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 삭제 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function ajaxResult(response, message) {
+				if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+					common.ui.modal.alert("안내", message, function() {
+						common.navi.open(baseUrl);
+					});
+				} else {
+					common.ui.modal.error(response.result);
+				}
+			}
+
+			function checkValidate() {
+				if(checkEmptyValidate() === false) {
+					return false;
+				}
+
+				if(checkItemValidate() === false) {
+					return false;
+				}
+
+				return true;
+			}
+
+			function checkEmptyValidate() {
+				let result = true;
+
+				$editForm.find("input, select").each(function(i) {
+					const $this = $(this);
+
+					if($this.is(':visible') == false) {
+						return;
+					}
+
+					if ($this.prop("required")) {
+						if($this.val().trim() === '') {
+							result = false;
+
+							const label = $this.closest('td').prev().text();
+							common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+								$this.focus();
+							});
+							return false;
+						}
+					}
+				});
+
+				return result;
+			}
+
+			function checkItemValidate() {
+				//사용여부 체크
+				if($editForm.find("input:radio[name=useFlag]:checked").length <= 0) {
+					common.ui.modal.alert("안내", "사용여부를 체크해 주세요.");
+					return false;
+				}
+
+				//블라인드 여부 체크
+				if($editForm.find("input:radio[name=blindFlag]:checked").length <= 0) {
+					common.ui.modal.alert("안내", "오픈여부를 체크해 주세요.");
+					return false;
+				}
+
+				//관심주 체크 체크
+				if($tagWrap.find('.tag').length <= 0) {
+					common.ui.modal.alert("안내", "태그를 등록해 주세요");
+					return false;
+				}
+
+				return  true;
+			}
+
+			function setEditMode() {
+				$editForm.find(modeItems).not(modeNotItems).removeAttr('data-mode');
+				$tagWrap.removeAttr('data-mode');
+
+				$openSearchStockPopupButton.show();
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+
+				if(editor) {
+					editor.setReadOnly(false);
+				}
+
+				$addImageButton.show();
+				common.ui.sorting.enable(sortingId);
+			}
+
+			function setDetailMode() {
+				$editForm.find(modeItems).not(modeNotItems).attr('data-mode', 'detail');
+
+				$tagWrap.attr('data-mode', 'detail');
+
+				$openSearchStockPopupButton.hide();
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+
+				if(editor) {
+					editor.setReadOnly(true);
+				}
+
+				$addImageButton.hide();
+				common.ui.sorting.disable(sortingId);
+			}
+
+			function onChangeFile(evt, $this) {
+				//TODO file upload
+				const lastIndex = $sortTable.find('.rowidx').last().text()
+						, targetFiles = evt.target.files
+
+				let index = Number(lastIndex) || 1;
+				const tagList = [];
+				$.each(targetFiles, function(i, file) {
+					const urlFile = URL.createObjectURL(file);
+					const id = common.file.makeFileId('IMAGE');
+					const $template = common.ui.sorting.getImageTemplate(id, index, urlFile, onClickDeleteImage);
+
+
+					tagList.push($template);
+					uploadFileList.push({
+						id: id,
+						file: file,
+					});
+					index += 1;
+				});
+
+				$sortTable.append(tagList);
+
+				$this.val('');
+				common.ui.sorting.refresh(sortingId);
+
+				console.log(uploadFileList);
+			}
+
+			function onUpdateSort(event, $this, ui) {
+				const newIndex = ui.item.index();
+				const oldIndex = Number($this.attr('data-previndex'));
+
+				const targetItem = uploadFileList.splice(oldIndex, 1);
+
+				uploadFileList.splice(newIndex, 0, targetItem[0]);
+			}
+
+			function onClickDeleteImage(e, $this) {
+				if($addImageButton.is(':visible') == false) {
+					return;
+				}
+
+				const $li = $this.closest('li');
+				const id = $li.attr('id');
+
+				uploadFileList = uploadFileList.filter(item => item.id != id);
+				$li.remove();
+			}
+
+			function getTagDom(data) {
+				const $tag = $('<span class="tag" data-stock-name="'+ data +'">' +
+						data +
+						'	<span data-role="remove"></span>\n' +
+						'</span>');
+
+				$tag.find('span[data-role="remove"]').on('click', function() {
+					const $this = $(this);
+					const mode = $this.closest('.tag_wrap').data('mode');
+					if(mode === 'detail') {
+						return false;
+					}
+
+					$this.closest('.tag').remove();
+				});
+
+				return $tag;
+			}
+
+			function getContentSummary(str) {
+				if(!str === true || str.length <= 500) {
+					return str;
+				}
+
+				return str.substr(0, 500);
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='주식정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">이슈/테마주 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">이슈/테마주 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col style="width:35%;">
+						<col style="width:15%;" />
+						<col style="width:35%;">
+					</colgroup>
+					<tr class="title">
+						<th class="require">메인 타이틀</th>
+						<td><input type="text" name="issueMainTitle" required th:data-mode="${mode}" placeholder="메인 타이틀을 입력해 주세요."></td>
+						<th class="require">타이틀</th>
+						<td><input type="text" name="issueTitle" required  th:data-mode="${mode}" placeholder="타이틀을 입력해 주세요."></td>
+					</tr>
+					<tr>
+						<th class="require">이슈일</th>
+						<td>
+							<input type="text" id="issueDate" name="issueDate" class="datepicker" autocomplete="off" title="이슈일" required>
+						</td>
+						<th class="require">게시 기간</th>
+						<td>
+							<input type="text" id="postStartDate" name="postStartDate" class="datepicker" autocomplete="off" title="시작일" required >
+							~
+							<input type="text" id="postEndDate" name="postEndDate" class="datepicker" autocomplete="off" title="종료일" required >
+						</td>
+					</tr>
+					<tr>
+						<th class="require">노출 여부</th>
+						<td sec:authorize="hasRole('ROLE_SUPER_ADMIN')">
+							<label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"
+								   th:data-mode="${mode}" th:value="${code}">
+								<input type="radio" name="primaryFlag" required th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+							</label>
+						</td>
+						<td sec:authorize="!hasRole('ROLE_SUPER_ADMIN')">
+							<select name="primaryFlag" readonly="readonly">
+								<option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"
+										th:value="${code}" th:text="${code.getDesc()}"></option>
+							</select>
+						</td>
+						<th class="require">사용 여부</th>
+						<td>
+							<label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+								   th:data-mode="${mode}" th:value="${code}">
+								<input type="radio" name="useFlag" required  th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div class="editor-wrap">
+								<textarea id="stockIssueEditor" name="issueContent" class="editor" required th:data-mode="${mode}" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<label class="require">관심주 등록</label>
+							<a href="javascript:" id="openSearchStockPopupButton" class="btn_tag_add btn_add" >추가</a>
+						</th>
+						<td colspan="3">
+							<div id="tagWrap" class="tag_wrap" th:data-mode="${mode}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							이미지
+							<a href="javascript:" id="addImageButton" class="btn_tag_add btn_add" >추가</a>
+						</th>
+						<td colspan="3">
+							<div class="sortList image">
+								<ul class="sortTable" id="sortTable">
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성 ID</th>
+						<td>
+							<input readonly='readonly' name="createId" />
+						</td>
+						<th>수정 ID</th>
+						<td>
+							<input readonly='readonly' name="updateId" />
+						</td>
+					</tr>
+					<tr>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+
+		<div id="layerPopupWrap"></div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton')
+			const $saveButton = $('#saveButton')
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton')
+			const $cancelButton = $('#cancelButton')
+			const $listButton = $('#listButton')
+
+
+			const $postStartDate = $('#postStartDate');
+			const $issueDate = $('#issueDate');
+			const $postEndDate = $('#postEndDate');
+			const $tagWrap = $('#tagWrap');
+
+			const baseUrl = '/stock/stock-issue';
+			const modeItems = 'input,textarea,label[type="radio"]';
+			const modeNotItems = 'input[readonly="readonly"]';
+
+			const editorId = 'stockIssueEditor';
+
+			//Sort
+			const $sortTable = $('#sortTable');
+			const $addImageButton = $('#addImageButton');
+			const sortingId = 'sortTable';
+			let uploadFileList = [];
+
+			/*<![CDATA[*/
+			const stockIssue = /*[[ ${stockIssue} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			const fileUploadMenuType = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$MenuPathType).ISSUE_PATH} ]]*/ null;
+			/*]]*/
+			console.log(stockIssue)
+
+			//Modal
+			const $openSearchStockPopupButton = $('#openSearchStockPopupButton');
+
+			let editor = null;
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+
+				if(stockIssue !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				//datePicker init
+				common.ui.datepicker.initFromTo($postStartDate, $postEndDate)
+				common.ui.datepicker.init($issueDate);
+
+				//editor init
+				common.ui.editor.init(editorId, {
+					uploadFileMenuType: fileUploadMenuType,
+					onInstanceReady : function(ev) {
+						editor = ev.editor;
+
+						if (!mode == false && mode != 'new') {
+							editor.setReadOnly(true);
+							const content = decodeURIComponent(atob(stockIssue['issueContent']));
+							editor.setData(content);
+						}
+					}
+				});
+
+				//sortable init
+				common.ui.sorting.init(sortingId, {
+					onChange: onChangeFile,
+					onUpdate: onUpdateSort
+				});
+			}
+
+			function initDom() {
+				Object.keys(stockIssue).forEach(key => {
+					let value = stockIssue[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'postStartDate' || key === 'postEndDate') {
+							value = new Date(value).format('yyyy-MM-dd');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'useFlag' || key === 'primaryFlag') {
+							//
+							$editForm.find('[name="' + key + '"]').each((index, item) => {
+								if (item.type == 'radio') {
+									if (item.value === value) {
+										item.checked = true;
+									}
+								} else {
+									const $option = $(item).find('option[value="'+ value +'"]')
+									$option.attr('selected', true);
+								}
+							})
+						} else  if(key === 'issueRelateStocks') {
+							console.log(value);
+							const $domList = [];
+							value.forEach(item => {
+								$domList.push(getTagDom(item));
+							});
+
+							$tagWrap.html($domList);
+						} else if(key === "fileList") {
+							console.log(value);
+							const domList = [];
+							value.forEach(item => {
+								const id = common.file.makeFileId('IMAGE');
+								const $tamplate = common.ui.sorting.getImageTemplate(id, item.fileOrder, item.fileSeq, onClickDeleteImage);
+								domList.push($tamplate);
+
+								item.id = id;
+							});
+
+							$sortTable.empty().append(domList);
+							uploadFileList = value;
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					}
+				})
+			}
+
+			function event() {
+				$saveButton.on('click', function() {
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					params['issueContent'] = btoa(encodeURIComponent(common.ui.editor.getData(editorId)));
+					params['uploadFiles'] = uploadFileList;
+					//params['postStartDate'] = params['postStartDate'] + 'T00:00:00';
+					//params['postEndDate'] = params['postEndDate'] + 'T23:59:59';
+					params.stockCodes = [];
+					$tagWrap.find('.tag').each((index, item) => {
+						const dataset = item.dataset;
+						params.stockCodes.push(dataset.stockCode);
+					})
+
+					saveAjax(params);
+				});
+
+				$editButton.on('click', function() {
+					if(stockIssue === null) {
+						return;
+					}
+
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					params['issueSeq'] = stockIssue['issueSeq'];
+					params['issueContent'] = btoa(encodeURIComponent(common.ui.editor.getData(editorId)));
+					//params['postStartDate'] = params['postStartDate'] + 'T00:00:00';
+					//params['postEndDate'] = params['postEndDate'] + 'T23:59:59';
+					params['fileIndex'] = stockIssue['fileIndex'] || 0;
+					params['uploadFiles'] = uploadFileList;
+					params.stockCodes = [];
+					$tagWrap.find('.tag').each((index, item) => {
+						const dataset = item.dataset;
+						params.stockCodes.push(dataset.stockCode);
+					})
+
+					updateAjax(params);
+				});
+
+				$deleteButton.on('click', function() {
+					if(stockIssue === null) {
+						return;
+					}
+					const params = {
+						issueSeq : stockIssue['issueSeq'],
+						fileIndex: stockIssue['fileIndex'] || 0
+					}
+
+					deleteAjax(params);
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+
+				$openSearchStockPopupButton.on('click', function() {
+					common.ui.layerPopup.openUrl('/stock/popup/search-stocks', null, function(data) {
+						const currentItems = $tagWrap.find('.tag');
+						const resultItem = [];
+
+						data.forEach(item => {
+							const target = currentItems.toArray().find(current => current.dataset.stockCode === item.stockCode);
+							if(!target === true) {
+								const $tagDom = getTagDom(item)
+								resultItem.push($tagDom);
+							}
+						});
+
+						$tagWrap.append(resultItem);
+					});
+
+				})
+
+				$addImageButton.on('click', function() {
+					common.ui.sorting.openFileMenu(sortingId);
+				});
+			}
+
+			function saveAjax(params) {
+				common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('PUT', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 저장 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function updateAjax(params) {
+				common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('POST', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 수정 되었습니다.");
+						});
+					}
+				})
+			}
+			function deleteAjax(params){
+				common.ui.modal.confirm('안내', '삭제 하시겠습니까?', function(ret) {
+					if(ret) {
+						common.ajax.del(baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 삭제 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function ajaxResult(response, message) {
+				if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+					common.ui.modal.alert("안내", message, function() {
+						common.navi.open(baseUrl);
+					});
+				} else {
+					common.ui.modal.error(response.result);
+				}
+			}
+
+			function checkValidate() {
+				if(checkEmptyValidate() === false) {
+					return false;
+				}
+
+				if(checkItemValidate() === false) {
+					return false;
+				}
+
+				return true;
+			}
+
+			function checkEmptyValidate() {
+				let result = true;
+
+				$editForm.find("input, select").each(function(i) {
+					const $this = $(this);
+
+					if($this.is(':visible') == false) {
+						return;
+					}
+
+					if ($this.prop("required")) {
+						if($this.val().trim() === '') {
+							result = false;
+
+							const label = $this.closest('td').prev().text();
+							common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+								$this.focus();
+							});
+							return false;
+						}
+					}
+				});
+
+				return result;
+			}
+
+			function checkItemValidate() {
+				//사용여부 체크
+				if($("input:radio[name=useFlag]:checked").length <= 0) {
+					common.ui.modal.alert("안내", "사용여부를 체크해 주세요.");
+					return false;
+				}
+
+				//노출여부 체크
+				if($("input:radio[name=primaryFlag]").length > 0 && $("input:radio[name=primaryFlag]:checked").length <= 0) {
+					common.ui.modal.alert("안내", "노출여부를 체크해 주세요.");
+					return false;
+				}
+
+				//에디터 체크
+				const content = common.ui.editor.getData(editorId);
+				if(!content === true) {
+					common.ui.modal.alert("안내", "내용을 입력해 주세요.");
+					return false;
+				}
+
+				//관심주 체크 체크
+				if($tagWrap.find('.tag').length <= 0) {
+					common.ui.modal.alert("안내", "관심주를 등록해 주세요");
+					return false;
+				}
+
+				//날짜 체크
+				if(common.vaild.checkDateFormat($('#issueDate').val()) == false
+					|| common.vaild.checkDateFormat($('#postStartDate').val()) == false
+					|| common.vaild.checkDateFormat($('#postEndDate').val()) == false
+				) {
+					common.ui.modal.alert("안내", "날짜 형식에 맞지 않습니다. ex) YYYY-MM-DD");
+					return false;
+				}
+
+				return  true;
+			}
+
+			function setEditMode() {
+				$editForm.find(modeItems).not(modeNotItems).removeAttr('data-mode');
+				$tagWrap.removeAttr('data-mode');
+
+				$openSearchStockPopupButton.show();
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+
+				if(editor) {
+					editor.setReadOnly(false);
+				}
+
+				$addImageButton.show();
+				common.ui.sorting.enable(sortingId);
+			}
+
+			function setDetailMode() {
+				$editForm.find(modeItems).not(modeNotItems).attr('data-mode', 'detail');
+
+				$tagWrap.attr('data-mode', 'detail');
+
+				$openSearchStockPopupButton.hide();
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+
+				if(editor) {
+					editor.setReadOnly(true);
+				}
+
+				$addImageButton.hide();
+				common.ui.sorting.disable(sortingId);
+			}
+
+			function getTagDom(data) {
+				const $tag = $('<span class="tag" data-stock-code="'+ data.stockCode +'" data-stock-name="'+ data.stockName +'">' +
+						data.stockName +
+						'	<span data-role="remove"></span>\n' +
+						'</span>');
+
+				$tag.find('span[data-role="remove"]').on('click', function() {
+					const $this = $(this);
+					const mode = $this.closest('.tag_wrap').data('mode');
+					if(mode === 'detail') {
+						return false;
+					}
+
+					$this.closest('.tag').remove();
+				});
+
+				return $tag;
+			}
+
+			function onChangeFile(evt, $this) {
+				//TODO file upload
+				const lastIndex = $sortTable.find('.rowidx').last().text()
+						, targetFiles = evt.target.files
+
+				let index = Number(lastIndex) || 0;
+				const tagList = [];
+				$.each(targetFiles, function(i, file) {
+					const urlFile = URL.createObjectURL(file);
+					const id = common.file.makeFileId('IMAGE');
+					const $template = common.ui.sorting.getImageTemplate(id, index, urlFile, onClickDeleteImage);
+
+
+					tagList.push($template);
+					uploadFileList.push({
+						id: id,
+						fileSeq: 0,
+						file: file,
+					});
+					index += 1;
+				});
+
+				$sortTable.append(tagList);
+
+				$this.val('');
+				common.ui.sorting.refresh(sortingId);
+
+				console.log(uploadFileList);
+			}
+
+			function onUpdateSort(event, $this, ui) {
+				const newIndex = ui.item.index();
+				const oldIndex = Number($this.attr('data-previndex'));
+
+				const targetItem = uploadFileList.splice(oldIndex, 1);
+
+				uploadFileList.splice(newIndex, 0, targetItem[0]);
+				console.log(uploadFileList);
+			}
+
+			function onClickDeleteImage(e, $this) {
+				if($addImageButton.is(':visible') == false) {
+					return;
+				}
+
+				const $li = $this.closest('li');
+				const id = $li.attr('id');
+				const index = $li.find('.rowidx').text();
+
+				uploadFileList = uploadFileList.filter(item => item.id != id);
+				console.log(uploadFileList);
+				$li.remove();
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

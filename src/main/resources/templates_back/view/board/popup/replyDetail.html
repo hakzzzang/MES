@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/popup}"
+      th:with="popupId='replyDetailPopupWrap'">
+<head>
+</head>
+
+<body>
+
+<th:block layout:fragment="content">
+    <div id="replyDetailPopup" class="modalpop sample_pop search_popup" style="display:none;">
+        <div class="modalcont">
+            <div class="con" style="padding: 10px;">
+                <!-- pagetle -->
+                <div class="pagetle" th:if="${mode == 'new'}">댓글 등록</div>
+                <div class="pagetle" th:if="${mode == 'detail'}">댓글 상세</div>
+                <!--// pagetle -->
+                <div>
+                    <div class="tblutils">
+                        <p><span class="require">*</span> 필수항목</p>
+                    </div>
+                    <!-- table edit -->
+                    <form id="editForm" class="detail">
+                        <table class="tbview">
+                            <colgroup>
+                                <col style="width:15%;" />
+                                <col style="width:35%;">
+                                <col style="width:15%;" />
+                                <col style="width:35%;">
+                            </colgroup>
+                            <tr class="title">
+                                <th>커뮤니티 제목</th>
+                                <td colspan="3"><label name="communityTitle" readonly="readonly"></label></td>
+                            </tr>
+                            <tr class="">
+                                <th>댓글 내용</th>
+                                <td colspan="3">
+                                    <label name="parentReplyContent" readonly="readonly" ></label>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <th class="require">내용</th>
+                                <td colspan="3">
+                                    <textarea name="content" class="editor" required th:data-mode="${mode}" ></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="require">사용 여부</th>
+                                <td colspan="3">
+                                    <label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+                                           th:data-mode="${mode}" th:value="${code}">
+                                        <input type="radio" name="useFlag" required th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="require">오픈 여부</th>
+                                <td colspan="3">
+                                    <label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$BlindYN).values()}"
+                                           th:data-mode="${mode}" th:value="${code}">
+                                        <input type="radio" name="blindFlag" required th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- table edit -->
+                        <table class="tbview" th:if="${mode != 'new'}">
+                            <colgroup>
+                                <col style="width:15%;" />
+                                <col>
+                                <col style="width:15%;" />
+                                <col>
+                            </colgroup>
+                            <tr>
+                                <th>생성 ID</th>
+                                <td colspan="3">
+                                    <input readonly='readonly' name="userId" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>생성일</th>
+                                <td>
+                                    <input readonly='readonly' name="createAt" />
+                                </td>
+                                <th>수정일</th>
+                                <td>
+                                    <input readonly='readonly' name="updateAt" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <!-- btn area -->
+                    <div class="btn_area right">
+                        <a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+                        <a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+                        <a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+                        <a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+                        <a href="javascript:" id="listButton" class="btns_default">목록</a>
+                    </div>
+                    <!-- // btn area -->
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="custom_js">
+    <script th:inline="javascript" >
+        function replyDetailPopupFunc(userData, callback) {
+            console.log('replyDetailPopup');
+
+            const modalId = 'replyDetailPopup';
+            const $replyDetailPopup = $('#' + modalId);
+
+            const $editForm = $replyDetailPopup.find('#editForm');
+            const $saveButton = $replyDetailPopup.find('#saveButton')
+            const $editButton = $replyDetailPopup.find('#editButton');
+            const $modifyButton = $replyDetailPopup.find('#modifyButton')
+            const $cancelButton = $replyDetailPopup.find('#cancelButton')
+            const $listButton = $replyDetailPopup.find('#listButton')
+
+            const baseUrl = '/board/community-board-reply';
+            const modeItems = 'input,textarea,label[type="radio"]';
+            const modeNotItems = 'input[readonly="readonly"]';
+
+
+            /*<![CDATA[*/
+            const mode = /*[[ ${mode} ]]*/ null;
+            const communityBoardReply = /*[[ ${communityBoardReply} ]]*/ null;
+            /*]]*/
+            console.log(communityBoardReply)
+            console.log(userData)
+
+            //Modal
+            let editor = null;
+
+            function init() {
+                initData();
+                event();
+            }
+
+            function initData() {
+                if(!userData == false) {
+                    userDataInitDom();
+                }
+
+                if(communityBoardReply !== null) {
+                    initDom();
+                    setDetailMode();
+                }
+            }
+
+            function userDataInitDom() {
+                Object.keys(userData).forEach(key => {
+                    let value = userData[key];
+                    if(!value === false) {
+                        console.log(key, value);
+                        if (key === 'title') {
+                            $editForm.find('[name="communityTitle"]').html(value);
+                        } else if(key === 'parentReplyContent') {
+                            $editForm.find('[name="parentReplyContent"]').html(value);
+                        }
+                    }
+                });
+
+                if(!userData['parentReplyContent'] === true) {
+                    $editForm.find('[name="parentReplyContent"]').closest('tr').hide();
+                }
+            }
+
+            function initDom() {
+                Object.keys(communityBoardReply).forEach(key => {
+                    let value = communityBoardReply[key];
+                    if(!value === false) {
+                        console.log(key, value);
+                        if(key === 'updateAt' || key === 'createAt') {
+                            value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+                            $editForm.find('[name="'+ key +'"]').val(value);
+                        } else if(key === 'useFlag' || key === 'blindFlag') {
+                            $editForm.find('[name="' + key + '"]').each((index, item) => {
+                                if (item.value === value) {
+                                    item.checked = true;
+                                }
+                            })
+                        } else {
+                            $editForm.find('[name="'+ key +'"]').val(value);
+                        }
+                    }
+                })
+            }
+
+            function event() {
+                $saveButton.on('click', function() {
+                    if(checkValidate() === false) {
+                        return false;
+                    }
+
+                    const params = $editForm.serializeObject();
+                    const parentReplySeq = userData['parentReplySeq'] || null
+                    if(parentReplySeq != null) {
+                        params['parentReplySeq'] = parentReplySeq;
+                    }
+
+                    params['communityBoardSeq'] = userData['communityBoardSeq'];
+
+                    saveAjax(params);
+                });
+
+                $editButton.on('click', function() {
+                    if(communityBoardReply === null) {
+                        return;
+                    }
+
+                    if(checkValidate() === false) {
+                        return false;
+                    }
+
+                    const params = $editForm.serializeObject();
+                    const parentReplySeq = userData['parentReplySeq'] || null
+                    if(parentReplySeq != null) {
+                        params['parentReplySeq'] = parentReplySeq;
+                    }
+                    params['communityBoardSeq'] = communityBoardReply['communityBoardSeq'];
+                    params['replySeq'] = communityBoardReply['replySeq'];
+
+                    updateAjax(params);
+                });
+
+                $modifyButton.on('click', function() {
+                    setEditMode();
+                });
+
+                $cancelButton.on('click', function() {
+                    initDom();
+                    setDetailMode();
+                });
+
+                $listButton.on('click', function() {
+                    common.ui.layerPopup.closeUrl($replyDetailPopup);
+                });
+            }
+
+            function saveAjax(params) {
+                common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+                    if(ret) {
+                        console.log(params);
+                        common.ajax.uploadFile('PUT', baseUrl, params, function(response) {
+                            ajaxResult(response, "정상적으로 저장 되었습니다.");
+                        });
+                    }
+                })
+            }
+
+            function updateAjax(params) {
+                common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+                    if(ret) {
+                        console.log(params);
+                        common.ajax.uploadFile('POST', baseUrl, params, function(response) {
+                            ajaxResult(response, "정상적으로 수정 되었습니다.");
+                        });
+                    }
+                })
+            }
+
+            function ajaxResult(response, message) {
+                if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+                    common.ui.modal.alert("안내", message, function() {
+                        common.ui.layerPopup.closeUrl($replyDetailPopup);
+                        callback && callback(true);
+                    });
+                } else {
+                    common.ui.modal.error(response.result);
+                }
+            }
+
+            function checkValidate() {
+                if(checkEmptyValidate() === false) {
+                    return false;
+                }
+
+                if(checkItemValidate() === false) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            function checkEmptyValidate() {
+                let result = true;
+
+                $editForm.find("input, select").each(function(i) {
+                    const $this = $(this);
+
+                    if($this.is(':visible') == false) {
+                        return;
+                    }
+
+                    if ($this.prop("required")) {
+                        if($this.val().trim() === '') {
+                            result = false;
+
+                            const label = $this.closest('td').prev().text();
+                            common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+                                $this.focus();
+                            });
+                            return false;
+                        }
+                    }
+                });
+
+                return result;
+            }
+
+            function checkItemValidate() {
+                //사용여부 체크
+                if($editForm.find("input:radio[name=useFlag]:checked").length <= 0) {
+                    common.ui.modal.alert("안내", "사용여부를 체크해 주세요.");
+                    return false;
+                }
+
+                //블라인드 여부 체크
+                if($editForm.find("input:radio[name=blindFlag]:checked").length <= 0) {
+                    common.ui.modal.alert("안내", "오픈여부를 체크해 주세요.");
+                    return false;
+                }
+
+                /*
+                //에디터 체크
+                const content = common.ui.editor.getData(editorId);
+                if(!content === true) {
+                    common.ui.modal.alert("안내", "내용을 입력해 주세요.");
+                    return false;
+                }
+
+                 */
+
+                return  true;
+            }
+
+            function setEditMode() {
+                $editForm.find(modeItems).not(modeNotItems)
+                    .removeAttr('data-mode');
+
+                $modifyButton.hide();
+                $editButton.show();
+                $cancelButton.show();
+
+                if(editor) {
+                    editor.setReadOnly(false);
+                }
+            }
+
+            function setDetailMode() {
+                $editForm.find(modeItems).not(modeNotItems)
+                    .attr('data-mode', 'detail');
+
+                $cancelButton.hide();
+                $editButton.hide();
+                $modifyButton.show();
+
+                if(editor) {
+                    editor.setReadOnly(true);
+                }
+            }
+
+            init();
+        }
+    </script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

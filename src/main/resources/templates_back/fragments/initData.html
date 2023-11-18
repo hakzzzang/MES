@@ -1,0 +1,55 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="initData">
+    	<script th:inline="javascript" >
+			$(document).ready(function() {
+                const pathname = window.location.pathname;
+                if(pathname === '/') {
+                    common.navi.open(CONSTANTS.MAIN_PATH);
+                    return false;
+                }
+
+                const $headerWrap = $('#headerWrap');
+                const $headerMenuWrap = $('#headerMenuWrap');
+                const $leftMenuWrap = $('#left');
+
+                const pathList = pathname.split('/');
+                const depth1 = pathList[1] || null;
+                const depth2 = pathList[2] || null;
+                const depth3 = pathList[3] || null;
+
+                function init() {
+                    initAccessToken();
+                    initHeaderMenu();
+                }
+
+                function initAccessToken() {
+                    /*<![CDATA[*/
+                    const accessToken = /*[[ ${accessToken} ]]*/ '';
+                    /*]]*/
+                    console.log('init Data - ', accessToken);
+                    if(!accessToken === false) {
+                        window.sessionStorage.setItem('accessToken', accessToken);
+                    }
+                }
+
+                function initHeaderMenu() {
+                    $headerWrap.find('#userInfo').on('click', function() {
+                        common.navi.open('/user/my-page');
+                    });
+
+                    $headerMenuWrap.find('a').on('click', function() {
+                        const href = $(this).data('href');
+                        common.navi.open(href);
+                    });
+
+                    $leftMenuWrap.find('a').on('click', function() {
+                        const href = $(this).data('href');
+                        common.navi.open(href);
+                    })
+                }
+
+                init();
+			});
+		</script>
+    </th:block>
+</html>

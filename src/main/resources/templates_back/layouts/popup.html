@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  lang="ko">
+
+<head></head>
+<body>
+	<div class="layer_pop_wrap" th:id="${popupId}">
+		<th:block layout:fragment="content" />
+		<th:block layout:fragment="custom_js" />
+	</div>
+</body>
+</html>

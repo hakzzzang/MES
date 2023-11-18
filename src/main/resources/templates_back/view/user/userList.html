@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='사용자'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">사용자 목록</div>
+		<!--// pagetle -->
+		<div id="userWrap">
+			<form class="search">
+				<div class="search_box">
+					<th:block th:replace="view/component/searchItem :: searchValue(placeholder='아이디/SNS 아이디')"></th:block>
+					<th:block th:replace="view/component/searchItem :: searchDate(searchDateType='createAt,updateAt')"></th:block>
+					<th:block th:replace="view/component/searchItem :: snsType"></th:block>
+					<th:block th:replace="view/component/searchItem :: activeFlag"></th:block>
+					<th:block th:replace="view/component/searchItem :: deleteFlag"></th:block>
+				</div>
+				<th:block th:replace="view/component/searchItem :: searchButton"></th:block>
+			</form>
+			<div class="tblutils">
+				<th:block th:replace="view/component/tableWrap :: tableInfo"></th:block>
+			</div>
+			<!-- search //-->
+
+			<th:block th:replace="view/component/tableWrap :: table(tableId='userListTable')"></th:block>
+			<th:block th:replace="view/component/tableWrap :: paging"></th:block>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/list-view.js}"></script>
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			class UserListView extends CommonListView {
+				constructor(data) {
+					super(data);
+				}
+
+				get headerInfo() {
+					const self = this;
+					return   [
+						{ key: 'no', name: 'no', width: '5%'},
+						{ key: 'userId', name: '아이디', isSorting: true
+							, createdCell: function(value, data) {
+								return `<a href="${self.baseUrl}/${data.userSeq}">${value}</a>`;
+							}
+						},
+						{ key: 'snsId', name: 'SNS 아이디', width: '15%', isSorting: true},
+						{ key: 'snsType', name: 'SNS 타입', width: '12%', isSorting: true
+							, createdCell: function(value) {
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$SnsType).values()}"]*/
+								if((/*[[${tmp}]]*/ '') === value) {
+									return  /*[[${tmp.getDesc()}]]*/ '';
+								}
+								/*[/]*/
+								/*]]*/
+							}
+						},
+						/*
+                        { key: 'agreeUsage', name: '사용동의', width: '12%', isSorting: true},
+                        { key: 'privacyUsage', name: '개인정보', width: '12%', isSorting: true},
+                        { key: 'marketingUsage', name: '마케팅', width: '12%', isSorting: true},
+                         */
+						{ key: 'activeFlag', name: '활성여부', width: '10%', isSorting: true},
+						{ key: 'deleteFlag', name: '삭제여부', width: '10%', isSorting: true},
+						{ key: 'createAt', name: '등록일', width: '10%', isSorting: true, initSortClass: 'sorting_desc'
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+						},
+						{ key: 'updateAt', name: '수정일', width: '10%', isSorting: true
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}},
+					]
+				}
+			}
+
+			const listView = new UserListView({
+				baseUrl : '/user/user'
+				, wrapId : 'userWrap'
+				, pagingId : 'pagingWrap'
+				, tableId : 'userListTable'
+			})
+
+			listView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

@@ -1,0 +1,92 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:fragment="createInfo(title, name, colspan)">
+    <th th:text="${title}"></th>
+    <td th:colspan="${colspan}">
+        <input readonly='readonly' th:name="${name}" />
+    </td>
+</th:block>
+
+
+<th:block th:fragment="editButtons(mode, hideButtons)">
+    <div class="btn_area right">
+        <a th:if="${mode != 'new' and #strings.contains(hideButtons,'delete') == false }" href="javascript:" id="deleteButton" class="btns_default btn_cancel">삭제</a>
+        <a th:if="${mode == 'new' and #strings.contains(hideButtons,'save') == false }" href="javascript:" id="saveButton" class="btns_default btn_submit">저장</a>
+        <a th:if="${mode != 'new' and #strings.contains(hideButtons,'delete') == false }" href="javascript:" id="editButton" class="btns_default btn_submit hidden">저장</a>
+        <a th:if="${mode != 'new' and #strings.contains(hideButtons,'modify') == false }" href="javascript:" id="modifyButton" class="btns_default btn_submit">수정</a>
+        <a th:if="${mode != 'new' and #strings.contains(hideButtons,'cancel') == false }" href="javascript:" id="cancelButton" class="btns_default btn_cancel">취소</a>
+        <a th:if="${#strings.contains(hideButtons,'list') == false }" href="javascript:" id="listButton" class="btns_default">목록</a>
+    </div>
+</th:block>
+
+
+<th:block th:fragment="addImageWrap(id)">
+    <tr>
+        <th>
+            이미지
+            <a th:id="${id}" href="javascript:" class="btn_tag_add btn_add" >�߰�</a>
+        </th>
+        <td colspan="3">
+            <div class="sortList image">
+                <ul class="sortTable" id="sortTable">
+                </ul>
+            </div>
+        </td>
+    </tr>
+</th:block>
+
+<th:block th:fragment="editorWrap(mode, id, name)">
+    <tr>
+        <th class="require">내용</th>
+        <td colspan="3">
+            <div class="editor-wrap">
+                <textarea th:id="${id}" th:name="${name}" class="editor" required th:data-mode="${mode}" ></textarea>
+            </div>
+        </td>
+    </tr>
+</th:block>
+
+<th:block th:fragment="title(mode)">
+    <th class="require">Title</th>
+    <td><input type="text" name="title" required th:data-mode="${mode}" placeholder="제목을 입력해주세요"></td>
+</th:block>
+
+<th:block th:fragment="useFlag(mode)">
+    <th class="require">사용 여부</th>
+    <td>
+        <label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$UseYN).values()}"
+               th:data-mode="${mode}" th:value="${code}">
+            <input type="radio" name="useFlag" required th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+        </label>
+    </td>
+</th:block>
+
+
+<th:block th:fragment="primaryFlag(mode)">
+    <th class="require">노출 여부</th>
+    <td sec:authorize="hasRole('ROLE_SUPER_ADMIN')">
+        <label type="radio" th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"
+               th:data-mode="${mode}" th:value="${code}">
+            <input type="radio" name="primaryFlag" required th:data-mode="${mode}"  th:text=${code.getDesc()} th:value="${code}">
+        </label>
+    </td>
+    <td sec:authorize="!hasRole('ROLE_SUPER_ADMIN')">
+        <select name="primaryFlag" readonly="readonly">
+            <option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$PrimaryStatus).values()}"
+                    th:value="${code}" th:text="${code.getDesc()}"></option>
+        </select>
+    </td>
+</th:block>
+
+<th:block th:fragment="datepicker(mode, title, id, name)">
+    <th th:text="${title}"></th>
+    <td>
+        <input type="text" th:id="${id}" th:name="${name}" class="datepicker" autocomplete="off" required th:data-mode="${mode}" >
+    </td>
+</th:block>
+
+
+
+
+

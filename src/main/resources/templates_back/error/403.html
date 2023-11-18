@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='오류'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<div class="errocont">
+			<p class="ico"></p>
+			<p class="p1">죄송합니다.<br />해당 페이지의 권한이 없습니다. </p>
+			<p class="p2">자세한 내용은 운영자에게 문의 하시기 바랍니다.</p>
+			<div>
+				<a href="javascript:" id="okButton" class="btn_default btn_submit">확인</a>
+			</div>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $okButton = $('#okButton');
+
+			function init() {
+				event();
+			}
+
+			function event() {
+				$okButton.on('click', function() {
+					common.navi.open(CONSTANTS.MAIN_PATH);
+				});
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

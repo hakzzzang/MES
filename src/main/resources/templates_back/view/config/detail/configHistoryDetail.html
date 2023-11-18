@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='설정정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">설정정보 히스토리 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr class="title">
+						<th class="">설정명</th>
+						<td>
+							<input type="text" name="configName" readonly="readonly">
+						</td>
+						<th class="">설정타입</th>
+						<td>
+							<select name="configType" readonly="readonly">
+								<option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$CONFIG_TYPE).values()}"
+										th:value="${code}" th:text="${code.getDesc()}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr id="editorWrap" class="hidden">
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div class="editor-wrap">
+								<textarea id="appConfigEditor" name="content" class="editor" readonly="readonly" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr id="textAreaWrap" class="hidden">
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div class="">
+								<textarea name="content" class="editor" readonly="readonly" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr class="">
+						<th class="">ETC1</th>
+						<td colspan="3">
+							<input type="text" name="etc1" th:data-mode="${mode}" placeholder="">
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성일</th>
+						<td colspan="3">
+							<input readonly='readonly' name="createAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $listButton = $('#listButton')
+
+			const $textAreaWrap = $('#textAreaWrap');
+			const $editorWrap = $('#editorWrap');
+
+			const baseUrl = '/config/config-history';
+			const modeItems = 'input,textarea,select';
+			const modeNotItems = 'input[readonly="readonly"]';
+			const editorId = 'appConfigEditor';
+
+			//Sort
+			const $addImageButton = $('#addImageButton');
+			const sortingId = 'sortTable';
+
+			/*<![CDATA[*/
+			const appConfig = /*[[ ${appConfig} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			const fileUploadMenuType = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$MenuPathType).MARKET_CONDITION_PATH} ]]*/ null;
+			/*]]*/
+			let contentMode = $editForm.find('[name="configType"').val();
+
+
+			let editor = null;
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				if(appConfig !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				//editor init
+				if(contentMode == 'AGREE_USAGE') {
+					$editorWrap.show();
+					common.ui.editor.init(editorId, {
+						uploadFileMenuType: fileUploadMenuType,
+						onInstanceReady: function(ev) {
+							editor = ev.editor;
+							if(!mode == false && mode != 'new') {
+								editor.setReadOnly(true);
+								const content = decodeURIComponent(atob(appConfig['value']));
+								editor.setData(content);
+							}
+						}
+					});
+				} else {
+					$textAreaWrap.show();
+					const content = appConfig['value'];
+					$textAreaWrap.find('textarea').val(content);
+				}
+			}
+
+			function initDom() {
+				Object.keys(appConfig).forEach(key => {
+					let value = appConfig[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'configType') {
+							$editForm.find('[name="' + key + '"]').each((index, item) => {
+								const $option = $(item).find('option[value="'+ value +'"]')
+								$option.attr('selected', true);
+							});
+
+							contentMode = value;
+						} else if(key === "value") {
+							console.log(key);
+							//Editor 에서 처리
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					}
+				});
+			}
+
+			function event() {
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+			}
+
+
+			function setDetailMode() {
+				$editForm.find(modeItems).not(modeNotItems)
+						.attr('data-mode', 'detail');
+
+				if(editor) {
+					editor.setReadOnly(true);
+				}
+
+				$addImageButton.hide();
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

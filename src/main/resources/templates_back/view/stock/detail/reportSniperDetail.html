@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='주식정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">VIP 레포트 스나이퍼 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">VIP 레포트 스나이퍼 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr class="title">
+						<th:block th:replace="view/component/detailItem :: title(mode=${mode})"></th:block>
+						<th:block th:replace="view/component/detailItem :: primaryFlag(mode=${mode})"></th:block>
+					</tr>
+					<tr>
+						<th:block th:replace="view/component/detailItem :: useFlag(mode=${mode})"></th:block>
+						<th:block th:replace="view/component/detailItem :: datepicker(mode=${mode}, title='증시일', id='reportSniperDate', name='reportSniperDate')"></th:block>
+					</tr>
+					<th:block th:replace="view/component/detailItem :: editorWrap(mode=${mode}, id='reportSniperEditor', name='content')"></th:block>
+					<th:block th:replace="view/component/detailItem :: addImageWrap(id='addImageButton')"></th:block>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th:block th:replace="view/component/detailItem :: createInfo(title='생성 ID', name='createId', colspan=1)"></th:block>
+						<th:block th:replace="view/component/detailItem :: createInfo(title='수정 ID', name='updateId', colspan=1)"></th:block>
+					</tr>
+					<tr>
+						<th:block th:replace="view/component/detailItem :: createInfo(title='생성일', name='createAt', colspan=1)"></th:block>
+						<th:block th:replace="view/component/detailItem :: createInfo(title='수정일', name='updateAt', colspan=1)"></th:block>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<th:block th:replace="view/component/detailItem :: editButtons(mode=${mode}, hideButtons='')"></th:block>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/detail-view.js}"></script>
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			/*<![CDATA[*/
+			const reportSniper = /*[[ ${reportSniper} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			const fileUploadMenuType = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$MenuPathType).SNIPER_PATH} ]]*/ null;
+			/*]]*/
+
+
+			class ReportSniperDetailView extends CommonDetailView {
+				constructor(data) {
+					super(data);
+
+					this.$reportSniperDate = $('#reportSniperDate');
+				}
+
+				//datePicker init
+				initDatepicker() {
+					super.initDatepicker();
+
+					common.ui.datepicker.init(this.$reportSniperDate)
+				}
+
+				//editor init
+				initEditor() {
+					super.initEditor();
+
+					const self = this;
+					common.ui.editor.init(this.editorId, {
+						uploadFileMenuType: fileUploadMenuType,
+						onInstanceReady : function(ev) {
+							self.editor = ev.editor;
+							const content = self.info['content'];
+
+							if(!self.mode === false && self.mode != 'new') {
+								self.editor.setReadOnly(true);
+								const _content = decodeURIComponent(atob(content));
+								self.editor.setData(_content);
+							}
+						}
+					});
+				}
+
+				event() {
+					super.event()
+				}
+
+				checkItemValidate() {
+					if(super.checkItemValidate() === false) {
+						return false;
+					}
+
+					//사용여부 체크
+					if(this.$editForm.find("input:radio[name=useFlag]:checked").length <= 0) {
+						common.ui.modal.alert("안내", "사용여부를 체크해 주세요.");
+						return false;
+					}
+
+					//노출여부 체크
+					if(this.$editForm.find("input:radio[name=primaryFlag]").length > 0
+							&& this.$editForm.find("input:radio[name=primaryFlag]:checked").length <= 0) {
+						common.ui.modal.alert("안내", "노출여부를 체크해 주세요.");
+						return false;
+					}
+
+					//에디터 체크
+					const content = common.ui.editor.getData(this.editorId);
+					if(!content === true) {
+						common.ui.modal.alert("안내", "내용을 입력해 주세요.");
+						return false;
+					}
+
+					//증시일 체크
+					if(common.vaild.checkDateFormat(this.$reportSniperDate.val()) === false) {
+						common.ui.modal.alert("안내", "날짜 형식에 맞지 않습니다. ex) YYYY-MM-DD");
+						return false;
+					}
+
+					return  true;
+				}
+
+				makeSaveParams() {
+					const params = super.makeSaveParams();
+					params['content'] = btoa(encodeURIComponent(common.ui.editor.getData(this.editorId)));
+
+					return params;
+				}
+
+				//추가 param 필요하면 재 정의
+				makeEditParams() {
+					const params = super.makeEditParams();
+					params['reportSniperSeq'] = this.info['reportSniperSeq'];
+					params['fileIndex'] = this.info['fileIndex'] || 0;
+					params['content'] = btoa(encodeURIComponent(common.ui.editor.getData(this.editorId)));
+
+					return params;
+				}
+
+				//추가 param 필요하면 재 정의
+				makeDeleteParams() {
+					return {
+						reportSniperSeq: this.info['reportSniperSeq'],
+						fileIndex: this.info['fileIndex'] || 0
+					};
+				}
+			}
+
+
+			const detailView = new ReportSniperDetailView({
+				info : reportSniper,
+				mode : mode,
+				editorId: 'reportSniperEditor',
+				baseUrl : '/stock/report-sniper',
+				modeItems:'input,textarea,label[type="radio"]',
+				modeNotItems:'input[readonly="readonly"]',
+			});
+
+			detailView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

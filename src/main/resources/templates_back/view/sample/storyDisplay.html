@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='Sample'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">전체메뉴전시</div>
+		<!--// pagetle -->
+		<div>
+			<div class="viewtype">
+				<ul class="sortTable" id="sortTable1">
+					<!-- loop 시작 s -->
+					<li>
+						<span class="num">1</span>
+						<div class="tablecell">
+							<!-- table edit -->
+							<table class="tbview">
+								<colgroup>
+									<col style="width:15%;" />
+									<col>
+								</colgroup>
+								<tr>
+									<th>PC 이미지</th>
+									<td>
+										<div class="fileui">
+											<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+											<input type="file"> <a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>
+											<span class="smt">000*000 이미지를 등록해주세요 (등록 가능한 확장자 : jpg,gif,png)</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>모바일 이미지 </th>
+									<td>
+										<div class="fileui">
+											<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+											<input type="file"> <a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>
+											<span class="smt">000*000 이미지를 등록해주세요 (등록 가능한 확장자 : jpg,gif,png)</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>대체 텍스트</th>
+									<td><input type="text" placeholder="텍스트를 입력해주세요."></td>
+								</tr>
+								<tr>
+									<th>URL 입력</th>
+									<td>
+										<ul class="list">
+											<li> <label>PC</label><input type="text" placeholder="텍스트를 입력해주세요."> </li>
+											<li> <label>모바일</label><input type="text" placeholder="텍스트를 입력해주세요."> </li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<th>사용 여부</th>
+									<td>
+										<label><input type="radio" name="use01" checked> Y</label>
+										<label><input type="radio" name="use01"> N</label>
+									</td>
+								</tr>
+							</table>
+							<!-- // table edit -->
+						</div>
+						<div class="handle btncell">
+							<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+						</div>
+					</li>
+					<!-- //loop 끝 e -->
+					<li>
+						<span class="num">2</span>
+						<div class="tablecell">
+							<!-- table edit -->
+							<table class="tbview">
+								<colgroup>
+									<col style="width:15%;" />
+									<col>
+								</colgroup>
+								<tr>
+									<th>PC 이미지</th>
+									<td>
+										<div class="fileui">
+											<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+											<input type="file">
+											<a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>
+											<span class="smt">000*000 이미지를 등록해주세요 (등록 가능한 확장자 : jpg,gif,png)</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>모바일 이미지 </th>
+									<td>
+										<div class="fileui">
+											<p class="thumb"><img th:src="@{/static/assets/img/thumb01.gif}" alt="" /></p>
+											<input type="file">
+											<a href="javascript:;" onclick="reset(this);" class="btn_del">삭제</a>
+											<span class="smt">000*000 이미지를 등록해주세요 (등록 가능한 확장자 : jpg,gif,png)</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>대체 텍스트</th>
+									<td><input type="text" placeholder="텍스트를 입력해주세요."></td>
+								</tr>
+								<tr>
+									<th>URL 입력</th>
+									<td>
+										<ul class="list">
+											<li> <label>PC</label><input type="text" placeholder="텍스트를 입력해주세요."> </li>
+											<li> <label>모바일</label><input type="text" placeholder="텍스트를 입력해주세요."> </li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<th>사용 여부</th>
+									<td>
+										<label><input type="radio" name="use02" checked> Y</label>
+										<label><input type="radio" name="use02"> N</label>
+									</td>
+								</tr>
+							</table>
+							<!-- // table edit -->
+						</div>
+						<div class="handle btncell">
+							<button class="btn_up"><i></i></button> <button class="btn_down"><i></i></button>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="#" class="btns_default">삭제</a>
+				<a href="#" class="btns_default btn_submit">추가</a>
+			</div>
+			<!-- // btn area -->
+
+			<ul class="writer">
+				<li>최초작성 : <span>강백호  2016-04-16 19:42</span></li>
+				<li>최근수정 : <span>아이유  2016-04-16 20:11</span></li>
+			</ul>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="#" class="btns_default btn_submit">저장</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			function init() {
+				event();
+			}
+
+			function event() {
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

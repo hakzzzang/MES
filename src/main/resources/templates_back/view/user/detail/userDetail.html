@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='사용자'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">사용자 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">사용자 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th class="require">아이디</th>
+						<td colspan="3">
+							<input type="text" name="userId" id="userId" required th:data-mode="${mode}">
+						</td>
+					</tr>
+					<tr>
+						<th class="require">이름</th>
+						<td>
+							<input type="text" name="userName" th:data-mode="${mode}">
+						</td>
+						<th>닉네임</th>
+						<td>
+							<input type="text" name="nickname" th:data-mode="${mode}">
+						</td>
+					</tr>
+					<tr>
+						<th class="require">전화번호</th>
+						<td>
+							<input type="text" name="phoneNumber" id="phoneNumber" required th:data-mode="${mode}">
+						</td>
+						<th>이메일</th>
+						<td>
+							<input type="email" name="email" th:data-mode="${mode}">
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>사용자 이미지</th>
+						<td colspan="3">
+							<input type="text" name="profileImagePath" readonly='readonly'>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>SNS ID</th>
+						<td>
+							<input type="text" name="snsId" readonly='readonly'>
+						</td>
+						<th>SNS 타입</th>
+						<td>
+							<select name="snsType" readonly='readonly'>
+								<option th:each="yn : ${T(com.stockmore.admin.common.constants.CommonCode$SnsType).values()}"
+										th:value="${yn}" th:text="${yn.getDesc()}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>활성여부</th>
+						<td>
+							<select name="activeFlag" readonly='readonly'>
+								<option th:each="yn : ${T(com.stockmore.admin.common.constants.CommonCode$StatusYN).values()}"
+										th:value="${yn}" th:text="${yn.getDesc()}"></option>
+							</select>
+						</td>
+						<th>삭제여부</th>
+						<td>
+							<select name="deleteFlag" readonly='readonly'>
+								<option th:each="yn : ${T(com.stockmore.admin.common.constants.CommonCode$StatusYN).values()}"
+										th:value="${yn}" th:text="${yn.getDesc()}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>사용동의</th>
+						<td>
+							<select name="agreeUsage" readonly='readonly'>
+								<option th:each="yn : ${T(com.stockmore.admin.common.constants.CommonCode$AgreeYN).values()}"
+										th:value="${yn}" th:text="${yn.getDesc()}"></option>
+							</select>
+						</td>
+						<th>개인정보 동의</th>
+						<td>
+							<select name="privacyUsage" readonly='readonly'>
+								<option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$AgreeYN).values()}"
+										th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>마케팅 동의</th>
+						<td>
+							<select name="marketingUsage" readonly='readonly'>
+								<option th:each="useYn : ${T(com.stockmore.admin.common.constants.CommonCode$AgreeYN).values()}"
+										th:value="${useYn}" th:text="${useYn.getDesc()}"></option>
+							</select>
+						</td>
+						<th>마지막 로그인</th>
+						<td>
+							<input type="text" name="lastLogin" readonly='readonly'>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>FCM 토큰</th>
+						<td colspan="3">
+							<input type="text" name="fcmToken" readonly='readonly'>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>엑세스 토큰</th>
+						<td colspan="3">
+							<input type="text" name="accessToken" readonly='readonly'>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>갱신 토큰</th>
+						<td colspan="3">
+							<input type="text" name="refreshToken" readonly='readonly'>
+						</td>
+					</tr>
+					<tr th:if="${mode != 'new'}">
+						<th>엑세스 토큰 만료일</th>
+						<td>
+							<input type="text" name="accessTokenExpireAt" readonly='readonly'>
+						</td>
+						<th>갱신 토큰 만료일</th>
+						<td>
+							<input type="text" name="refreshTokenExpireAt" readonly='readonly'>
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton')
+			const $saveButton = $('#saveButton')
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton')
+			const $cancelButton = $('#cancelButton')
+			const $listButton = $('#listButton')
+
+			const baseUrl = '/user/user';
+			const modeItems = 'input,textarea,label[type="radio"]';
+
+			/*<![CDATA[*/
+			const user = /*[[ ${user} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			/*]]*/
+			console.log(user)
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				if(user !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				if(mode !== 'new') {
+					$('#userId').attr("readonly", true);
+				}
+			}
+
+			function initDom() {
+				Object.keys(user).forEach(key => {
+					let value = user[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt' || key === 'lastLogin') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="' + key + '"]').val(value);
+						} else if(key === 'accessTokenExpireAt' || key === 'refreshTokenExpireAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="' + key + '"]').val(value);
+						} else if(key === 'agreeUsage' || key === 'privacyUsage' || key === 'marketingUsage' || key === 'sysType') {
+							$editForm.find('[name="' + key + '"] option').each((index, item) => {
+								if (item.value === value) {
+									item.selected = true;
+								}
+							})
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					} else {
+						if(key === 'agreeUsage' || key === 'privacyUsage' || key === 'marketingUsage') {
+							value = 'N';
+							$editForm.find('[name="' + key + '"] option').each((index, item) => {
+								if (item.value === value) {
+									item.selected = true;
+								}
+							})
+						}
+					}
+				})
+			}
+
+			function event() {
+				$saveButton.on('click', function() {
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+
+					common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+						if(ret) {
+							saveAjax(params);
+						}
+					})
+
+				});
+
+				$editButton.on('click', function() {
+					if(user === null) {
+						return;
+					}
+
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					params['userSeq'] = user['userSeq'];
+
+					common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+						if(ret) {
+							updateAjax(params);
+						}
+					})
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+			}
+
+			function saveAjax(params) {
+				common.ajax.put(baseUrl, params, function(response) {
+					if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+						common.ui.modal.alert("안내", "정상적으로 저장 되었습니다.", function() {
+							common.navi.open(baseUrl);
+						});
+					} else {
+						common.ui.modal.error(response.result);
+					}
+				});
+			}
+
+			function updateAjax(params) {
+				common.ajax.post(baseUrl, params, function(response) {
+					if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+						common.ui.modal.alert("안내", "정상적으로 수정 되었습니다.", function() {
+							common.navi.open(baseUrl);
+						});
+					} else {
+						common.ui.modal.error(response.result);
+					}
+				});
+			}
+
+			function checkValidate() {
+				if(checkEmptyValidate() === false) {
+					return false;
+				}
+
+				if(checkItemValidate() === false) {
+					return false;
+				}
+
+				return true;
+			}
+
+			function checkEmptyValidate() {
+				let result = true;
+
+				$editForm.find("input, select").each(function(i) {
+					const $this = $(this);
+
+					if($this.is(':visible') == false) {
+						return;
+					}
+
+					if ($this.prop("required")) {
+						if($this.val().trim() === '') {
+							result = false;
+
+							const label = $this.closest('td').prev().text();
+							common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+								$this.focus();
+							});
+							return false;
+						}
+					}
+				});
+
+				return result;
+			}
+
+			function checkItemValidate() {
+				//이메일 체크
+				const $emailDom = $("input[name='email']");
+				if(common.vaild.checkEmail($emailDom.val()) === false) {
+					common.ui.modal.alert("안내", "이메일 형식에 맞게 입력해 주세요.", function() {
+						$emailDom.focus();
+					});
+
+					return false;
+				}
+
+				return  true;
+			}
+
+			function setEditMode() {
+				$editForm.find(modeItems).not('input[readonly="readonly"]').removeAttr('data-mode');
+
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+			}
+
+			function setDetailMode() {
+				$editForm.find(modeItems).not('input[readonly="readonly"]').attr('data-mode', 'detail');
+
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="tableInfo">
+    <p class="cnt">총 <strong id="totalCount"></strong>건 / 검색결과 <strong id="searchCount"></strong>건</p>
+</th:block>
+
+<th:block th:fragment="table(tableId)">
+    <table th:attr="id=${tableId}" class="tblist">
+    </table>
+</th:block>
+
+<th:block th:fragment="paging">
+    <div id="pagingWrap" class="paging-wrap paging" role="navigation" aria-label="페이지 선택">
+    </div>
+</th:block>

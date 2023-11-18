@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='설정정보'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">설정정보 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">설정정보 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr class="title">
+						<th class="require">설정명</th>
+						<td>
+							<input type="text" name="configName" required th:data-mode="${mode}" placeholder="설정명을 입력해주세요">
+						</td>
+						<th class="require">설정타입</th>
+						<td>
+							<select name="configType" th:data-mode="${mode}">
+								<option th:each="code : ${T(com.stockmore.admin.common.constants.CommonCode$CONFIG_TYPE).values()}"
+										th:value="${code}" th:text="${code.getDesc()}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr id="editorWrap" class="hidden">
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div class="editor-wrap">
+								<textarea id="appConfigEditor" name="content" class="editor" required th:data-mode="${mode}" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr id="textAreaWrap" class="hidden">
+						<th class="require">내용</th>
+						<td colspan="3">
+							<div class="">
+								<textarea name="content" class="editor" required th:data-mode="${mode}" ></textarea>
+							</div>
+						</td>
+					</tr>
+					<tr class="">
+						<th class="">ETC1</th>
+						<td colspan="3">
+							<input type="text" name="etc1" th:data-mode="${mode}" placeholder="">
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton');
+			const $saveButton = $('#saveButton');
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton');
+			const $cancelButton = $('#cancelButton');
+			const $listButton = $('#listButton');
+			const $textAreaWrap = $('#textAreaWrap');
+			const $editorWrap = $('#editorWrap');
+
+			const baseUrl = '/config/app-config';
+			const modeItems = 'input,textarea,select';
+			const modeNotItems = 'input[readonly="readonly"]';
+			const editorId = 'appConfigEditor';
+
+			//Sort
+			const $sortTable = $('#sortTable');
+			const $addImageButton = $('#addImageButton');
+			const sortingId = 'sortTable';
+			let uploadFileList = [];
+
+			/*<![CDATA[*/
+			const appConfig = /*[[ ${appConfig} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			const fileUploadMenuType = /*[[ ${T(com.stockmore.admin.common.constants.CommonCode$MenuPathType).MARKET_CONDITION_PATH} ]]*/ null;
+			/*]]*/
+
+
+			let contentMode = $editForm.find('[name="configType"').val();
+			let editor = null;
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				if(appConfig !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				//editor init
+				if(contentMode == 'AGREE_USAGE') {
+					$editorWrap.show();
+					common.ui.editor.init(editorId, {
+						uploadFileMenuType: fileUploadMenuType,
+						onInstanceReady: function(ev) {
+							editor = ev.editor;
+							if(!mode == false && mode != 'new') {
+								editor.setReadOnly(true);
+								const content = decodeURIComponent(atob(appConfig['value']));
+								editor.setData(content);
+							}
+						}
+					});
+				} else {
+					$textAreaWrap.show();
+					const content = appConfig['value'];
+					$textAreaWrap.find('textarea').val(content);
+
+					common.ui.editor.init(editorId, {
+						uploadFileMenuType: fileUploadMenuType,
+						onInstanceReady: function(ev) {
+							editor = ev.editor;
+						}
+					});
+				}
+			}
+
+			function initDom() {
+				Object.keys(appConfig).forEach(key => {
+					let value = appConfig[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === 'configType') {
+							$editForm.find('[name="' + key + '"]').each((index, item) => {
+								const $option = $(item).find('option[value="'+ value +'"]')
+								$option.attr('selected', true);
+							})
+
+							contentMode = value;
+						} else if(key === "value") {
+							console.log(key);
+							//Editor 에서 처리
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					}
+				});
+			}
+
+			function event() {
+				$saveButton.on('click', function() {
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					let params = $editForm.serializeObject();
+					if(contentMode == 'AGREE_USAGE') {
+						params['value'] = btoa(encodeURIComponent(common.ui.editor.getData(editorId)));
+					} else {
+						params['value'] = $textAreaWrap.find('textarea').val();
+					}
+
+					params = Object.filter(params, item => !item === false);
+
+					saveAjax(params);
+				});
+
+				$editButton.on('click', function() {
+					if(appConfig === null) {
+						return;
+					}
+
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					let params = $editForm.serializeObject();
+					params['configSeq'] = appConfig['configSeq'];
+					if(contentMode == 'AGREE_USAGE') {
+						params['value'] = btoa(encodeURIComponent(common.ui.editor.getData(editorId)));
+					} else {
+						params['value'] = $textAreaWrap.find('textarea').val();
+					}
+
+					params = Object.filter(params, item => !item === false);
+
+					updateAjax(params);
+				});
+
+				$deleteButton.on('click', function() {
+					if(appConfig === null) {
+						return;
+					}
+					const params = {
+						configSeq : appConfig['configSeq']
+					}
+
+					deleteAjax(params);
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+
+				$addImageButton.on('click', function() {
+					common.ui.sorting.openFileMenu(sortingId);
+				});
+
+				$editForm.find('[name="configType"').on('change', function() {
+					const value = $(this).val();
+					console.log(value);
+					changeTextAreaMode(value);
+				});
+			}
+
+			function saveAjax(params) {
+				common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('PUT', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 저장 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function updateAjax(params) {
+				common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+					if(ret) {
+						console.log(params);
+						common.ajax.uploadFile('POST', baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 수정 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function deleteAjax(params) {
+				common.ui.modal.confirm('안내', '삭제 하시겠습니까?', function(ret) {
+					if(ret) {
+						common.ajax.del(baseUrl, params, function(response) {
+							ajaxResult(response, "정상적으로 삭제 되었습니다.");
+						});
+					}
+				})
+			}
+
+			function ajaxResult(response, message) {
+				if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+					common.ui.modal.alert("안내", message, function() {
+						common.navi.open(baseUrl);
+					});
+				} else {
+					common.ui.modal.error(response.result);
+				}
+			}
+
+			function checkValidate() {
+				if(checkEmptyValidate() === false) {
+					return false;
+				}
+
+				if(checkItemValidate() === false) {
+					return false;
+				}
+
+				return true;
+			}
+
+			function checkEmptyValidate() {
+				let result = true;
+
+				$editForm.find("input, select").each(function(i) {
+					const $this = $(this);
+
+					if($this.is(':visible') == false) {
+						return;
+					}
+
+					if ($this.prop("required")) {
+						if($this.val().trim() === '') {
+							result = false;
+
+							const label = $this.closest('td').prev().text();
+							common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+								$this.focus();
+							});
+							return false;
+						}
+					}
+				});
+
+				return result;
+			}
+
+			function checkItemValidate() {
+				let content = "";
+				if(contentMode == 'AGREE_USAGE') {
+					content = common.ui.editor.getData(editorId);
+				} else {
+					content = $textAreaWrap.find('textarea').val();
+				}
+
+				//에디터 체크
+				if(!content === true) {
+					common.ui.modal.alert("안내", "내용을 입력해 주세요.");
+					return false;
+				}
+
+				return  true;
+			}
+
+			function setEditMode() {
+				$editForm.find(modeItems).not(modeNotItems)
+						.removeAttr('data-mode');
+
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+
+				if(editor) {
+					editor.setReadOnly(false);
+				}
+
+				$addImageButton.show();
+			}
+
+			function setDetailMode() {
+				$editForm.find(modeItems).not(modeNotItems)
+						.attr('data-mode', 'detail');
+
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+
+				if(editor) {
+					editor.setReadOnly(true);
+				}
+
+				$addImageButton.hide();
+			}
+
+			function changeTextAreaMode(mode) {
+				contentMode = mode;
+
+				if(contentMode == 'AGREE_USAGE') {
+					$textAreaWrap.hide();
+					$editorWrap.show();
+				} else {
+					$textAreaWrap.show();
+					$editorWrap.hide();
+				}
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

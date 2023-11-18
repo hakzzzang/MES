@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='관리자'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle" th:if="${mode == 'new'}">관리자 등록</div>
+		<div class="pagetle" th:if="${mode == 'detail'}">관리자 상세</div>
+		<!--// pagetle -->
+		<div>
+			<div class="tblutils">
+				<p><span class="require">*</span> 필수항목</p>
+			</div>
+			<!-- table edit -->
+			<form id="editForm" class="detail">
+				<table class="tbview">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr class="title">
+						<th class="require">아이디</th>
+						<td>
+							<input type="text" name="userId" id="userId" required th:data-mode="${mode}">
+						</td>
+						<th class="require">권한</th>
+						<td>
+							<label type="checkbox" th:each="authority : ${T(com.stockmore.admin.common.constants.CommonCode$UserAuthority).values()}"
+								   th:data-mode="${mode}" th:value="${authority}">
+								<input type="checkbox" name="userAuthorityList" required th:data-mode="${mode}"  th:text=${authority.getDesc()} th:value="${authority}">
+							</label>
+						</td>
+					</tr>
+					<tr class="title">
+						<th class="require">이름</th>
+						<td>
+							<input type="text" name="userName" required th:data-mode="${mode}">
+						</td>
+						<th class="require">넥네임</th>
+						<td>
+							<input type="text" name="nickname" required th:data-mode="${mode}">
+						</td>
+					</tr>
+					<tr class="password-no-change">
+						<th class="require">비밀번호</th>
+						<td colspan="3" >
+							<a href="javascript:" class="btns_default" id="changePasswordButton" th:data-change-mode="${mode}">변경</a>
+						</td>
+					</tr>
+					<tr class="password-change" style="display:none;">
+						<th class="require">비밀번호</th>
+						<td>
+							<input class="password" id="password" name="password" required th:data-mode="${mode}" th:data-change-mode="${mode}" autocomplete="off" >
+						</td>
+						<th class="require">비밀번호 확인</th>
+						<td>
+						 	<input class="password" id="passwordConfirm" name="passwordConfirm" required th:data-mode="${mode}" th:data-change-mode="${mode}" autocomplete="off">
+						</td>
+					</tr>
+					<tr>
+						<th class="require">이메일</th>
+						<td>
+							<input type="email" name="email" required th:data-mode="${mode}">
+						</td>
+						<th>전화번호</th>
+						<td>
+							<input type="text" name="phoneNumber" th:data-mode="${mode}">
+						</td>
+					</tr>
+				</table>
+
+				<!-- table edit -->
+				<table class="tbview" th:if="${mode != 'new'}">
+					<colgroup>
+						<col style="width:15%;" />
+						<col>
+						<col style="width:15%;" />
+						<col>
+					</colgroup>
+					<tr>
+						<th>생성일</th>
+						<td>
+							<input readonly='readonly' name="createAt" />
+						</td>
+						<th>수정일</th>
+						<td>
+							<input readonly='readonly' name="updateAt" />
+						</td>
+					</tr>
+				</table>
+			</form>
+
+			<!-- btn area -->
+			<div class="btn_area right">
+				<a href="javascript:" id="deleteButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">삭제</a>
+				<a href="javascript:" id="saveButton" class="btns_default btn_submit" th:if="${mode == 'new'}">저장</a>
+				<a href="javascript:" id="editButton" class="btns_default btn_submit" style="display:none;">저장</a>
+				<a href="javascript:" id="modifyButton" class="btns_default btn_submit" th:if="${mode != 'new'}">수정</a>
+				<a href="javascript:" id="cancelButton" class="btns_default btn_cancel" th:if="${mode != 'new'}">취소</a>
+				<a href="javascript:" id="listButton" class="btns_default">목록</a>
+			</div>
+			<!-- // btn area -->
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:inline="javascript" >
+		$(document).ready(function() {
+			const $editForm = $('#editForm');
+			const $deleteButton = $('#deleteButton');
+			const $saveButton = $('#saveButton');
+			const $editButton = $('#editButton');
+			const $modifyButton = $('#modifyButton');
+			const $cancelButton = $('#cancelButton');
+			const $listButton = $('#listButton');
+
+			const $changePasswordButton = $('#changePasswordButton');
+			const baseUrl = '/user/admin-user';
+			const modeItems = 'input,textarea,label[type="radio"],label[type="checkbox"],select';
+
+			/*<![CDATA[*/
+			const adminUser = /*[[ ${adminUser} ]]*/ null;
+			const mode = /*[[ ${mode} ]]*/ null;
+			/*]]*/
+			console.log(adminUser)
+
+			function init() {
+				initData();
+				event();
+			}
+
+			function initData() {
+				if(adminUser !== null) {
+					initDom();
+					setDetailMode();
+				}
+
+				if(mode === 'new') {
+					$('.password-change').show();
+					$('.password-no-change').hide();
+				} else {
+					$('#userId').attr("readonly", true);
+				}
+			}
+
+			function initDom() {
+				Object.keys(adminUser).forEach(key => {
+					let value = adminUser[key];
+					if(!value === false) {
+						console.log(key, value);
+						if(key === 'updateAt' || key === 'createAt') {
+							value = new Date(value).format('yyyy-MM-dd HH:mm:ss');
+							$editForm.find('[name="'+ key +'"]').val(value);
+						} else if(key === "userAuthorityList") {
+							if(!value == false && value.length > 0) {
+								value.forEach(item => {
+									$editForm.find('input[value="'+ item.authority +'"]').attr('checked', true);
+								});
+							}
+						} else {
+							$editForm.find('[name="'+ key +'"]').val(value);
+						}
+					}
+				})
+			}
+
+			function event() {
+				$saveButton.on('click', function() {
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					if(typeof params['userAuthorityList'] === 'string') {
+						params['userAuthorityList'] = [params['userAuthorityList']];
+					}
+
+					common.ui.modal.confirm('안내', '신규 등록 하시겠습니까?', function(ret) {
+						if(ret) {
+							saveAjax(params);
+						}
+					})
+
+				});
+
+				$editButton.on('click', function() {
+					if(adminUser === null) {
+						return false;
+					}
+
+					if(checkValidate() === false) {
+						return false;
+					}
+
+					const params = $editForm.serializeObject();
+					params['userSeq'] = adminUser['userSeq'];
+
+					if(typeof params['userAuthorityList'] === 'string') {
+						params['userAuthorityList'] = [params['userAuthorityList']];
+					}
+					common.ui.modal.confirm('안내', '정보를 수정 하시겠습까?', function(ret) {
+						if(ret) {
+							updateAjax(params);
+						}
+					})
+				});
+
+				$modifyButton.on('click', function() {
+					setEditMode();
+				});
+
+				$cancelButton.on('click', function() {
+					initDom();
+					setDetailMode();
+				});
+
+				$listButton.on('click', function() {
+					common.navi.open(baseUrl, false);
+				});
+
+				$changePasswordButton.on('click', function() {
+					if($modifyButton.is(':visible') == true) {
+						return false;
+					}
+
+					$('.password-change').show();
+					$('.password-no-change').hide();
+				});
+			}
+
+			function saveAjax(params) {
+				common.ajax.put(baseUrl, params, function(response) {
+					if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+						common.ui.modal.alert("안내", "정상적으로 저장 되었습니다.", function() {
+							common.navi.open(baseUrl);
+						});
+					} else {
+						common.ui.modal.error(response.result);
+					}
+				});
+			}
+
+			function updateAjax(params) {
+				common.ajax.post(baseUrl, params, function(response) {
+					if(response.result.code === API_RESPONSE_CDOE.SUCCESS.code) {
+						common.ui.modal.alert("안내", "정상적으로 수정 되었습니다.", function() {
+							common.navi.open(baseUrl);
+						});
+					} else {
+						common.ui.modal.error(response.result);
+					}
+				});
+			}
+
+			function checkValidate() {
+				if(checkEmptyValidate() === false) {
+					return false;
+				}
+
+				if(checkItemValidate() === false) {
+					return false;
+				}
+
+				return true;
+			}
+
+			function checkEmptyValidate() {
+				let result = true;
+
+				$editForm.find("input, select").each(function(i) {
+					const $this = $(this);
+
+					if ($this.prop('type') === 'checkbox') {
+						return;
+					}
+
+					if($this.is(':visible') == false) {
+						return;
+					}
+
+					if ($this.prop("required")) {
+						if($this.val().trim() === '') {
+							result = false;
+
+							const label = $this.closest('td').prev().text();
+							common.ui.modal.alert("안내", label + " 값을 입력해 주세요.", function() {
+								$this.focus();
+							});
+							return false;
+						}
+					}
+				});
+
+				return result;
+			}
+
+			function checkItemValidate() {
+				//비밀번호 체크
+				if($('.password-change').is(':visible') === true) {
+					const password = $('#password').val().trim();
+					const passwordConfirm = $('#passwordConfirm').val().trim();
+
+					if(common.vaild.checkPassword(password) === false) {
+						common.ui.modal.alert("안내", "비밀번호 형식에 맞춰 주세요. ..TODO");
+						return false;
+					}
+
+					if(common.vaild.checkCompare(password, passwordConfirm) === false) {
+						common.ui.modal.alert("안내", "비밀번호와 비밀번호 확인이 다릅니다.");
+						$('#password').focus();
+						return false;
+					}
+				}
+
+				//권한 체크
+				if($("input:checkbox[name=userAuthorityList]:checked").length <= 0) {
+					common.ui.modal.alert("안내", "권한을 체크해 주세요.");
+					return false;
+				}
+
+				//이메일 체크
+				const $emailDom = $("input[name='email']");
+				if(common.vaild.checkEmail($emailDom.val()) === false) {
+					common.ui.modal.alert("안내", "이메일 형식에 맞게 입력해 주세요.", function() {
+						$emailDom.focus();
+					});
+
+					return false;
+				}
+
+				//전화번호 체크
+				const $phoneNumber = $("input[name='phoneNumber']");
+				const phoneNumber = $phoneNumber.val();
+				if(phoneNumber?.length > 0
+						&& common.vaild.checkPhoneNumber(phoneNumber) === false) {
+					common.ui.modal.alert("안내", "전화번호 형식에 맞게 입력해 주세요.", function() {
+						$phoneNumber.focus();
+					});
+
+					return false;
+				}
+
+				return  true;
+			}
+
+			function setEditMode() {
+				$editForm.find(modeItems)
+						.not('input[readonly="readonly"]').removeAttr('data-mode');
+
+				$modifyButton.hide();
+				$deleteButton.hide();
+				$editButton.show();
+				$cancelButton.show();
+
+				$('.password-change').hide();
+				$('.password-no-change').show();
+			}
+
+			function setDetailMode() {
+				$editForm.find(modeItems)
+						.not('input[readonly="readonly"]').attr('data-mode', 'detail');
+
+				$cancelButton.hide();
+				$editButton.hide();
+				$modifyButton.show();
+				$deleteButton.show();
+
+				$('.password-change').hide();
+				$('.password-no-change').show();
+			}
+
+			init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+

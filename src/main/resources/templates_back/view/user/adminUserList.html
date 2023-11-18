@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/default}"
+	  th:with="metaTitle='관리자'">
+<head>
+</head>
+
+<body>
+<!-- content -->
+<th:block layout:fragment="content">
+	<div class="conts">
+		<!-- pagetle -->
+		<div class="pagetle">관리자 목록</div>
+		<!--// pagetle -->
+		<div id="adminUserWrap">
+			<form class="search">
+				<div class="search_box">
+					<th:block th:replace="view/component/searchItem :: searchValue(placeholder='아이디/이름/닉네임')"></th:block>
+					<th:block th:replace="view/component/searchItem :: searchDate(searchDateType='createAt,updateAt')"></th:block>
+				</div>
+				<th:block th:replace="view/component/searchItem :: searchButton"></th:block>
+			</form>
+			<div class="tblutils">
+				<th:block th:replace="view/component/tableWrap :: tableInfo"></th:block>
+				<a href="javascript:" id="addButton" class="btns_default btn_submit">신규등록</a>
+			</div>
+			<!-- search //-->
+
+			<th:block th:replace="view/component/tableWrap :: table(tableId='adminUserListTable')"></th:block>
+			<th:block th:replace="view/component/tableWrap :: paging"></th:block>
+		</div>
+	</div>
+</th:block>
+<!-- //content -->
+
+<!-- script -->
+<th:block layout:fragment="custom_js">
+	<script th:src="@{/static/assets/module/list-view.js}"></script>
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			class AdminUserListView extends CommonListView {
+				constructor(data) {
+					super(data);
+				}
+
+				get headerInfo() {
+					const self = this;
+					return  [
+						{ key: 'no', name: 'no', width: '5%'},
+						{ key: 'userId', name: '아이디', isSorting: true
+							, createdCell: function(value, data) {
+								return `<a href="${self.baseUrl}/${data.userSeq}">${value}</a>`;
+							}
+						},
+						{ key: 'userName', name: '이름', width: '15%', isSorting: true},
+						{ key: 'nickname', name: '닉네임', width: '15%', isSorting: true},
+						{ key: 'authority', name: '권한', width: '15%',isSorting: true
+							, createdCell: function(value) {
+								let result = '';
+								/*<![CDATA[*/
+								/*[# th:each="tmp : ${T(com.stockmore.admin.common.constants.CommonCode$UserAuthority).values()}"]*/
+								if(value.indexOf(/*[[${tmp}]]*/ '') != -1) {
+									result += (/*[[${tmp.getDesc()}]]*/ '') + ', ';
+								}
+								/*[/]*/
+								/*]]*/
+
+								return common.utils.removeLastComma(result)
+							}
+						},
+						{ key: 'createAt', name: '등록일', width: '10%', isSorting: true, initSortClass: 'sorting_desc'
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}
+						},
+						{ key: 'updateAt', name: '수정일', width: '10%', isSorting: true
+							, createdCell: function(value) { return new Date(value).format('yyyy-MM-dd');}},
+					]
+				}
+			}
+
+			const listView = new AdminUserListView({
+				baseUrl : '/user/admin-user'
+				, wrapId : 'adminUserWrap'
+				, pagingId : 'pagingWrap'
+				, tableId : 'adminUserListTable'
+			})
+
+			listView.init();
+		});
+	</script>
+</th:block>
+<!-- //script -->
+</body>
+</html>
+
