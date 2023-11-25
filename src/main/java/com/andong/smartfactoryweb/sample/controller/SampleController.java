@@ -19,36 +19,50 @@ public class SampleController {
     private final SampleService sampleService;
     @GetMapping("/getMapping")
     public String SampelGetMappingTest(/*@RequestParam String param, @RequestParam String param2, Model model*/) {
-       // model.addAttribute("param1", param);
-       // model.addAttribute("param2", param2);
+        // model.addAttribute("param1", param);
+        // model.addAttribute("param2", param2);
         UserVO user = sampleService.getSample();
         return "/success";
     }
 
-    @GetMapping("/get")
-    public String SampleGet(){
-        return "/index";
-    }
-    @GetMapping("/get3")
-    public void SampleGet3(){
-
-    }
-    @GetMapping("/get5")
-    public void SampleGe5t(){
-
-    }
-    @GetMapping("/get4")
-    public void SampleGe4t(){
+    @GetMapping("/login")
+    public String LoginController() {
+        return "login";
     }
 
-    @GetMapping("/get12")
-    public void SampleGe12t(){
-
+    @GetMapping("/signup")
+    public String SignupController(){
+        return "signup";
     }
 
-    @GetMapping("/get6")
-    public void SampleGe6t(){
-
+    @GetMapping("/main")
+    public String MainController(){
+        return "main";
     }
+
+    @GetMapping("/order")
+    public String OrderController(){
+        return "order";
+    }
+
+    @GetMapping("/orderstatus")
+    public String OrderstatusController(){
+        return "orderstatus";
+    }
+
+
+    @GetMapping("/inventory")
+    public String InventoryController(){
+        return "inventory";
+    }
+
+    @GetMapping("/statistics")
+    public String StatisticsController(){
+        return "statistics";
+    }
+
+
+
+
 
 }
