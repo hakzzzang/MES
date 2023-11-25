@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.andong.smartfactoryweb.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.andong.smartfactoryweb.app.user.vo.LoginVO">
+        <id property="userSeq" column="user_seq"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name" />
+        <result property="nickname" column="nickname" />
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="createAt" column="create_at"/>
+        <result property="updateAt" column="update_at"/>
+        <collection property="userAuthorityList" javaType="java.util.List"
+                    ofType="com.andong.smartfactoryweb.app.user.vo.UserAuthorityVO">
+            <id property="authoritySeq" column="authority_seq"/>
+            <result property="authority" column="authority"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="findUserByUserId" parameterType="String"
+            resultMap="userResultMap">
+        SELECT
+            U.user_seq
+             , U.user_id
+             , U.password
+             , U.user_name
+             , U.phone_number
+             , U.email
+             , U.region
+             , U.create_at
+             , U.update_at
+             , A.authority_seq
+             , A.authority
+        FROM user U
+                 LEFT JOIN user_authority A on U.user_seq = A.user_seq
+        WHERE U.user_id = #{userid}
+    </select>
+</mapper>
