@@ -26,7 +26,8 @@ public class SampleController {
     }
 
     @GetMapping("/get")
-    public void SampleGet(){
+    public String SampleGet(){
+        return "/index";
     }
 
 }
