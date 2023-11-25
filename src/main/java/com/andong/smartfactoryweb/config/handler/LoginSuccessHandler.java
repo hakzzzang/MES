@@ -13,23 +13,15 @@ import java.io.IOException;
 
 @Slf4j
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        try {
+            
+        } catch(Exception e) {
+            log.error(e.getMessage());
+        }
 
+        response.sendRedirect("/main");
     }
-
-//    @Autowired
-//    private UserService userService;
-//
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        try {
-//            LoginVO userDetails = (LoginVO) authentication.getPrincipal();
-//            userService.updateLastLogin(userDetails.getUserSeq());
-//        } catch(Exception e) {
-//            log.error(e.getMessage());
-//        }
-//
-//        response.sendRedirect(Constants.MAIN_PATH);
-//    }
 }
