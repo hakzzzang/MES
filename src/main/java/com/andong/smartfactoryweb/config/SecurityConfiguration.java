@@ -1,5 +1,7 @@
 package com.andong.smartfactoryweb.config;
 
+import com.andong.smartfactoryweb.app.user.service.UserServiceImpl;
+import com.andong.smartfactoryweb.common.exception.AjaxAwareAuthenticationEntryPoint;
 import com.andong.smartfactoryweb.config.handler.LoginFailureHandler;
 import com.andong.smartfactoryweb.config.handler.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,9 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-//	@Autowired
-//	private UserServiceImpl userService;
+
+	@Autowired
+	private UserServiceImpl userService;
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,10 +44,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Bean
 	public AuthenticationSuccessHandler loginSuccessHandler() { return new LoginSuccessHandler(); }
 
-//	@Bean
-//	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-//		return new AjaxAwareAuthenticationEntryPoint(Constants.LOGIN_PATH);
-//	}
+	@Bean
+	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
+		return new AjaxAwareAuthenticationEntryPoint("/login");
+	}
 	
 	@Override
     public void configure(WebSecurity web) throws Exception {
@@ -65,17 +68,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.and()
 					.logout()
 						.logoutSuccessUrl("/login")
-						.invalidateHttpSession(true);
-				//.and()
-				//	.exceptionHandling()
-						//.authenticationEntryPoint(loginUrlAuthenticationEntryPoint());
+						.invalidateHttpSession(true)
+				.and()
+					.exceptionHandling()
+						.authenticationEntryPoint(loginUrlAuthenticationEntryPoint());
 
     }
 
-//	@Override
-//	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(userService)
-//			.passwordEncoder(new BCryptPasswordEncoder());
-//   }
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService)
+			.passwordEncoder(new BCryptPasswordEncoder());
+   }
 
 }

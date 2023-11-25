@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service("userService")
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserMapper userMapper;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

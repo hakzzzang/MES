@@ -21,15 +21,15 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 		String errorCode = null;
 
-//		if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
-//			errorCode = ApiResponseCode.BAD_CREDENTIALS.getCode();
-//		} else if(exception instanceof DisabledException) {
-//			errorCode = ApiResponseCode.USER_DISABLED.getCode();
-//		} else if(exception instanceof CredentialsExpiredException) {
-//			errorCode = ApiResponseCode.CREDENTIAL_EXPIRED.getCode();
-//		} else {
-//			errorCode = ApiResponseCode.LOGIN_ERROR.getCode();
-//		}
+		if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
+			errorCode = "BAD_CREDENTIALS";
+		} else if(exception instanceof DisabledException) {
+			errorCode = "USER_DISABLED";
+		} else if(exception instanceof CredentialsExpiredException) {
+			errorCode = "CREDENTIAL_EXPIRED";
+		} else {
+			errorCode = "LOGIN_ERROR";
+		}
 
 		response.sendRedirect(DEFAULT_FAILURE_URL + "&errorCode=" + errorCode);
 	}
