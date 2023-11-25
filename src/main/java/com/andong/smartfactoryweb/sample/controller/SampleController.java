@@ -29,5 +29,26 @@ public class SampleController {
     public String SampleGet(){
         return "/index";
     }
+    @GetMapping("/get3")
+    public void SampleGet3(){
+
+    }
+    @GetMapping("/get5")
+    public void SampleGe5t(){
+
+    }
+    @GetMapping("/get4")
+    public void SampleGe4t(){
+    }
+
+    @GetMapping("/get12")
+    public void SampleGe12t(){
+
+    }
+
+    @GetMapping("/get6")
+    public void SampleGe6t(){
+
+    }
 
 }
