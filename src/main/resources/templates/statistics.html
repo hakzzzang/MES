@@ -59,6 +59,18 @@
         .async-hide {
             opacity: 0 !important
         }
+
+        body {
+            margin-left: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
+        }
+
+        .sidenav {
+            width: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
+        }
+
+        h1 {
+            margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
+        }
     </style>
     <script>
         (function(a, s, y, n, c, h, i, d, e) {
@@ -122,7 +134,6 @@
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
-<body class="g-sidenav-show  bg-gray-200">
 
 
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -154,8 +165,6 @@
                 <a href="/sample/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/team-3.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
-                <img src="/static/img/team-3.jpg" class="avatar">
-                <span class="nav-link-text ms-2 ps-1">회원가입</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
@@ -179,3 +188,7 @@
         </ul>
     </div>
 </aside>
+
+<body class="g-sidenav-show  bg-gray-200">
+<h1>통계 페이지</h1>
+</body>
