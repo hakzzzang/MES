@@ -130,9 +130,9 @@
         })(window, document, 'script', 'dataLayer', 'GTM-NKDMSK6');
     </script>
 
-
-
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
+
 </head>
 
 
@@ -196,6 +196,436 @@
     </div>
 </aside>
 
+
+<!-- 붙여넣기 -->
+
 <body class="g-sidenav-show  bg-gray-200">
-<h1>통계 페이지</h1>
+
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+    <!-- doughnut-->
+    <div class="row mt-4" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
+        <div class="col-lg-6 col-8">  <!-- 차트 전체 크기-->
+            <div class="card z-index-2 mt-0">
+                <div class="card-header p-2 pt-2"> <!-- 상단부 크기-->
+                    <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 me-3 float-start">
+                        <!--아이콘 크기-->
+                        <i class="material-icons opacity-10">donut_small</i>
+                    </div>
+                    <h5 class="font-weight-bolder mb-0">제품 판매 현황</h5>
+                </div>
+                <div class="card-body d-flex p-4 pt-2">
+                    <div class="chart w-100">
+                        <canvas id="doughnut-chart" class="chart-canvas" height="300"></canvas>
+                    </div>
+                    <div class="table-responsive w-80 mt-5">
+                        <table class="table align-items-center mb-0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div>
+                                            <img src="/static/img/small-logos/devto.svg" class="avatar avatar-sm me-2" alt="logo_xd">
+                                            <!--로고이미지-->
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">Jet Engine1</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 25% </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div>
+                                            <img src="/static/img/small-logos/creative-tim.svg" class="avatar avatar-sm me-2" alt="logo_atlassian">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">Jet Engine2</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 13% </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div>
+                                            <img src="/static/img/small-logos/bootstrap.svg" class="avatar avatar-sm me-2" alt="logo_slack">
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">Jet Engine3</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> 12% </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--지역별 제품 판매 현황 차트-->
+        <div class="col-lg-6 col-8">
+            <div class="card z-index-2 mt-0">
+                <div class="card-header p-2 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
+                        <i class="material-icons opacity-10">leaderboard</i>
+                    </div>
+                    <h5 class="font-weight-bolder mb-0">지역별 제품 판매 현황</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="chart">
+                        <canvas id="bar-chart" class="chart-canvas" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 일별 매출액 차트-->
+        <div class="col-lg-12 mt-lg-5 mt-8">
+            <div class="card overflow-hidden h-100">
+                <div class="card-header p-3 pb-0">
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                            <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="font-weight-bolder mb-0">일별 매출액</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mt-4 p-0">
+                    <div class="chart">
+                        <canvas id="chart-line-widgets" class="chart-canvas" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 플러그인 -->
+<div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+        <i class="material-icons py-2">settings</i>
+    </a>
+    <div class="card shadow-lg">
+        <div class="card-header pb-0 pt-3">
+            <div class="float-start">
+                <h5 class="mt-3 mb-0">Material UI Configurator</h5>
+                <p>See our dashboard options.</p>
+            </div>
+            <div class="float-end mt-4">
+                <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                    <i class="material-icons">clear</i>
+                </button>
+            </div>
+            <!-- End Toggle Button -->
+        </div>
+        <hr class="horizontal dark my-1">
+        <div class="card-body pt-sm-3 pt-0">
+            <!-- Sidebar Backgrounds -->
+            <div>
+                <h6 class="mb-0">Sidebar Colors</h6>
+            </div>
+            <a href="javascript:void(0)" class="switch-trigger background-color">
+                <div class="badge-colors my-2 text-start">
+                    <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+                    <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+                    <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+                    <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+                    <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+                    <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+                </div>
+            </a>
+            <!-- Sidenav Type -->
+            <div class="mt-3">
+                <h6 class="mb-0">Sidenav Type</h6>
+                <p class="text-sm">Choose between 2 different sidenav types.</p>
+            </div>
+            <div class="d-flex">
+                <button class="btn bg-gradient-dark px-3 mb-2 active" data-class="bg-gradient-dark" onclick="sidebarType(this)">Dark</button>
+                <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-transparent" onclick="sidebarType(this)">Transparent</button>
+                <button class="btn bg-gradient-dark px-3 mb-2 ms-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
+            </div>
+            <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+            <!-- Navbar Fixed -->
+            <div class="mt-3 d-flex">
+                <h6 class="mb-0">Navbar Fixed</h6>
+                <div class="form-check form-switch ps-0 ms-auto my-auto">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
+                </div>
+            </div>
+            <hr class="horizontal dark my-3">
+            <div class="mt-2 d-flex">
+                <h6 class="mb-0">Sidenav Mini</h6>
+                <div class="form-check form-switch ps-0 ms-auto my-auto">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarMinimize" onclick="navbarMinimize(this)">
+                </div>
+            </div>
+            <hr class="horizontal dark my-3">
+            <div class="mt-2 d-flex">
+                <h6 class="mb-0">Light / Dark</h6>
+                <div class="form-check form-switch ps-0 ms-auto my-auto">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script src="/static/js/core/popper.min.js"></script>
+<script src="/static/js/core/bootstrap.min.js"></script>
+<script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/static/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="/static/js/plugins/fullcalendar.min.js"></script>
+<!-- Kanban scripts -->
+<script src="/static/js/plugins/dragula/dragula.min.js"></script>
+<script src="/static/js/plugins/jkanban/jkanban.js"></script>
+<script src="/static/js/plugins/chartjs.min.js"></script>
+<script>
+    // Doughnut chart
+    var ctx3 = document.getElementById("doughnut-chart").getContext("2d");
+
+    new Chart(ctx3, {
+        type: "doughnut",
+        data: {
+            labels: ['Jet Engine1', 'Jet Engine2', 'Jet Engine3'],
+            datasets: [{
+                label: "Projects",
+                weight: 9,
+                cutout: 60,
+                tension: 0.9,
+                pointRadius: 2,
+                borderWidth: 2,
+                backgroundColor: ['#FF0000', '#0000FF', '#00FF00'],  <!--차트 색상 변경 가능-->
+                data: [15, 20, 12], <!--차트에 값 설정 하는 부분-->
+                fill: false
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                    },
+                    ticks: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: false,
+                        drawTicks: false,
+                    },
+                    ticks: {
+                        display: false,
+                    }
+                },
+            },
+        },
+    });
+
+    // Bar chart
+    var ctx5 = document.getElementById("bar-chart").getContext("2d");
+
+    new Chart(ctx5, {
+        type: "bar",
+        data: {
+            labels: ['지역1', '지역2', '지역3'],
+            datasets: [{
+                label: "Sales by age",
+                weight: 5,
+                borderWidth: 0,
+                borderRadius: 4,
+                backgroundColor: '#3A416F',
+                data: [15, 20, 12],
+                fill: false,
+                maxBarThickness: 70  // Bar 굵기
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        drawTicks: false,
+                        borderDash: [5, 5],
+                        color: '#c1c4ce5c'
+                    },
+                    ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#9ca2b7',
+                        font: {
+                            size: 14,
+                            weight: 300,
+                            family: "Roboto",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: true,
+                        drawTicks: true,
+                        color: '#c1c4ce5c'
+                    },
+                    ticks: {
+                        display: true,
+                        color: '#9ca2b7',
+                        padding: 10,
+                        font: {
+                            size: 14,
+                            weight: 300,
+                            family: "Roboto",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+            },
+        },
+    });
+    var ctx3 = document.getElementById("chart-line-widgets").getContext("2d");
+
+    var gradientStroke3 = ctx3.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke3.addColorStop(1, 'rgba(33,82,255,0.1)');
+    gradientStroke3.addColorStop(0.2, 'rgba(33,82,255,0.0)');
+    gradientStroke3.addColorStop(0, 'rgba(33,82,255,0)'); //purple colors
+
+    new Chart(ctx3, {
+        type: "line",
+        data: {
+            labels: ["일", "월", "화", "수", "목", "금", "토"],
+            datasets: [{
+                label: "일별 매출액",
+                tension: 0,
+                pointRadius: 5,
+                pointBackgroundColor: "#E91E63",
+                pointBorderColor: "transparent",
+                borderColor: "#E91E63",
+                borderWidth: 4,
+                backgroundColor: "transparent",
+                data: [10000, 50000, 30000, 70000, 90000, 20000, 40000],
+                maxBarThickness: 6,
+                fill: true
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            scales: {
+                y: {
+                    grid: {
+                        drawBorder: false,
+                        display: false,
+                        drawOnChartArea: true,
+                        drawTicks: false,
+                        borderDash: [5, 5]
+                    },
+                    ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#9ca2b7',
+                        font: {
+                            size: 14,
+                            weight: 300,
+                            family: "Roboto",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+                x: {
+                    grid: {
+                        drawBorder: false,
+                        display: true,
+                        drawOnChartArea: true,
+                        drawTicks: false,
+                        borderDash: [5, 5],
+                        color: '#c1c4ce5c'
+                    },
+                    ticks: {
+                        display: true,
+                        padding: 10,
+                        color: '#9ca2b7',
+                        font: {
+                            size: 14,
+                            weight: 300,
+                            family: "Roboto",
+                            style: 'normal',
+                            lineHeight: 2
+                        },
+                    }
+                },
+            },
+        },
+    });
+</script>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+
+<!-- Github buttons -->
+<!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/static/js/material-dashboard.min.js?v=3.0.6"></script>
 </body>
+</html>
+
+
