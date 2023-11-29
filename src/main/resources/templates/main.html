@@ -1,19 +1,11 @@
-<!--
-=========================================================
-* Material Dashboard 2 PRO - v3.0.6
-=========================================================
-
-* Product Page:  https://www.creative-tim.com/product/material-dashboard-pro
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
@@ -21,7 +13,6 @@
     <title>
         Material Dashboard 2 PRO by Creative Tim
     </title>
-
 
     <link rel="canonical" href="https://www.creative-tim.com/product/material-dashboard-pro" />
 
@@ -55,23 +46,6 @@
 
     <link id="pagestyle" href="/static/css/material-dashboard.min.css?v=3.0.6" rel="stylesheet" />
 
-    <style>
-        .async-hide {
-            opacity: 0 !important
-        }
-
-        body {
-            margin-left: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
-        }
-
-        .sidenav {
-            width: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
-        }
-
-        h1 {
-            margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
-        }
-    </style>
     <script>
         (function(a, s, y, n, c, h, i, d, e) {
             s.className += ' ' + y;
@@ -129,73 +103,286 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NKDMSK6');
     </script>
-
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
+    <title>Your Webpage</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 600px; /* 조정 가능: 위 아래 여백을 늘리려면 높이를 조절합니다. */
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            color: #fff;
+            text-align: center;
+        }
+
+        .text-overlay2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            text-align: center;
+            font-family: 'Nanum Brush Script', cursive;
+        }
+
+        .text-overlay h2,
+        .text-overlay p {
+            font-size: 2em; /* 조정 가능: 원하는 크기로 설정합니다. */
+            margin: 10px 0; /* 조절 가능: 글자 사이의 여백을 조절합니다. */
+            font-family: 'Nanum Brush Script', cursive;
+        }
+
+        .text-overlay2 p{
+            font-size: 2em; /* 조정 가능: 원하는 크기로 설정합니다. */
+            margin: 10px 0; /* 조절 가능: 글자 사이의 여백을 조절합니다. */
+            font-family: 'Nanum Brush Script', cursive;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            margin-left: 230px; /* 원하는 만큼의 왼쪽 마진 추가 */
+        }
+
+
+        .cont_tit {
+            font-size: 3em; /* 변경된 부분: 원하는 크기로 설정 */
+            margin-top: 30px; /* 변경된 부분: 상단 여백 추가 */
+        }
+
+        .business-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 10px; /* Add margin to space out business parts */
+
+        }
+
+        .business-part {
+            flex: 0 0 calc(33.33% - 20px); /* Adjust width and margin as needed */
+            margin: 0 10px 20px 10px; /* Adjust margin as needed */
+            text-align: center;
+        }
+
+        .business-part img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 600px; /* 조정 가능: 위 아래 여백을 늘리려면 높이를 조절합니다. */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: right; /* 푸터 전체를 오른쪽 정렬 */
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: flex-end; /* 푸터 전체를 오른쪽 정렬 */
+            gap: 20px; /* 섹션 사이의 간격을 조절 */
+        }
+
+        .footer-section p {
+            font-size: 0.8rem; /* 글씨 크기 조절 */
+            margin: 0; /* 여백 제거 */
+        }
+
+    </style>
 </head>
-
 
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
-        <a class="navbar-brand m-0">
+        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard-pro/pages/dashboards/analytics.html " target="_blank">
             <img src="/static/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-1 font-weight-bold text-white">Menu Bar</span>
         </a>
-
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/main" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Main.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/team-1.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Login.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/team-2.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/team-3.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/order" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Order.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/team-4.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">주문</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Statistics.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/team-5.jpg" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">판매량 통계 및 분석</span>
                 </a>
             </li>
 
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/OrderStatus.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/apple-icon.png" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">주문 현황</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
                 <a href="/sample/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Inventory.png" class="navbar-brand-img h-100">
+                    <img src="/static/img/apple-icon.png" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">재고 관리</span>
                 </a>
             </li>
         </ul>
     </div>
 </aside>
+<body>
 
-<body class="g-sidenav-show  bg-gray-200">
-<h1>메인 페이지</h1>
+<div class="video-container">
+    <video autoplay muted loop>
+        <source src="/static/img/홍보영상.mp4" type="video/mp4">
+    </video>
+    <div class="text-overlay">
+        <p>⚽︎ 2-Kang-in jet engine ⚽︎</p><br>
+        <p>"끊임없는 도전과 혁신으로, 더 높고 먼 세계로의 여정을 제안합니다."</p>
+        <p>"우리의 제트기 엔진은 뛰어난 성능과 미래 지향적 디자인으로,</p><p>불가능한 것은 없다는 확신을 전합니다."</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container index">
+        <h4 class="cont_tit">OUR BUSINESS</h4>
+        <p class="cont_subtit">
+            <span>대한민국</span> JET ENGINE의 미래, <span>2-Gang-in</span>이 만들어 갑니다.
+        </p>
+
+        <br>
+        <br>
+
+        <div class="business-container">
+            <!-- Updated business parts with images and descriptions -->
+            <div class="business-part">
+                <img src="https://otegotextile.com/wp-content/uploads/2022/01/factory-workers-with-face-masks-protected-against-corona-virus-doing-quality-control-production-factory-1536x1024.jpg" alt="Image 1" width="400">
+                <p class="cont_subtit">
+                <h4>업계 최고 수준의 인재</h4> 혁신적이고 전문적인 팀을 형성하고 있습니다.
+                </p>
+            </div>
+            <div class="business-part">
+                <img src="https://jooinn.com/images/factory-8.jpg" alt="Image 2" width="400">
+                <p class="cont_subtit">
+                <h4>자동분류 기술의 선두주자</h4></span> 정확성과 효율성에서 우수한 성과를 창출하고 있습니다.
+                </p>
+            </div>
+            <div class="business-part">
+                <img src="https://oskyeng.com/wp-content/uploads/2021/07/aerospace-industry-oskaloosa-engineering-manufacturing.jpg" alt="Image 3" width="400">
+                <p class="cont_subtit">
+                <h4>국내 최고의 제트 엔진 회사</h4> 끊임없는 연구와 혁신으로 미래를 선도하고 있습니다.
+                </p>
+
+            </div>
+        </div>
+        <h4 class="cont_tit">OUR COMPANY</h4>
+        <p class="cont_subtit">
+            <span>"함께 미래를 향해 나아가는 여정에서 모든 동료가 안심하고 성공할 수 있도록 최선을 다하겠습니다."</span>
+        </p>
+        <br>
+        <br>
+        <div class="image-container">
+            <img src="https://www.waterstreetcompany.com/wp-content/uploads/2019/04/banner-policy-support.jpg" alt="Image 1">
+        </div>
+        <br>
+        <h4 class="cont_tit">OUR PRODUCT</h4>
+        <p class="cont_subtit">
+            <span>"우리는 항상 최고의 성능과 안정성을 추구하며, 고객들에게 뛰어난 경험을 제공하기 위해 지속적으로 연구와 개발에 투자하고 있습니다. "</span>
+        </p>
+        <br>
+        <div class="business-container">
+            <!-- Updated business parts with images and descriptions -->
+            <div class="business-part">
+                <img src="/static/img/광고2.jpg" alt="Image 1">
+                <p class="cont_subtit">
+                <h4>PRODUCT A</h4> 6,454,675,000.00원
+                </p>
+            </div>
+            <div class="business-part">
+                <img src="/static/img/광고3.png" alt="Image 2">
+                <p class="cont_subtit">
+                <h4>PRODUCT B</h4></span> 12,911,700,000.00원
+                </p>
+            </div>
+            <div class="business-part">
+                <img src="/static/img/광고1.png" alt="Image 3">
+                <p class="cont_subtit">
+                <h4>PRODUCT C</h4> 25,823,400,000.00원
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <p>회사명: 2-Kang-in JET ENGINE</p>
+        </div>
+        <div class="footer-section">
+            <p>연락처: 전화번호: 010-1577-1577</p>
+        </div>
+        <div class="footer-section">
+            <p>이메일: smartfactory @ naver.com</p>
+        </div>
+        <div class="footer-section">
+            <p>주소: 경상북도 안동시 안동대 정보통신원</p>
+        </div>
+    </div>
+</footer>
+
 </body>
+</html>
