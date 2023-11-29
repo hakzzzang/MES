@@ -199,11 +199,6 @@
 <!----여기서부터 중간--->
 <div class="container-fluid py-4">
     <div class="d-sm-flex justify-content-between">
-        <div>
-            <a href="javascript:;" class="btn btn-icon bg-gradient-primary">
-                New order
-            </a>
-        </div>
         <div class="d-flex">
             <div class="dropdown d-inline">
                 <a href="javascript:;" class="btn btn-outline-dark dropdown-toggle " data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
@@ -219,10 +214,6 @@
                     <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Remove Filter</a></li>
                 </ul>
             </div>
-            <button class="btn btn-icon btn-outline-dark ms-2 export" data-type="csv" type="button">
-                <i class="material-icons text-xs position-relative">archive</i>
-                Export CSV
-            </button>
         </div>
     </div>
     <div class="row">
@@ -237,7 +228,7 @@
                 <div class="table-responsive">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns"><div class="dataTable-top"><div class="dataTable-dropdown"><label><select class="dataTable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select> entries per page</label></div><div class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div></div><div class="dataTable-container"><table class="table table-flush dataTable-table" id="datatable-search">
                         <thead class="thead-light">
-                        <tr><th data-sortable="" style="width: 17.0324%;"><a href="#" class="dataTable-sorter">Id</a></th><th data-sortable="" style="width: 15.883%;"><a href="#" class="dataTable-sorter">Date</a></th><th data-sortable="" style="width: 15.465%;"><a href="#" class="dataTable-sorter">Status</a></th><th data-sortable="" style="width: 19.3312%;"><a href="#" class="dataTable-sorter">Customer</a></th><th data-sortable="" style="width: 21.2121%;"><a href="#" class="dataTable-sorter">Product</a></th><th data-sortable="" style="width: 11.0763%;"><a href="#" class="dataTable-sorter">Revenue</a></th></tr>
+                        <tr><th data-sortable="" style="width: 17.0324%;"><a href="#" class="dataTable-sorter">Id</a></th><th data-sortable="" style="width: 15.883%;"><a href="#" class="dataTable-sorter">날짜</a></th><th data-sortable="" style="width: 15.465%;"><a href="#" class="dataTable-sorter">제품상태</a></th><th data-sortable="" style="width: 19.3312%;"><a href="#" class="dataTable-sorter">주문자</a></th><th data-sortable="" style="width: 21.2121%;"><a href="#" class="dataTable-sorter">제품</a></th><th data-sortable="" style="width: 11.0763%;"><a href="#" class="dataTable-sorter"> </a></th></tr>
                         </thead>
                         <tbody><tr><td>
                             <div class="d-flex align-items-center">
@@ -257,7 +248,7 @@
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <img src="../../../assets/img/team-2.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                 <span>Orlando Imieto</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
@@ -265,10 +256,10 @@
                         </td><td class="text-xs font-weight-normal">
 <!--                            <span class="my-2 text-xs">$140,20</span>              -->
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="lmateria-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
 
                         </td></tr><tr><td>
@@ -288,17 +279,17 @@
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <img src="../../../assets/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                 <span>Alice Murinho</span>
                             </div>
                         </td><td class="font-weight-normal">
                             <span class="my-2 text-xs">Valvet T-shirt</span>
                         </td><td class="font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -311,14 +302,13 @@
                             <span class="my-2 text-xs">1 Nov, 11:13 AM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">refresh</i></button>
-                                <span>Refunded</span>
+                                <button class="btn btn-icon-only btn-primary btn-outline-primary mb-0 me-2 btn- mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산중</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xs me-2 bg-gradient-dark">
-                                    <span>M</span>
-                                </div>
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                 <span>Michael Mirra</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
@@ -328,10 +318,10 @@ Leather Wallet
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -344,13 +334,14 @@ Leather Wallet
                             <span class="my-2 text-xs">1 Nov, 12:20 PM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button>
+                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
                                 <span>생산완료</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="../../../assets/img/team-3.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                    <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                     <span>Andrew Nichel</span>
                                 </div>
                             </div>
@@ -360,10 +351,10 @@ Bracelet Onu-Lino
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -376,13 +367,14 @@ Bracelet Onu-Lino
                             <span class="my-2 text-xs">1 Nov, 1:40 PM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">clear</i></button>
-                                <span>Canceled</span>
+                                <button class="btn btn-icon-only btn-warning btn-outline-warning mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>주문중</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="../../../assets/img/team-4.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                    <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                     <span>Sebastian Koga</span>
                                 </div>
                             </div>
@@ -393,10 +385,10 @@ Phone Case Pink
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -409,26 +401,27 @@ Phone Case Pink
                             <span class="my-2 text-xs">1 Nov, 2:19 AM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button>
-                                <span>Paid</span>
+                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산완료</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xs me-2 bg-gradient-primary">
-                                    <span>L</span>
-                                </div>
-                                <span>Laur Gilbert</span>
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
+                                <span>김민수</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
-<span class="my-2 text-xs">
-Backpack Niver
+                            <div class="d-flex align-items-center">
+                                <span class="my-2 text-xs">
+Adidas Vio
 </span>
+                            </div>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -441,14 +434,13 @@ Backpack Niver
                             <span class="my-2 text-xs">1 Nov, 3:42 AM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button>
-                                <span>Paid</span>
+                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산완료</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xs me-2 bg-gradient-dark">
-                                    <span>I</span>
-                                </div>
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                 <span>Iryna Innda</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
@@ -457,10 +449,10 @@ Adidas Vio
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -473,26 +465,24 @@ Adidas Vio
                             <span class="my-2 text-xs">2 Nov, 9:32 AM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button>
-                                <span>Paid</span>
+                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산완료</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-xs me-2 bg-gradient-dark">
-                                    <span>A</span>
-                                </div>
+                                <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                 <span>Arrias Liunda</span>
-                            </div>
                         </td><td class="text-xs font-weight-normal">
 <span class="my-2 text-xs">
 Airpods 2 Gen
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -505,13 +495,14 @@ Airpods 2 Gen
                             <span class="my-2 text-xs">2 Nov, 10:14 AM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">done</i></button>
-                                <span>Paid</span>
+                                <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산완료</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="../../../assets/img/team-5.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                    <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                     <span>Rugna Ilpio</span>
                                 </div>
                             </div>
@@ -521,10 +512,10 @@ Bracelet Warret
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr><tr><td>
                             <div class="d-flex align-items-center">
@@ -537,13 +528,14 @@ Bracelet Warret
                             <span class="my-2 text-xs">2 Nov, 12:56 PM</span>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-sm" aria-hidden="true">refresh</i></button>
-                                <span>Refunded</span>
+                                <button class="btn btn-icon-only btn-primary btn-outline-primary mb-0 me-2 btn- mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                </button>
+                                <span>생산중</span>
                             </div>
                         </td><td class="text-xs font-weight-normal">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="../../../assets/img/ivana-squares.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                    <img src="/static/img/icons/flags/man.ico" class="avatar avatar-xs me-2" alt="user image">
                                     <span>Anna Landa</span>
                                 </div>
                             </div>
@@ -554,10 +546,10 @@ Watter Bottle India
 </span>
                         </td><td class="text-xs font-weight-normal">
                             <button class="btn btn-icon btn-2 btn-facebook" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">수정</i></span>
                             </button>
                             <button class="btn btn-icon btn-2 btn-primary" type="button">
-                                <span class="btn-inner--icon"><i class="material-icons">lightbulb</i></span>
+                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td></tr></tbody>
                     </table></div><div class="dataTable-bottom"><div class="dataTable-info">Showing 1 to 10 of 12 entries</div><nav class="dataTable-pagination"><ul class="dataTable-pagination-list"><li class="pager"><a href="#" data-page="1">‹</a></li><li class="active"><a href="#" data-page="1">1</a></li><li class=""><a href="#" data-page="2">2</a></li><li class="pager"><a href="#" data-page="2">›</a></li></ul></nav></div></div>
@@ -565,38 +557,10 @@ Watter Bottle India
             </div>
         </div>
     </div>
-    <footer class="footer py-4  ">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
-                        document.write(new Date().getFullYear())
-                    </script>2023,
-                        made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
-                        for a better web.
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
-                        </li>
-                    </ul>
+
                 </div>
             </div>
         </div>
     </footer>
 </div>>
-<body class="g-sidenav-show  bg-gray-200">
 </body>
