@@ -204,21 +204,25 @@
 <!-- End Navbar -->
 <div class="container-fluid py-4">
     <!-- doughnut-->
-    <div class="row mt-4" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
-        <div class="col-lg-6 col-8">  <!-- 차트 전체 크기-->
-            <div class="card z-index-2 mt-0">
+    <div class="row mt-0" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
+          <div class="col-lg-7 col-8">  <!-- 차트 전체 크기-->
+            <div class="card z-index-4 mt-0">
                 <div class="card-header p-2 pt-2"> <!-- 상단부 크기-->
-                    <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 me-3 float-start">
-                        <!--아이콘 크기-->
-                        <i class="material-icons opacity-10">donut_small</i>
+                    <div>
+                        <img src="/static/img/Salesstatus.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">
+                        <!--아이콘 이미지-->
                     </div>
+<!--                    <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 me-3 float-start">-->
+<!--                        &lt;!&ndash;아이콘 크기&ndash;&gt;-->
+<!--                        <i class="material-icons opacity-10">donut_small</i>-->
+<!--                    </div>-->
                     <h5 class="font-weight-bolder mb-0">제품 판매 현황</h5>
                 </div>
-                <div class="card-body d-flex p-4 pt-2">
+                <div class="card-body d-flex p-4 pt-4">
                     <div class="chart w-100">
-                        <canvas id="doughnut-chart" class="chart-canvas" height="300"></canvas>
+                        <canvas id="doughnut-chart" class="chart-canvas" height="405"></canvas>
                     </div>
-                    <div class="table-responsive w-80 mt-5">
+                    <div class="table-responsive w-80 mt-7">
                         <table class="table align-items-center mb-0">
                             <tbody>
                             <tr>
@@ -228,13 +232,17 @@
                                             <img src="/static/img/small-logos/devto.svg" class="avatar avatar-sm me-2" alt="logo_xd">
                                             <!--로고이미지-->
                                         </div>
+                                        <div>
+                                            <img src="/static/img/Red.png" class="avatar avatar-sm me-2" alt="logo_xd">
+                                            <!--색상표현-->
+                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Jet Engine1</h6>
+                                            <h6 class="mb-0 text-2xl">Jet Engine1</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 25% </span>
+                                    <span class="text-lg font-weight-bold"> 25% </span>
                                 </td>
                             </tr>
                             <tr>
@@ -243,13 +251,17 @@
                                         <div>
                                             <img src="/static/img/small-logos/creative-tim.svg" class="avatar avatar-sm me-2" alt="logo_atlassian">
                                         </div>
+                                        <div>
+                                            <img src="/static/img/Blue.png" class="avatar avatar-sm me-2" alt="logo_xd">
+                                            <!--색상표현-->
+                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Jet Engine2</h6>
+                                            <h6 class="mb-0 text-2xl">Jet Engine2</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 13% </span>
+                                    <span class="text-lg font-weight-bold"> 13% </span>
                                 </td>
                             </tr>
                             <tr>
@@ -258,13 +270,17 @@
                                         <div>
                                             <img src="/static/img/small-logos/bootstrap.svg" class="avatar avatar-sm me-2" alt="logo_slack">
                                         </div>
+                                        <div>
+                                            <img src="/static/img/Green.png" class="avatar avatar-sm me-2" alt="logo_xd">
+                                            <!--색상표현-->
+                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Jet Engine3</h6>
+                                            <h6 class="mb-0 text-2xl">Jet Engine3</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> 12% </span>
+                                    <span class="text-lg font-weight-bold"> 12% </span>
                                 </td>
                             </tr>
                             </tbody>
@@ -275,31 +291,40 @@
         </div>
 
         <!--지역별 제품 판매 현황 차트-->
-        <div class="col-lg-6 col-8">
+        <div class="col-lg-5 col-8">
             <div class="card z-index-2 mt-0">
                 <div class="card-header p-2 pt-2">
-                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">
-                        <i class="material-icons opacity-10">leaderboard</i>
+                    <div>
+                        <img src="/static/img/Salesbyregion.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">
+                        <!--로고이미지-->
                     </div>
+<!--                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">-->
+<!--                        <i class="material-icons opacity-10">leaderboard</i>-->
+<!--                    </div>-->
                     <h5 class="font-weight-bolder mb-0">지역별 제품 판매 현황</h5>
                 </div>
                 <div class="card-body p-4 pt-2">
                     <div class="chart">
-                        <canvas id="bar-chart" class="chart-canvas" height="300"></canvas>
+                        <canvas id="bar-chart" class="chart-canvas" height="420"></canvas>
                     </div>
                 </div>
             </div>
         </div>
         <!-- 일별 매출액 차트-->
         <div class="col-lg-12 mt-lg-5 mt-8">
-            <div class="card overflow-hidden h-100">
+            <div class="card z-index-2 h-100">
+<!--                <div class="card overflow-hidden h-100">-->
                 <div class="card-header p-3 pb-0">
                     <div class="d-flex align-items-center">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                            <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
+                        <div>
+                            <img src="/static/img/Salesmoney.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n6 me-3 float-start" alt="logo_xd">
+                            <!--로고이미지-->
                         </div>
-                        <div class="ms-3">
-                            <h5 class="font-weight-bolder mb-0">일별 매출액</h5>
+<!--                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">-->
+<!--                            <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>-->
+<!--                        </div>-->
+                        <div class="ms-1">
+                            <h5 class="font-weight-bolder mb-5">일별 매출액</h5>
                         </div>
                     </div>
                 </div>
@@ -453,6 +478,7 @@
     });
 
     // Bar chart
+    // 지역별 제품 판매 현황
     var ctx5 = document.getElementById("bar-chart").getContext("2d");
 
     new Chart(ctx5, {
@@ -465,7 +491,7 @@
                 borderWidth: 0,
                 borderRadius: 4,
                 backgroundColor: '#3A416F',
-                data: [15, 20, 12],
+                data: [15, 30, 12],
                 fill: false,
                 maxBarThickness: 70  // Bar 굵기
             }],
@@ -494,7 +520,7 @@
                         color: '#9ca2b7',
                         font: {
                             size: 14,
-                            weight: 300,
+                            weight: 300,    // 글씨 굵기
                             family: "Roboto",
                             style: 'normal',
                             lineHeight: 2
@@ -515,7 +541,7 @@
                         padding: 10,
                         font: {
                             size: 14,
-                            weight: 300,
+                            weight: 300,  // 글씨 굵기
                             family: "Roboto",
                             style: 'normal',
                             lineHeight: 2
