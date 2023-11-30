@@ -48,6 +48,18 @@
 
     <title>Slick</title>
     <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <style>
+        .slick-arrow{
+            position: absolute;
+            top:50%;
+            transform:translateY(-50%);
+            width: 32px; height: 60px;
+            border:none;
+            text-indent: -9999px; overflow: hidden;
+        }
+        .slick-prev{z-index:100; left:10%; background:url(/static/img/left.png) no-repeat 0 0; }
+        .slick-next{right:10%; background:url(/static/img/right.png) no-repeat 0 0; }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
