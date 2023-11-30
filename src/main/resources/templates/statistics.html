@@ -197,21 +197,122 @@
 </aside>
 
 
+<!-- 새로 추가한 부분-->
+<div class="container-fluid py-4">
+    <div class="row ">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">금일 매출액</p>
+                        <h4 class="mb-0">$53k</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than lask week</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">금일 이용자 현황</p>
+                        <h4 class="mb-0">2,300</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than lask month</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">새 고객</p>
+                        <h4 class="mb-0">3,462</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">총 매출액</p>
+                        <h4 class="mb-0">$103,430</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 붙여넣기 -->
 
 <body class="g-sidenav-show  bg-gray-200">
 
 <!-- End Navbar -->
 <div class="container-fluid py-4">
+    <div class="row" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
+        <!-- 일별 매출액 차트-->
+        <div class="col-lg-12 mt-lg-0 mt-8 mb-5">
+            <div class="card z-index-2 h-100">
+                <!--                <div class="card overflow-hidden h-100">-->
+                <div class="card-header p-3 pb-0">
+                    <div class="d-flex align-items-center">
+                        <!--                        <div>-->
+                        <!--                            <img src="/static/img/Salesmoney.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n6 me-3 float-start" alt="logo_xd">-->
+                        <!--                            &lt;!&ndash;로고이미지&ndash;&gt;-->
+                        <!--                        </div>-->
+                        <!--                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">-->
+                        <!--                            <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>-->
+                        <!--                        </div>-->
+                        <div class="ms-1">
+                            <h5 class="font-weight-bolder mb-5">주간 매출액</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mt-4 p-0">
+                    <div class="chart">
+                        <canvas id="chart-line-widgets" class="chart-canvas" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- doughnut-->
-    <div class="row mt-0" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
+    <div class="row" >  <!-- 페이지 상단으로 부터의 거리 mt-? -->
           <div class="col-lg-7 col-8">  <!-- 차트 전체 크기-->
             <div class="card z-index-4 mt-0">
                 <div class="card-header p-2 pt-2"> <!-- 상단부 크기-->
-                    <div>
-                        <img src="/static/img/Salesstatus.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">
-                        <!--아이콘 이미지-->
-                    </div>
+<!--                    <div>-->
+<!--                        <img src="/static/img/Salesstatus.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">-->
+<!--                        &lt;!&ndash;아이콘 이미지&ndash;&gt;-->
+<!--                    </div>-->
 <!--                    <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 me-3 float-start">-->
 <!--                        &lt;!&ndash;아이콘 크기&ndash;&gt;-->
 <!--                        <i class="material-icons opacity-10">donut_small</i>-->
@@ -219,7 +320,7 @@
                     <h5 class="font-weight-bolder mb-0">제품 판매 현황</h5>
                 </div>
                 <div class="card-body d-flex p-4 pt-4">
-                    <div class="chart w-80">
+                    <div class="chart w-60">
                         <canvas id="doughnut-chart" class="chart-canvas" height="405"></canvas>
                     </div>
                     <div class="table-responsive w-80 mt-7">
@@ -294,10 +395,10 @@
         <div class="col-lg-5 col-8">
             <div class="card z-index-2 mt-0">
                 <div class="card-header p-2 pt-2">
-                    <div>
-                        <img src="/static/img/Salesbyregion.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">
-                        <!--로고이미지-->
-                    </div>
+<!--                    <div>-->
+<!--                        <img src="/static/img/Salesbyregion.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n4 me-3 float-start" alt="logo_xd">-->
+<!--                        &lt;!&ndash;로고이미지&ndash;&gt;-->
+<!--                    </div>-->
 <!--                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 me-3 float-start">-->
 <!--                        <i class="material-icons opacity-10">leaderboard</i>-->
 <!--                    </div>-->
@@ -310,28 +411,154 @@
                 </div>
             </div>
         </div>
-        <!-- 일별 매출액 차트-->
-        <div class="col-lg-12 mt-lg-5 mt-8">
-            <div class="card z-index-2 h-100">
-<!--                <div class="card overflow-hidden h-100">-->
-                <div class="card-header p-3 pb-0">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="/static/img/Salesmoney.png" class="icon icon-lg icon-shape bg-gradient-white text-center mt-n6 me-3 float-start" alt="logo_xd">
-                            <!--로고이미지-->
-                        </div>
-<!--                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">-->
-<!--                            <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>-->
-<!--                        </div>-->
-                        <div class="ms-1">
-                            <h5 class="font-weight-bolder mb-5">일별 매출액</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body mt-4 p-0">
-                    <div class="chart">
-                        <canvas id="chart-line-widgets" class="chart-canvas" height="200"></canvas>
-                    </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <h5> VIP 고객</h5>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-lg font-weight-bolder opacity-7">고객명</th>
+                            <th class="text-uppercase text-secondary text-lg font-weight-bolder opacity-7 ps-2">지불한 금액</th>
+                            <th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">최근 주문 일</th>
+                            <th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">주문 건수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--span class : text-success : 초록색 /////////  text-danger : 빨간색-->
+                        <tr>
+                            <td>
+                                <div class="d-flex px-3 py-1">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/blue-shoe.jpg" class="avatar me-3" alt="image">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-lg">김OO1</h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email2@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-lg font-weight-normal mb-0">$130.992</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-lg font-weight-normal mb-0">23/12/04</p>
+                            </td>
+                            <td class="align-middle text-end">
+                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                    <p class="text-lg font-weight-normal mb-0">13</p>
+                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex px-3 py-1">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-mug.jpg" class="avatar me-3" alt="image">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-lg">김OO2</h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email2@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-lg font-weight-normal mb-0">$80.250</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-lg font-weight-normal mb-0">23/12/07</p>
+                            </td>
+                            <td class="align-middle text-end">
+                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                    <p class="text-lg font-weight-normal mb-0">40</p>
+                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex px-3 py-1">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg" class="avatar me-3" alt="image">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-lg">김OO3</h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email3@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-lg font-weight-normal mb-0">$40.600</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-lg font-weight-normal mb-0">23/12/07</p>
+                            </td>
+                            <td class="align-middle text-end">
+                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                    <p class="text-lg font-weight-normal mb-0">54</p>
+                                    <i class="ni ni-bold-up text-sm ms-1 text-danger"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex px-3 py-1">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/bang-sound.jpg" class="avatar me-3" alt="image">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-lg">김OO4</h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email4@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-lg font-weight-normal mb-0">$91.300</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-lg font-weight-normal mb-0">23/12/09</p>
+                            </td>
+                            <td class="align-middle text-end">
+                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                    <p class="text-lg font-weight-normal mb-0">5</p>
+                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex px-3 py-1">
+                                    <div>
+                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/photo-tools.jpg" class="avatar me-3" alt="image">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-lg">김OO5</h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email5@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="text-lg font-weight-normal mb-0">$140.925</p>
+                            </td>
+                            <td class="align-middle text-center text-sm">
+                                <p class="text-lg font-weight-normal mb-0">23/12/10</p>
+                            </td>
+                            <td class="align-middle text-end">
+                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                    <p class="text-lg font-weight-normal mb-0">121</p>
+                                    <i class="ni ni-bold-up text-sm ms-1 text-success"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -636,6 +863,7 @@
             },
         },
     });
+
 </script>
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
