@@ -61,7 +61,10 @@ public class SampleController {
         return "statistics";
     }
 
-
+    @GetMapping("/detail")
+    public String DetailController(){
+        return "detail";
+    }
 
 
 
