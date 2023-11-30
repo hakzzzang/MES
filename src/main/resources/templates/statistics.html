@@ -219,7 +219,7 @@
                     <h5 class="font-weight-bolder mb-0">제품 판매 현황</h5>
                 </div>
                 <div class="card-body d-flex p-4 pt-4">
-                    <div class="chart w-100">
+                    <div class="chart w-80">
                         <canvas id="doughnut-chart" class="chart-canvas" height="405"></canvas>
                     </div>
                     <div class="table-responsive w-80 mt-7">
@@ -228,10 +228,10 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/static/img/small-logos/devto.svg" class="avatar avatar-sm me-2" alt="logo_xd">
-                                            <!--로고이미지-->
-                                        </div>
+<!--                                        <div>-->
+<!--                                            <img src="/static/img/small-logos/devto.svg" class="avatar avatar-sm me-2" alt="logo_xd">-->
+<!--                                            &lt;!&ndash;로고이미지&ndash;&gt;-->
+<!--                                        </div>-->
                                         <div>
                                             <img src="/static/img/Red.png" class="avatar avatar-sm me-2" alt="logo_xd">
                                             <!--색상표현-->
@@ -248,9 +248,9 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/static/img/small-logos/creative-tim.svg" class="avatar avatar-sm me-2" alt="logo_atlassian">
-                                        </div>
+<!--                                        <div>-->
+<!--                                            <img src="/static/img/small-logos/creative-tim.svg" class="avatar avatar-sm me-2" alt="logo_atlassian">-->
+<!--                                        </div>-->
                                         <div>
                                             <img src="/static/img/Blue.png" class="avatar avatar-sm me-2" alt="logo_xd">
                                             <!--색상표현-->
@@ -267,9 +267,9 @@
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="/static/img/small-logos/bootstrap.svg" class="avatar avatar-sm me-2" alt="logo_slack">
-                                        </div>
+<!--                                        <div>-->
+<!--                                            <img src="/static/img/small-logos/bootstrap.svg" class="avatar avatar-sm me-2" alt="logo_slack">-->
+<!--                                        </div>-->
                                         <div>
                                             <img src="/static/img/Green.png" class="avatar avatar-sm me-2" alt="logo_xd">
                                             <!--색상표현-->
@@ -429,13 +429,13 @@
             datasets: [{
                 label: "Projects",
                 weight: 9,
-                cutout: 60,
+                cutout: 100,
                 tension: 0.9,
                 pointRadius: 2,
                 borderWidth: 2,
                 backgroundColor: ['#FF0000', '#0000FF', '#00FF00'],  <!--차트 색상 변경 가능-->
                 data: [15, 20, 12], <!--차트에 값 설정 하는 부분-->
-                fill: false
+                fill: false,
             }],
         },
         options: {
