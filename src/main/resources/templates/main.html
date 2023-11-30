@@ -88,6 +88,26 @@
 
 
     <script>
+        // Array of image URLs
+        var images = [
+            "https://vakilsearch.com/blog/wp-content/uploads/2022/04/shutterstock_192419543-scaled.jpg",
+            "https://www.waterstreetcompany.com/wp-content/uploads/2019/04/banner-policy-support.jpg",
+            "https://incon.co.uk/wp-content/uploads/2016/10/power-station.jpg"
+        ];
+
+        var currentImageIndex = 0;
+
+        // Function to change the image every 3 seconds
+        function changeImage() {
+            document.getElementById('slideshow-image').src = images[currentImageIndex];
+            currentImageIndex = (currentImageIndex + 1) % images.length; // Cycle through images
+        }
+
+        // Set interval to call the changeImage function every 3 seconds
+        setInterval(changeImage, 3000);
+    </script>
+
+    <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -130,19 +150,9 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-40%, -50%);
+            transform: translate(-33%, -50%);
             color: #fff;
             text-align: center;
-        }
-
-        .text-overlay2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: black;
-            text-align: center;
-            font-family: 'Nanum Brush Script', cursive;
         }
 
         .text-overlay h2,
@@ -174,20 +184,29 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
-            margin-top: 10px; /* Add margin to space out business parts */
-
+            margin-top: 20px; /* Adjust margin as needed */
         }
 
         .business-part {
             flex: 0 0 calc(33.33% - 20px); /* Adjust width and margin as needed */
             margin: 0 10px 20px 10px; /* Adjust margin as needed */
             text-align: center;
+            border: 1px solid #ddd; /* Add border for better separation */
+            padding: 10px; /* Add padding for better spacing */
         }
 
         .business-part img {
             max-width: 100%;
             height: auto;
             margin-bottom: 10px;
+        }
+
+        .cont_subtit {
+            font-size: 1.2em;
+        }
+
+        h4 {
+            color: #3498db; /* Change the color as needed */
         }
 
         .image-container {
@@ -221,6 +240,65 @@
             margin: 0; /* 여백 제거 */
         }
 
+        .business-part-new {
+            flex: 0 0 calc(33.33% - 20px);
+            margin: 0 10px 20px 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ddd; /* Add border for better separation */
+            padding: 10px; /* Add padding for better spacing */
+        }
+
+        .business-part-new img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .business-part-new:hover img {
+            transform: scale(1.2);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .business-part-new:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay h4,
+        .overlay p {
+            color: #fff;
+            margin: 0;
+        }
+
+        .overlay button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .overlay button:hover {
+            background-color: #2980b9;
+        }
 
     </style>
 </head>
@@ -302,10 +380,9 @@
     <div class="container index">
         <h4 class="cont_tit">OUR BUSINESS</h4>
         <p class="cont_subtit">
-            <span>대한민국</span> JET ENGINE의 미래, <span>2-Gang-in</span>이 만들어 갑니다.
+            <span>"대한민국</span> JET ENGINE의 미래, <span>2-Gang-in</span>이 만들어 갑니다."
         </p>
 
-        <br>
         <br>
 
         <div class="business-container">
@@ -319,7 +396,7 @@
             <div class="business-part">
                 <img src="https://jooinn.com/images/factory-8.jpg" alt="Image 2" width="400">
                 <p class="cont_subtit">
-                <h4>자동분류 기술의 선두주자</h4></span> 정확성과 효율성에서 우수한 성과를 창출하고 있습니다.
+                <h4>자동분류 기술의 선두주자</h4></span> 정확성과 효율성에서 우수한 성과를 창출합니다.
                 </p>
             </div>
             <div class="business-part">
@@ -335,9 +412,8 @@
             <span>"함께 미래를 향해 나아가는 여정에서 모든 동료가 안심하고 성공할 수 있도록 최선을 다하겠습니다."</span>
         </p>
         <br>
-        <br>
         <div class="image-container">
-            <img src="https://www.waterstreetcompany.com/wp-content/uploads/2019/04/banner-policy-support.jpg" alt="Image 1">
+            <img id="slideshow-image" src="https://www.waterstreetcompany.com/wp-content/uploads/2019/04/banner-policy-support.jpg" alt="Image 1">
         </div>
         <br>
         <h4 class="cont_tit">OUR PRODUCT</h4>
@@ -346,24 +422,37 @@
         </p>
         <br>
         <div class="business-container">
-            <!-- Updated business parts with images and descriptions -->
-            <div class="business-part">
-                <img src="/static/img/광고2.jpg" alt="Image 1">
-                <p class="cont_subtit">
-                <h4>PRODUCT A</h4> 6,454,675,000.00원
-                </p>
+            <div class="business-part-new">
+                <img src="/static/img/광고2.png" alt="Image 1">
+                <div class="overlay">
+                    <h4>High-pressure compressor</h4>
+                    <p class="cont_subtit">
+                    </p>
+                    <button onclick="window.location.href='/sample/order'">구매 하기</button>
+                </div>
+                <h4>PRODUCT A</h4>
             </div>
-            <div class="business-part">
+            <div class="business-part-new">
                 <img src="/static/img/광고3.png" alt="Image 2">
-                <p class="cont_subtit">
-                <h4>PRODUCT B</h4></span> 12,911,700,000.00원
-                </p>
+                <div class="overlay">
+                    <h4>Gearbox</h4>
+                    <p class="cont_subtit">
+                        <!-- Description for Product B -->
+                    </p>
+                    <button onclick="window.location.href='/sample/order'">구매 하기</button>
+                </div>
+                <h4>PRODUCT B</h4>
             </div>
-            <div class="business-part">
+            <div class="business-part-new">
                 <img src="/static/img/광고1.png" alt="Image 3">
-                <p class="cont_subtit">
-                <h4>PRODUCT C</h4> 25,823,400,000.00원
-                </p>
+                <div class="overlay">
+                    <h4>Fan rotor</h4>
+                    <p class="cont_subtit">
+                        <!-- Description for Product C -->
+                    </p>
+                    <button onclick="window.location.href='/sample/order'">구매 하기</button>
+                </div>
+                <h4>PRODUCT C</h4>
             </div>
         </div>
     </div>
