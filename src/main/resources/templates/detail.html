@@ -60,6 +60,58 @@
             opacity: 0 !important
         }
 
+        header.content {
+            background-image: url('https://avatars.mds.yandex.net/i?id=5d1a18e6f57499f41f7524a09e33af5473f338ec-10640163-images-thumbs&n=13');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px; /* padding을 좌우로 20px로 수정 */
+        }
+
+        .content3 {
+            text-align: center;
+            margin-left: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border: 1px solid black; /* Add border for better separation */
+        }
+
+        .content3img {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .image-container {
+            width: 100%; /* Each image takes 100% of the container */
+            margin-bottom: 20px; /* Add margin between images */
+        }
+
+        .image-container img {
+            max-width: 50%; /* Make sure the image doesn't exceed its container */
+            height: auto;
+        }
+
+        .text-container3 {
+            width: 100%; /* Adjust the width of the text container as needed */
+            text-align: left;
+        }
+
+
+        .cont_tit {
+            font-size: 3em; /* 변경된 부분: 원하는 크기로 설정 */
+            margin-top: 30px; /* 변경된 부분: 상단 여백 추가 */
+            border-bottom: 2px solid #000;
+        }
+
+        .cont_tit2 {
+            font-size: 3em; /* 변경된 부분: 원하는 크기로 설정 */
+            margin-top: 30px; /* 변경된 부분: 상단 여백 추가 */
+            text-align: center;
+        }
+
         body {
             margin-left: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
         }
@@ -68,9 +120,56 @@
             width: 300px; /* 왼쪽 메뉴바와 겹치지 않고 출력 */
         }
 
-        h1 {
-            margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
+        header.content h1 {
+            color: #fff; /* Set text color to white */
         }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            float: left; /* 오른쪽으로 띄우기 */
+            color: white;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            margin-left: 280px;
+        }
+
+        .content2 {
+            padding: 20px;
+            text-align: left;
+            margin-left: 270px; /* 원하는 만큼의 왼쪽 마진 추가 */
+        }
+
+        .video2 {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .business-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px; /* Adjust margin as needed */
+        }
+
+        .business-part {
+            flex: 0 0 calc(33.33% - 20px); /* Adjust width and margin as needed */
+            margin: 0 10px 20px 10px; /* Adjust margin as needed */
+            text-align: center;
+            border: 1px solid #ddd; /* Add border for better separation */
+            padding: 10px; /* Add padding for better spacing */
+        }
+
+        .business-part img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
     </style>
     <script>
         (function(a, s, y, n, c, h, i, d, e) {
@@ -132,10 +231,13 @@
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
+    <!-- Additional files -->
+    <!--[if lt IE 10]><script type="text/javascript" src="/assets/js/dev/html5.min.js"></script><![endif]-->
+    <link href="https://aeroreport.de/assets/css/main.min.css?1700046625" rel="stylesheet">
 
 </head>
 
-
+<br>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
@@ -201,33 +303,92 @@
     </div>
 </aside>
 
-<body class="g-sidenav-show bg-gray-200">
-
-<!-- 3D Image -->
-<head>
-    <!-- Additional files -->
-    <!--[if lt IE 10]><script type="text/javascript" src="/assets/js/dev/html5.min.js"></script><![endif]-->
-    <link href="https://aeroreport.de/assets/css/main.min.css?1700046625" rel="stylesheet">
-</head>
-
-<script>
-    var chartData = [];
-    var ChartBackgrounds = [];
-    var timelineData = [];
-    var currentLanguage = "en";
-</script>
 <div class="container-fluid pt-4 px-sm-0">
+
+<!--    <div class="content">-->
+<!--        <div class="container index">-->
+<!--            <h4 class="cont_tit">Product introduction</h4>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="content2">
+        <h4 class="cont_tit2">How does a turbofan engine work?</h4>
+    </div>
+
+    <div class="content">
+        <video autoplay muted loop class="video2">
+            <source src="/static/img/제품 설명 동영상.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="content">
+        <div class="container index">
+            <div class="business-container">
+                <!-- Updated business parts with images and descriptions -->
+                <div class="business-part">
+                    <img src="/static/img/엔진설명1.png" alt="Image 1" width="400">
+                    <p class="cont_subtit">
+                    <h4>흡입구를 통한 공기 흡입</h4>
+                    </p>
+                </div>
+                <div class="business-part">
+                    <img src="/static/img/엔진설명2.png" alt="Image 2" width="400">
+                    <p class="cont_subtit">
+                    <h4>흡입한 공기를 압축시키는 압축기</h4>
+                    </p>
+                </div>
+                <div class="business-part">
+                    <img src="/static/img/엔진설명3.png" alt="Image 3" width="400">
+                    <p class="cont_subtit">
+                    <h4>흡입한 공기를 연소시키는 연소실</h4>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container index">
+            <div class="business-container">
+                <!-- Updated business parts with images and descriptions -->
+                <div class="business-part">
+                    <img src="/static/img/엔진설명4.png" alt="Image 1" width="400">
+                    <p class="cont_subtit">
+                    <h4>폭발된 공기의 힘으로 터빈 작동</h4>
+                    </p>
+                </div>
+                <div class="business-part">
+                    <img src="/static/img/엔진설명5.png" alt="Image 2" width="400">
+                    <p class="cont_subtit">
+                    <h4>연소된 공기가 빠져나가는 배기구</h4>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content2">
+        <h4 class="cont_tit2">What products do we sell?</h4>
+<!--        2-Kang-ibn Jet Engines is a premier jet engine company specializing in the sale of high-quality components such as fan rotors, high-pressure compressors, and gearboxes.-->
+<!--        Renowned for our dedication to excellence, we offer top-tier fan rotors designed to efficiently accelerate air for optimal thrust.-->
+<!--        Our high-pressure compressors boast advanced technology, handling primary compression tasks with exceptional performance and reliability.-->
+<!--        Furthermore, our state-of-the-art gearboxes play a pivotal role in separating components, allowing them to operate at optimal speeds and enhancing overall engine efficiency.-->
+<!--        At 2-Kang-ibn Jet Engines, we take pride in delivering cutting-edge solutions that meet the rigorous standards of the aviation industry, setting a benchmark for quality and innovation in each component we offer.-->
+    </div>
+    <br>
+    <br>
     <!--<div class="row">-->
     <article
             class="article"
             id="wiefunktionierteinturbofantriebwerkaufbaueinestriebwerks"
             itemscope
-            itemtype="http://schema.org/Article">
-        <div class="row me-10 mt-0">
-            <!--            <div class="row me-10 mt-0">-->
-            <!--            <div class="row">-->
-            <div class="col-lg-10 col-10">
-                <!--                <div class="small-12 medium-12 large-12 columns">-->
+            itemtype="http://schema.org/Article"
+    ></article>
+
+    <section class="article-image-hover bgcolorgrey">
+        <div class="row me-10">
+            <div class="small-12 medium-12 large-12 columns">
                 <div class="article-image-hover-container">
                     <video class="article-image-hover-video" autoplay muted loop playsinline data-piwik-title="" title="" src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/185b147e25-1627476449/triebwerk_animation.mp4" type="video/mp4"></video>
                     <div class="marker" data-overlay="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/788a64299b-1628080873/gtf_fan_rotor.svg" style="left:12%; top:0%; width:16%; height:100%;">
@@ -235,7 +396,7 @@
                         <h5 class=" detailtext-headline hidden" style="left:16rem">Fan rotor</h5>
                         <div class=" detailtext hidden" style="left:16rem">The fan rotor is the first and very large rotor in the compressor. Its primary task is to accelerate a large mass flow of air in the bypass flow and thus provide the main thrust. The fan is driven by the low-pressure turbine via the low-pressure shaft. In the geared turbofan engine, the fan is optimized for maximum air flow.
                             <br><br>                                      <span class="detailimage-grey hidden" >
-                  <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/5c7e5c93c7-1628079399/fan-rotor_1.png" width="800" height="450"></span>
+                      <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/5c7e5c93c7-1628079399/fan-rotor_1.png" width="800" height="450"></span>
                             <span class=" text-blue-dynamic hidden" style="left:"><b>Did you know?</b><br>
 It’s always a special sight for the engineers when the fan blades of the Boeing 777 engine GE90 come to MTU Maintenance: these blades measure a full 1.25 meters and weigh 25 kilograms each.</span>
                         </div>
@@ -245,81 +406,126 @@ It’s always a special sight for the engineers when the fan blades of the Boein
                         <h5 class=" detailtext-headline hidden" style="left:8rem">Gearbox</h5>
                         <div class=" detailtext hidden" style="left:8rem">In conventional engines, the low-pressure turbine and the fan sit on one shaft, but here the gearbox decouples the two components. This lets the components run at their optimum speed: the large-diameter fan slower, and the smaller-proportioned low-pressure compressor and low pressure turbine considerably faster. The gearbox is a planetary gear train with a reduction ratio of 3:1 or higher.
                             <br><br>                                      <span class="detailimage-grey hidden" >
-                  <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/86d659d2ce-1629377820/getriebe_1.png" width="800" height="450"></span>
+                      <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/86d659d2ce-1629377820/getriebe_1.png" width="800" height="450"></span>
                             <span class=" text-blue-dynamic hidden" style="left:"><b>Did you know?</b><br>
 Pratt & Whitney, MTU and Fiat Avio began their first preliminary studies into a geared turbofan in the 1990s.</span>
                         </div>
                     </div>
-
-                    <div class="marker" data-overlay="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/0ac350f9b5-1628080873/gtf_high-pressure_compressor.svg" style="left:46%; top:0%; width:15%; height:100%;">  <!--left ; 46 top 0 width 15 he100-->
+                    <div class="marker" data-overlay="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/0ac350f9b5-1628080873/gtf_high-pressure_compressor.svg" style="left:46%; top:0%; width:15%; height:100%;">
                         <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/0ac350f9b5-1628080873/gtf_high-pressure_compressor.svg" class="hidden" width="230" height="150">
                         <h5 class=" detailtext-headline hidden" style="left:-24rem">High-pressure compressor</h5>
                         <div class=" detailtext hidden" style="left:-24rem">The highly efficient high-pressure compressor handles main compression. What sets an advanced turbofan engine apart is that the blades and disk are manufactured as a single part—known as a “blisk.” These high-tech components not only save space and weigh less than conventional rotors with individual blades, but they also provide for better blade aerodynamics. Furthermore, they reduce assembly work and thus costs.
                             <br><br>                                      <span class="detailimage-grey hidden" style='left: -15rem'>
-                  <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/ae11b9c5a3-1628079435/hdv_1.png" width="800" height="450"></span>
+                      <img src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/ae11b9c5a3-1628079435/hdv_1.png" width="800" height="450"></span>
                             <span class=" text-blue-dynamic hidden" style="left:"><b>Did you know?</b><br>
 MTU built a specially designed shop for blisk production at its Munich site, where it manufactures up to 6,000 blisks a year.</span>
                         </div>
                     </div>
-
                     <img class="article-image-hover-image" src="/static/img/gtf_overview_en.svg" alt="gtf_overview_en">
-                    <!--                         src="https://aeroreport.de/media/pages/good-to-know/wie-funktioniert-ein-turbofan-triebwerk-aufbau-eines-triebwerks/image-hover/af35bcf21d-1628081033/gtf_overview_en.svg" alt="gtf_overview_en">-->
                 </div>
             </div>
         </div>
-    </article>
+    </section>
 </div>
+
 <script src="https://aeroreport.de/assets/js/main.js?1700046625"></script>
 <script src="https://aeroreport.de/ar-prototype/dist/bundle.js?1700046625"></script>
-<!--여기서부터 제품 상세설명-->
-<div class="row">
-    <div class="col-12 mt-n12">
+
+<div class="content mt-5">
+    <div class="container index">
+        <h4 class="cont_tit">Fanrotor</h4>
     </div>
 </div>
-<!-- 팬로터-->
-<div class="card mt-5">
-    <div class="card-body p-3 pt-0">
-        <div class="row">
-            <div class="col-4">
-                <img src="/static/img/부품1.jpg" alt="팬 로터" class="border-radius-lg shadow shadow-dark w-100 mt-n4">
-            </div>
-            <div class="col-8 my-auto">
-                <h2>팬 로터</h2>
-                <br>
-                <p class="text-muted text-sm mt-3"> 팬 로터는 압축기의 첫 번째이자 매우 큰 로터입니다. 주요 임무는 우회 흐름에서 대량의 공기 흐름을 가속화하여 주 추력을 제공하는 것입니다. 팬은 저압 샤프트를 통해 저압 터빈에 의해 구동됩니다. 기어드 터보팬 엔진에서 팬은 최대 공기 흐름에 최적화되어 있습니다.</p>
-            </div>
+
+<div class="content3">
+    <div class="content3img">
+        <div class="image-container">
+            <img src="/static/img/광고1.png" alt="Image1">
+        </div>
+        <div class="image-container">
+            <img src="/static/img/Fan_rotor_Detail.png" alt="Image2">
         </div>
     </div>
-</div>
-<!-- 변속 장치-->
-<div class="card mt-5">
-    <div class="card-body p-3 pt-0">
-        <div class="row">
-            <div class="col-4">
-                <img src="/static/img/부품2.jpg" alt="변속 장치" class="border-radius-lg shadow shadow-dark w-100 mt-n4">
-            </div>
-            <div class="col-8 my-auto">
-                <h2>변속 장치</h2>
-                <br>
-                <p class="text-muted text-sm mt-3"> 기존 엔진에서는 저압 터빈과 팬이 하나의 샤프트에 위치하지만 여기서는 기어박스가 두 구성요소를 분리합니다. 이를 통해 구성 요소가 최적의 속도로 작동할 수 있습니다. 즉, 직경이 큰 팬은 더 느리고, 비율이 작은 저압 압축기 및 저압 터빈은 훨씬 더 빠릅니다. 기어박스는 감속비가 3:1 이상인 유성기어열입니다.</p>
-            </div>
-        </div>
+    <div class="text-container3">
+        <h4>복합적인 드론 및 항공기 설계 가능성</h4>
+        Fanrotor는 전통적인 헬리콥터와 고정익 비행기의 장점을 결합하여 복합적인 드론 및 항공기를 설계할 수 있는 기술입니다.
+        <br>
+        <br>
+        <br>
+        <h4>에너지 효율성 향상</h4>
+        Fanrotor는 헬리콥터와 유사한 수직 이착륙 및 이륙 기능을 제공하면서도, 회전 날개에 의한 추진력을 활용하여 에너지 효율성을 향상시킵니다.
+        <br>
+        <br>
+        <br>
+        <h4>소음 감소 및 안전성 향상</h4>
+        Fanrotor는 회전하는 날개가 고정익 비행기처럼 전방으로 이동하지 않고 헬리콥터처럼 수직 이동하므로 소음이 상대적으로 낮습니다.
     </div>
 </div>
-<!--고압압축기 -->
-<div class="card mt-5">
-    <div class="card-body p-3 pt-0">
-        <div class="row">
-            <div class="col-4">
-                <img src="/static/img/부품3.jpg" alt="고압압축기" class="border-radius-lg shadow shadow-dark w-100 mt-n4">
-            </div>
-            <div class="col-8 my-auto">
-                <h2>고압 압축기</h2>
-                <br>
-                <p class="text-muted text-sm mt-3"> 고효율 고압 압축기는 주압축을 처리합니다. 고급 터보팬 엔진을 차별화하는 점은 블레이드와 디스크가 "블리스크"라고 알려진 단일 부품으로 제조된다는 것입니다. 이러한 첨단 기술 구성 요소는 개별 블레이드가 있는 기존 로터보다 공간을 절약하고 무게도 가벼울 뿐만 아니라 더 나은 블레이드 공기역학을 제공합니다. 또한 조립 작업을 줄여 비용을 절감합니다.</p>
-            </div>
-        </div>
+<div class="content mt-5">
+    <div class="container index">
+        <h4 class="cont_tit">GearBox</h4>
     </div>
 </div>
+<br>
+<div class="content3">
+    <div class="content3img">
+        <div class="image-container">
+            <img src="/static/img/광고3.png" alt="Image1">
+        </div>
+        <br>
+        <div class="image-container">
+            <img src="/static/img/Gearbox_Detail.png" alt="Image2">
+        </div>
+    </div>
+    <div class="text-container3">
+        <h4>전력 및 속도 제어의 유연성</h4>
+        기어박스는 여러 개의 기어를 포함하고 있어, 동일한 회전 속도에서도 다양한 토크(힘) 및 속도 전달이 가능합니다.
+        <br>
+        <br>
+        <br>
+        <h4>효율성 및 연료 경제성 향상</h4>
+        기어박스를 통해 엔진의 회전 운동을 효과적으로 변속할 수 있기 때문에, 다양한 속도 및 부하 상황에 최적화된 엔진 성능을 유지할 수 있습니다.
+        <br>
+        <br>
+        <br>
+        <h4>장비 및 시스템 보호</h4>
+        기어박스는 특히 고출력 엔진이나 회전 운동이 많이 필요한 어플리케이션에서 사용되며, 이는 장비와 시스템을 과도한 은하, 충격, 또는 부하로부터 보호할 수 있습니다.
+    </div>
+</div>
+<br>
+<div class="content mt-5">
+    <div class="container index">
+        <h4 class="cont_tit">High Pressure Compressor</h4>
+    </div>
+</div>
+<br>
+<div class="content3">
+    <div class="content3img">
+        <div class="image-container">
+            <img src="/static/img/광고2.png" alt="Image1">
+        </div>
+        <br>
+        <div class="image-container">
+            <img src="/static/img/High-Pressure_Compressor_Detail.png" alt="Image2">
+        </div>
+    </div>
+    <div class="text-container3">
+        <h4>효율적인 공기 압축</h4>
+        고압 컴프레서는 대기 중의 공기를 고압으로 압축하는 역할을 합니다. 이는 엔진 내 연소를 위해 필요한 공기의 압력을 유지하고, 연소 효율성을 향상시킵니다.
+        <br>
+        <br>
+        <br>
+        <h4>발전기 효율 향상</h4>
+        고압 컴프레서는 발전기의 성능에 직접적인 영향을 미칩니다. 더 높은 공기 압력은 연소 공기의 밀도를 증가시키며, 이는 연소 프로세스에서 더 많은 연료를 효과적으로 연소하게 만듭니다.
+        <br>
+        <br>
+        <br>
+        <h4>항공기 성능 향상</h4>
+        특히 항공기에서는 고압 컴프레서가 비행 성능에 중요한 역할을 합니다. 높은 압축 비율과 효율적인 공기 압축은 항공기의 엔진에서 높은 추력 및 연료 효율성을 제공합니다.
+    </div>
+    </div>
+</div>
+
+
 </body>
 </html>
