@@ -17,9 +17,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/static/img/favicon.png">
+    <link rel="icon" type="image/png" href="/static/img/Company.png">
     <title>
-        Material Dashboard 2 PRO by Creative Tim
+        Smartfactory_Team-2-Kang-in
     </title>
 
 
@@ -226,20 +226,20 @@
                         </div>
                         <div class="card-body">
                             <form role="form" class="text-start">
-                                <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control">
+                                <div class="input-group input-group-dynamic mb-3">
+                                    <label class="form-label">Id</label>
+                                    <input type="email" class="form-control" aria-label="Email" id="id">
                                 </div>
-                                <div class="input-group input-group-outline mb-3">
+                                <div class="input-group input-group-dynamic mb-3">
                                     <label class="form-label">Password</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" aria-label="Password" id="password">
                                 </div>
                                 <div class="form-check form-switch d-flex align-items-center mb-3">
                                     <input class="form-check-input" type="checkbox" id="rememberMe" checked>
                                     <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
                                 </div>
                                 <div class="text-center">
-                                    <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                                    <button type="button" id="loginButton" class="btn bg-gradient-primary w-100 my-4 mb-2" onclick="validateAndSignUp(event)">Sign in</button>
                                 </div>
                                 <p class="mt-4 text-sm text-center">
                                     Don't have an account?
@@ -286,6 +286,36 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+</script>
+<script>
+    function validateAndSignUp(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // 양식 유효성을 검사하는 함수
+        var id = document.getElementById("id").value;
+        var password = document.getElementById("password").value;
+
+        // 기본적인 유효성 검사 - 필드가 비어있는지 확인
+        if (id === "") {
+            alert("아이디를 작성해주세요!");
+        }
+        else if (password === "") {
+            alert("비밀번호를 작성해주세요!");
+        }
+        else {
+            document.querySelector('form').submit();
+            alert("로그인이 완료되었습니다!");
+            window.location.href = "/sample/main";
+        }
+
+        // 여기에 아이디가 없을 경우 경고문 (SQL 연동)
+
+        // 아이디는 맞지만 비밀번호가 다를 때 경고문 (SQL 연동)
+
+        // 관리자인지 아닌지 SQL 확인
+
+    }
+
 </script>
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
