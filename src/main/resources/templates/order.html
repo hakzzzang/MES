@@ -17,9 +17,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/static/img/favicon.png">
+    <link rel="icon" type="image/png" href="/static/img/Company.png">
     <title>
-        Material Dashboard 2 PRO by Creative Tim
+        Smartfactory_Team-2-Kang-in
     </title>
 
 
@@ -71,6 +71,24 @@
         h1 {
             margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
         }
+
+        .your-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* 상단 간격 조절 */
+        }
+
+        .your-table th, .your-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .your-table th {
+            background-color: #f2f2f2;
+        }
+
+
     </style>
 
     <style>
@@ -408,35 +426,24 @@
         </div>
     </div>
 </div>
+<table class="your-table mt-4">
+    <thead>
+    <tr>
+        <th class="text-center w-20">제품명</th>
+        <th class="text-center w-20">지역</th>
+        <th class="text-center w-20">개수</th>
+        <th class="text-center w-20">가격</th>
+        <th class="text-center w-20">주문/취소</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 여기에 동적으로 행이 추가될 것입니다 -->
+    </tbody>
+</table>
 
-<!--테이블 추가 해야함 제품명, 지역, 갯수, 가격 UI 추가 공간 -->
-<br>
-<br>
-<div class="table-responsive">
-    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-        <div class="dataTable-container">
-            <table class="table table-flush dataTable-table" id="datatable-search">
-                <thead class="thead-light">
-                <tr>
-                    <th data-sortable="" style="width: 17.0324%;">
-                        <a href="#" class="dataTable-sorter">제품명</a>
-                    </th>
-                    <th data-sortable="" style="width: 15.883%;">
-                        <a href="#" class="dataTable-sorter">지역</a>
-                    </th>
-                    <th data-sortable="" style="width: 15.465%;">
-                        <a href="#" class="dataTable-sorter">수량</a>
-                    </th>
-                    <th data-sortable="" style="width: 19.3312%;">
-                        <a href="#" class="dataTable-sorter">가격</a>
-                    </th>
-                </tr>
-                </thead>
-                <tbody id="table-body">
-                <!-- Add your table body (tr and td elements) here -->
-                </tbody>
-            </table>
-        </div>
+<div class="row mt-3 mb-5">
+    <div class="col-12 text-center">
+        <button class="btn bg-gradient-success mb-0 ms-2" type="button" name="button">주문하기</button>
     </div>
 </div>
 
@@ -467,18 +474,25 @@
                     price = 0;
             }
 
-            // 추가할 행의 HTML 구조 정의
-            var newRow = `
-                <tr>
-                    <td>${partName}</td>
-                    <td>${area}</td>
-                    <td>${num}개</td>
-                    <td>$${price}</td>
-                </tr>
+            // 추가할 정보의 HTML 구조 정의
+            var newElement = `
+               <tr>
+                    <td class="text-center w-20">${partName}</td>
+                    <td class="text-center w-20">${area}</td>
+                    <td class="text-center w-20">${num}개</td>
+                    <td class="text-center w-20">$${price}</td>
+                    <td class="text-center w-20">
+                       <button class="btn bg-gradient-danger mb-0 ms-2 cancel-button" type="button" name="button">취소하기</button>
+                   </td>
+               </tr>
             `;
+            // 정보를 추가할 테이블의 tbody에 새로운 엘리먼트 추가
+            $(".your-table tbody").append(newElement);
+        });
 
-            // 정보를 추가할 테이블의 tbody에 새로운 행 추가
-            $("#table-body").append(newRow);
+        // 취소하기 버튼 클릭 시 해당 행 삭제
+        $(".your-table tbody").on("click", ".cancel-button", function() {
+            $(this).closest("tr").remove();
         });
     });
 </script>
