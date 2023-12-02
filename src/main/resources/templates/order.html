@@ -157,6 +157,7 @@
     </script>
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+    <script src="/static/opensrc/jquery-3.6.0.js"></script>
 </head>
 
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -273,7 +274,7 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="FanNum">
+                                                        <input type="number" class="form-control text-white fs-5 text-center" id="FanNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -283,7 +284,7 @@
                             </div>
                             <div class="row mt-2 mb-1">
                                 <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                    <button id="FanInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +340,7 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="GearNum">
+                                                        <input type="number" class="form-control text-white fs-5 text-center" id="GearNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -349,7 +350,7 @@
                             </div>
                             <div class="row mt-2 mb-1">
                                 <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                    <button id="GearInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
                                 </div>
                             </div>
                         </div>
@@ -406,7 +407,7 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="HighNum">
+                                                        <input type="number" class="form-control text-white fs-5 text-center" id="HighNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -416,7 +417,7 @@
                             </div>
                             <div class="row mt-2 mb-1">
                                 <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button id="HighButton" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                    <button id="HighInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
                                 </div>
                             </div>
                         </div>
@@ -447,7 +448,7 @@
     </div>
 </div>
 
-<script src="/static/opensrc/jquery-3.6.0.js"></script>
+
 
 <script>
     $(document).ready(function () {
@@ -486,8 +487,30 @@
                    </td>
                </tr>
             `;
-            // 정보를 추가할 테이블의 tbody에 새로운 엘리먼트 추가
-            $(".your-table tbody").append(newElement);
+
+            function handleInputEvent(input) {
+                // 입력된 값이 0보다 작은지 확인합니다.
+                if (parseInt(input.val()) < 0) {
+                    // 만약 그렇다면 값을 0으로 설정합니다.
+                    input.val(0);
+                }
+            }
+
+            // 각 input 요소에 대한 이벤트 리스너 등록
+            $('#FanNum, #GearNum, #HighNum').on('input', function () {
+                handleInputEvent($(this));
+            });
+
+            if(num === undefined || num <= 0){
+                alert('수량을 입력 해 주세요.')
+                return;
+            }
+            else
+                // 정보를 추가할 테이블의 tbody에 새로운 엘리먼트 추가
+                ($(".your-table tbody").append(newElement));
+
+
+
         });
 
         // 취소하기 버튼 클릭 시 해당 행 삭제
@@ -496,7 +519,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>
