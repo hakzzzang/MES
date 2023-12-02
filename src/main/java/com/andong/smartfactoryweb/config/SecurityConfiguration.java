@@ -31,12 +31,10 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Autowired
+	ServletConfiguration servletConfiguration;
+
+	@Autowired
 	private UserServiceImpl userService;
-	
-	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 	@Bean
 	public AuthenticationFailureHandler loginFailureHandler() { return new LoginFailureHandler(); }
@@ -48,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
 		return new AjaxAwareAuthenticationEntryPoint("/login");
 	}
-	
+
 	@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/**");
@@ -57,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity security) throws Exception{
 		security.csrf().disable().authorizeRequests()
-					.antMatchers("/login", "/privacy", "/sample/**", "/rest/**", "/file/**","/login").permitAll()
+					.antMatchers("/**", "/login", "/privacy", "/sample/**", "/rest/**", "/file/**","/login").permitAll()
 					.anyRequest().authenticated()
 				.and()
 					.formLogin()
@@ -78,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService)
-			.passwordEncoder(new BCryptPasswordEncoder());
+			.passwordEncoder(servletConfiguration.passwordEncoder());
    }
 
 }

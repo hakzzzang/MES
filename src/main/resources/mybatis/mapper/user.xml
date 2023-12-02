@@ -4,13 +4,14 @@
     <resultMap id="userResultMap" type="com.andong.smartfactoryweb.app.user.vo.LoginVO">
         <id property="userSeq" column="user_seq"/>
         <result property="userId" column="user_id"/>
+        <result property="password" column="password"/>
         <result property="userName" column="user_name" />
         <result property="nickname" column="nickname" />
         <result property="email" column="email"/>
         <result property="phoneNumber" column="phone_number"/>
         <result property="createAt" column="create_at"/>
         <result property="updateAt" column="update_at"/>
-        <collection property="userAuthorityList" javaType="java.util.List"
+        <collection property="userAuthorities" javaType="java.util.List"
                     ofType="com.andong.smartfactoryweb.app.user.vo.UserAuthorityVO">
             <id property="authoritySeq" column="authority_seq"/>
             <result property="authority" column="authority"/>
@@ -35,5 +36,48 @@
         FROM user U
                  LEFT JOIN user_authority A on U.user_seq = A.user_seq
         WHERE U.user_id = #{userid}
+    </select>
+
+    <insert id="insertNewUser" parameterType="com.andong.smartfactoryweb.app.user.vo.UserVO">
+        INSERT INTO user(
+            user_id
+            , password
+            , user_name
+            , phone_number
+            , email
+            , region
+            , create_at
+            , create_id
+        )VALUES (
+            #{userId}
+            , #{password}
+            , #{userName}
+            , #{phoneNumber}
+            , #{email}
+            , #{region}
+            , now()
+            , #{userId}
+        )
+        <selectKey keyProperty="userSeq" resultType="long" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertUserAuthority" parameterType="com.andong.smartfactoryweb.app.user.vo.UserAuthorityVO">
+        INSERT INTO user_authority(
+            user_seq
+            , authority
+            , create_at
+            , create_id
+        )VALUES(
+            #{userSeq}
+            , #{authority}
+            , now()
+            , #{createId}
+        )
+    </insert>
+
+    <select id="searchAllUsers" resultType="com.andong.smartfactoryweb.app.user.vo.UserVO">
+        SELECT * FROM user WHERE 1=1
     </select>
 </mapper>
