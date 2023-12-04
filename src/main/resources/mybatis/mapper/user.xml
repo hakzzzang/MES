@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
 <mapper namespace="com.andong.smartfactoryweb.mapper.UserMapper">
+
     <resultMap id="userResultMap" type="com.andong.smartfactoryweb.app.user.vo.LoginVO">
         <id property="userSeq" column="user_seq"/>
         <result property="userId" column="user_id"/>
@@ -71,7 +74,6 @@
             , create_id
         )VALUES(
             #{userSeq}
-            , #{authority}
             , now()
             , #{createId}
         )
