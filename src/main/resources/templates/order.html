@@ -509,14 +509,32 @@
                 // 정보를 추가할 테이블의 tbody에 새로운 엘리먼트 추가
                 ($(".your-table tbody").append(newElement));
 
-
-
         });
 
         // 취소하기 버튼 클릭 시 해당 행 삭제
         $(".your-table tbody").on("click", ".cancel-button", function() {
-            $(this).closest("tr").remove();
+            var confirmCancel = confirm('정말로 취소하시겠습니까?')
+            if (confirmCancel){
+                $(this).closest("tr").remove();
+            }
+            else{
+                // 취소 철회
+            }
         });
+
+        // 주문하기 버튼 클릭 시
+        $(".btn.bg-gradient-success").on("click", function () {
+            var ordertable = $(".your-table tbody tr")
+            if(ordertable.length === 0){
+                alert('주문하실 상품과 수량을 선택 해 주세요.')
+                return;
+            }
+            else{
+                confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
+                window.location.href = "/sample/orderstatus";
+            }
+        });
+
     });
 </script>
 </body>
