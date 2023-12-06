@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Bean
 	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-		return new AjaxAwareAuthenticationEntryPoint("/sample/login");
+		return new AjaxAwareAuthenticationEntryPoint("/SF/login");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity security) throws Exception{
 		security.csrf().disable().authorizeRequests()
-				.antMatchers("/sample/login","/sample/main","/sample/signup","/sample/detail").permitAll()
+				.antMatchers("/SF/login","/SF/main","/SF/signup","/SF/detail").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()

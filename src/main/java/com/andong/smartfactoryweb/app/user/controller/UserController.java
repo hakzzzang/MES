@@ -17,12 +17,12 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/SF")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
     private final UserService userService;
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public String login(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
@@ -40,20 +40,22 @@ public class UserController {
 
 
             // 여기에 성공 시의 처리를 추가하면 됩니다.
-            return "redirect:/sample/main";
+
+            return "main";
         } else {
             // 비밀번호 불일치 또는 사용자가 존재하지 않음: 로그인 실패
             log.info("로그인 실패: {}", userId);
 
-            // 실패 시의 처리를 추가하거나 에러 메시지를 표시할 수 있습니다.
-            return "redirect:/login?error";
+//            // 실패 시의 처리를 추가하거나 에러 메시지를 표시할 수 있습니다.
+//            return "redirect:/SF/login?error";
+            return "login";
         }
     }
 
-    @RequestMapping(value="/sign-up", method = RequestMethod.POST)//POSTMAPPING
+    @RequestMapping(value="/signup", method = {RequestMethod.POST, RequestMethod.GET})//POSTMAPPING
     public String signUp(UserVO userVO){
         userService.signUp(userVO);
-        return "redirect:/sample/login";
+        return "signup";
     }
 
     @RequestMapping(value="/users", method = RequestMethod.GET)
@@ -61,7 +63,7 @@ public class UserController {
         List<UserVO> users = userService.searchAllUsers();
         log.debug("");
         model.addAttribute("users", users);
-        return "/main";
+        return "main";
     }
 //
     // 로그아웃을 처리하는 메서드
@@ -72,6 +74,16 @@ public class UserController {
 
 
         // 로그아웃 후 리다이렉트할 경로를 지정 (예: 메인 페이지로 리다이렉트)
-        return "redirect:/sample/main";
+        return "redirect:/main";
+    }
+
+    @GetMapping("/detail")
+    public String DetailController(){
+        return "detail";
+    }
+
+    @GetMapping("/main")
+    public String MainController(){
+        return "main";
     }
 }

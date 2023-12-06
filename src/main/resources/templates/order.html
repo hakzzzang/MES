@@ -173,7 +173,7 @@
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/main" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/main" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Main.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
@@ -185,44 +185,44 @@
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
-                <a href="/sample/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
-                <a href="/sample/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/detail" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/detail" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Detail.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">상품 소개</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/order" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/order" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Order.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Statistics.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">판매량 통계 및 분석</span>
                 </a>
             </li>
 
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/OrderStatus.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문 현황</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/sample/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Inventory.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">재고 관리</span>
                 </a>
@@ -551,7 +551,7 @@
             }
             else{
                 // confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
-                // window.location.href = "/sample/orderstatus";
+                // window.location.href = "/SF/orderstatus";
                 // 주문 데이터를 담을 배열
                 var orders = [];
 
@@ -565,13 +565,13 @@
                     orders.push(order);
                 });
                 $.ajax({
-                    url: '/order/placeOrder', // 서버의 주문 처리 엔드포인트로 수정
+                    url: '/SF/placeOrder', // 서버의 주문 처리 엔드포인트로 수정
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(orders),
                     success: function (response) {
                         confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
-                        window.location.href = "/sample/orderstatus";
+                        window.location.href = "/SF/orderstatus";
                     },
                     error: function () {
                         alert('주문 실패. 다시 시도하세요.');
