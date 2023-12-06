@@ -63,7 +63,7 @@ public class UserController {
         model.addAttribute("users", users);
         return "/main";
     }
-
+//
     // 로그아웃을 처리하는 메서드
     @GetMapping("/logout")
     public String logout(HttpSession session) {
