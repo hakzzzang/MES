@@ -190,7 +190,7 @@
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
                 <a href="/sample/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
