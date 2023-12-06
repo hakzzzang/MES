@@ -24,6 +24,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             log.error(e.getMessage());
         }
 
-        response.sendRedirect("/main");
+        response.sendRedirect("/sample/main");
     }
 }

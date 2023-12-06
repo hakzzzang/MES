@@ -137,19 +137,13 @@
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0" th:if="${session.user ne null}">
-                <a href="#" th:href="@{/user/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
-                    <img src="/static/img/Login.png" class="navbar-brand-img h-100">
-                    <span class="nav-link-text ms-2 ps-1">로그아웃</span>
-                </a>
-            </li>
-            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
+            <li class="nav-item mb-2 mt-0">
                 <a href="/sample/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
+            <li class="nav-item mb-2 mt-0">
                 <a href="/sample/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
@@ -231,22 +225,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form role="form" class="text-start" action="/user/login" method="post">
+                            <form role="form" id="signupForm" action="/login" method="post">
                                 <div class="input-group input-group-dynamic mb-3">
                                     <label class="form-label">Id</label>
-                                    <input type="text" class="form-control" aria-label="text" id="userId" name="userId">
+                                    <input type="text" class="form-control" aria-label="Email" id="id" name="username">
                                 </div>
                                 <div class="input-group input-group-dynamic mb-3">
                                     <label class="form-label">Password</label>
                                     <input type="password" class="form-control" aria-label="Password" id="password" name="password">
                                 </div>
-                                <div class="text-center">
-                                    <button type="submit" id="loginButton" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                                <div th:if="${param.error}" style="color: red; font-weight: bold;">
+                                    <p>로그인에 실패하였습니다. Please try again.</p>
                                 </div>
-                                <p class="mt-4 text-sm text-center">
-                                    Don't have an account?
-                                    <a href="/sample/signup" class="text-primary text-gradient font-weight-bold">Sign up</a>
-                                </p>
+                                <div class="text-center">
+                                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                                </div>
+                                <p class="text-sm mt-3 mb-0">Don't have an account? <a href="/sample/register" class="text-primary text-gradient font-weight-bolder">Sign up</a></p>
                             </form>
                         </div>
                     </div>
@@ -289,36 +283,7 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
-<script>
-    function validateAndSignUp(event) {
-        event.preventDefault(); // Prevent the default form submission
 
-        // 양식 유효성을 검사하는 함수
-        var id = document.getElementById("id").value;
-        var password = document.getElementById("password").value;
-
-        // 기본적인 유효성 검사 - 필드가 비어있는지 확인
-        if (id === "") {
-            alert("아이디를 작성해주세요!");
-        }
-        else if (password === "") {
-            alert("비밀번호를 작성해주세요!");
-        }
-        else {
-            document.querySelector('form').submit();
-            alert("로그인이 완료되었습니다!");
-            window.location.href = "/sample/main";
-        }
-
-        // 여기에 아이디가 없을 경우 경고문 (SQL 연동)
-
-        // 아이디는 맞지만 비밀번호가 다를 때 경고문 (SQL 연동)
-
-        // 관리자인지 아닌지 SQL 확인
-
-    }
-
-</script>
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

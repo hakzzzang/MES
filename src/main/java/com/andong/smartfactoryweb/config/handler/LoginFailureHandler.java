@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginFailureHandler implements AuthenticationFailureHandler {
-	private final String DEFAULT_FAILURE_URL = "/login?error=true";
+	private final String DEFAULT_FAILURE_URL = "/sample/login?error=true";
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 		String errorCode = null;

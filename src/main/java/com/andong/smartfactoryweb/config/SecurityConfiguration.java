@@ -44,39 +44,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Bean
 	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-		return new AjaxAwareAuthenticationEntryPoint("/login");
+		return new AjaxAwareAuthenticationEntryPoint("/sample/login");
 	}
 
 	@Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/**");
-    }
-	
-	@Override
-    protected void configure(HttpSecurity security) throws Exception{
-		security.csrf().disable().authorizeRequests()
-					.antMatchers("/**", "/login", "/privacy", "/sample/**", "/rest/**", "/file/**","/login").permitAll()
-					.anyRequest().authenticated()
-				.and()
-					.formLogin()
-						.loginPage("/login")
-						.defaultSuccessUrl("/")
-						.failureHandler(loginFailureHandler())
-						.successHandler(loginSuccessHandler())
-				.and()
-					.logout()
-						.logoutSuccessUrl("/login")
-						.invalidateHttpSession(true)
-				.and()
-					.exceptionHandling()
-						.authenticationEntryPoint(loginUrlAuthenticationEntryPoint());
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/static/**");
+	}
 
-    }
+	@Override
+	protected void configure(HttpSecurity security) throws Exception{
+		security.csrf().disable().authorizeRequests()
+				.antMatchers("/sample/login","/sample/main","/sample/signup","/sample/detail").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/")
+				.failureHandler(loginFailureHandler())
+				.successHandler(loginSuccessHandler())
+				.and()
+				.logout()
+				.logoutSuccessUrl("/login")
+				.invalidateHttpSession(true)
+				.and()
+				.exceptionHandling()
+				.authenticationEntryPoint(loginUrlAuthenticationEntryPoint());
+
+	}
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService)
-			.passwordEncoder(servletConfiguration.passwordEncoder());
-   }
+				.passwordEncoder(servletConfiguration.passwordEncoder());
+	}
 
 }

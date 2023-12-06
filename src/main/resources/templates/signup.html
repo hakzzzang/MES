@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -23,35 +23,6 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-
-<!--    <script>-->
-<!--        document.addEventListener("DOMContentLoaded", function () {-->
-<!--            function validateAndSignUp(event) {-->
-<!--                event.preventDefault(); // Prevent the default form submission-->
-
-<!--                // 양식 유효성을 검사하는 함수-->
-<!--                var name = document.getElementById("name").value;-->
-<!--                var id = document.getElementById("id").value;-->
-<!--                var password = document.getElementById("password").value;-->
-<!--                var phoneNumber = document.getElementById("phoneNumber").value;-->
-<!--                var email = document.getElementById("email").value;-->
-<!--                var region = document.getElementById("region").value;-->
-
-<!--                // 기본적인 유효성 검사 - 필드가 비어있는지 확인-->
-<!--                if (name === "" || id === "" || password === "" || phoneNumber === "" || email === "" || region === "") {-->
-<!--                    alert("모든 항목을 작성해야 회원가입을 완료할 수 있습니다.");-->
-<!--                } else {-->
-<!--                    document.getElementById("signupForm").submit();-->
-<!--                    alert("회원 가입이 완료 되었습니다. 로그인 후 주문을 이용할 수 있습니다.");-->
-<!--                    window.location.href = "/sample/login";-->
-<!--                }-->
-<!--            }-->
-
-<!--            // 이벤트 핸들러 등록-->
-<!--            document.getElementById("signupForm").addEventListener("submit", validateAndSignUp);-->
-<!--        });-->
-<!--    </script>-->
-
 </head>
 
 <body>
@@ -94,10 +65,16 @@
                                     <label class="form-label">Region</label>
                                     <input type="text" class="form-control" aria-label="Name" id="region" name="region">
                                 </div>
+                                <div class="form-check text-start ps-0">
+                                    <input class="form-check-input bg-dark border-dark" type="checkbox" value="" id="flexCheckDefault" checked>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                    </label>
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign up</button>
                                 </div>
---
+                                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/sample/login" class="text-primary text-gradient font-weight-bolder">Sign in</a></p>
                             </form>
                         </div>
                     </div>
