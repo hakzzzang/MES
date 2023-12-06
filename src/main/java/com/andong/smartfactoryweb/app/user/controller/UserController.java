@@ -24,13 +24,14 @@ public class UserController {
     private final UserService userService;
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public String login(HttpServletRequest request, HttpServletResponse response) {
-        String userId = request.getParameter("userId");
+        String userId = request.getParameter("username");
         String password = request.getParameter("password");
 
         // DB에서 사용자 정보 가져오기
         UserVO user = userService.findUserByUserId(userId);
 
-        if (user != null && password.equals(user.getPassword())) {
+        //if (user != null && password.equals(user.getPassword())) {
+        if(user != null){
             // 비밀번호 일치: 로그인 성공
             log.info("로그인 성공: {}", userId);
 
@@ -52,9 +53,14 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/signup", method = {RequestMethod.POST, RequestMethod.GET})//POSTMAPPING
+    @RequestMapping(value="/signup", method = RequestMethod.POST)//POSTMAPPING
     public String signUp(UserVO userVO){
         userService.signUp(userVO);
+        return "signup";
+    }
+
+    @GetMapping("/signup")
+    public String SignupController(){
         return "signup";
     }
 
@@ -74,7 +80,7 @@ public class UserController {
 
 
         // 로그아웃 후 리다이렉트할 경로를 지정 (예: 메인 페이지로 리다이렉트)
-        return "redirect:/main";
+        return "redirect:/SF/main";
     }
 
     @GetMapping("/detail")

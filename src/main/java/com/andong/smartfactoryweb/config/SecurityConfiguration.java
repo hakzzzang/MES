@@ -40,7 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	public AuthenticationFailureHandler loginFailureHandler() { return new LoginFailureHandler(); }
 
 	@Bean
-	public AuthenticationSuccessHandler loginSuccessHandler() { return new LoginSuccessHandler(); }
+	public AuthenticationSuccessHandler customLoginSuccessHandler() {
+		return new LoginSuccessHandler(userService);
+	}
 
 	@Bean
 	public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
@@ -59,13 +61,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/login")
+				.loginPage("/SF/login")
 				.defaultSuccessUrl("/")
 				.failureHandler(loginFailureHandler())
-				.successHandler(loginSuccessHandler())
+				.successHandler(customLoginSuccessHandler())
 				.and()
 				.logout()
-				.logoutSuccessUrl("/login")
+				.logoutSuccessUrl("/SF/login")
 				.invalidateHttpSession(true)
 				.and()
 				.exceptionHandling()
