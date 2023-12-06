@@ -12,7 +12,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -235,10 +235,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr th:each="item : ${material}" th:if="${item.materialName == 'Fan Rotor'}">
                                 <td>
                                     <div class="d-flex">
-                                        <h6 class="ms-3 my-auto">Fanrotor</h6>
+                                        <h6 class="ms-3 my-auto" th:text="${item.materialName}"></h6>
                                     </div>
                                 </td>
                                 <td class="text-sm">항공기 부품</td>
@@ -247,13 +247,13 @@
                                 </td>
 
                                 <td class="text-sm text-start">
-                                    0
+                                    <h6 th:text="${item.materialRemainCount}"></h6>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:each="item : ${material}" th:if="${item.materialName == 'Gear Box'}">
                                 <td>
                                     <div class="d-flex">
-                                        <h6 class="ms-3 my-auto">GearBox</h6>
+                                        <h6 class="ms-3 my-auto" th:text="${item.materialName}"></h6>
                                     </div>
                                 </td>
                                 <td class="text-sm">항공기 부품</td>
@@ -261,13 +261,13 @@
                                     <span class="badge badge-danger badge-sm">Out of Stock</span>
                                 </td>
                                 <td class="text-sm text-start">
-                                    0
+                                    <h6 th:text="${item.materialRemainCount}"></h6>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:each="item : ${material}" th:if="${item.materialName == 'High-Pressure Compressor'}">
                                 <td>
                                     <div class="d-flex">
-                                        <h6 class="ms-3 my-auto">High-Pressure compressor</h6>
+                                        <h6 class="ms-3 my-auto" th:text="${item.materialName}"></h6>
                                     </div>
                                 </td>
                                 <td class="text-sm">항공기 부품</td>
@@ -275,7 +275,7 @@
                                     <span class="badge badge-success badge-sm">in Stock</span>
                                 </td>
                                 <td class="text-sm text-start">
-                                    54342
+                                    <h6 th:text="${item.materialRemainCount}"></h6>
                                 </td>
                             </tr>
                             </tbody>

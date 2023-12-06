@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.andong.smartfactoryweb.mapper.OrderMapper">
+
+    <resultMap id="orderResultMap" type="com.andong.smartfactoryweb.app.order.vo.MaterialVO">
+        <id property="materialSeq" column="material_seq"/>
+        <result property="materialName" column="material_name"/>
+        <result property="materialRemainCount" column="material_remain_count"/>
+        <result property="materialPrice" column="material_price"/>
+        <collection property="orderMaterials" javaType="java.util.List"
+                    ofType="com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO">
+            <id property="orderMaterialSeq" column="order_material_seq"/>
+            <result property="materialSeq" column="material_seq"/>
+            <result property="productOrderSeq" column="product_order_seq"/>
+            <result property="count" column="count"/>
+            <result property="createAt" column="create_at"/>
+            <result property="region" column="region"/>
+            <result property="materialTotalPrice" column="material_total_price"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="productCount" parameterType="LONG" resultMap="orderResultMap">
+        SELECT
+            material_seq,
+            material_name,
+            material_remain_count,
+            material_price
+        FROM material
+    </select>
+
+    <select id="productOrder" parameterType="LONG" resultMap="orderResultMap">
+        SELECT
+            order_material_seq,
+            material_seq,
+            product_order_seq,
+            count,
+            create_at,
+            region,
+            material_total_price
+        FROM order_material
+    </select>
+
+    <insert id="insertOrder" parameterType="com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO">
+        <!-- 적절한 INSERT 쿼리 작성 -->
+        INSERT INTO order_material (
+            material_seq,
+            product_order_seq,
+            count,
+            create_at,
+            region,
+            material_total_price
+        )VALUES (
+            #{materialSeq}
+            , #{productOrderSeq}
+            , #{count}
+            , NOW()
+            , #{region}
+            , #{materialTotalPrice})
+    </insert>
+</mapper>

@@ -245,13 +245,16 @@
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h3 class="text-white opacity-9">Fan rotor</h3>
-                                    <hr class="horizontal light mt-1 mb-3">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 900,000</h6>
+                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 1}">
+                                        <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
+<!--                                    <h3 class="text-white opacity-9">Fan rotor</h3>-->
+                                        <hr class="horizontal light mt-1 mb-3">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 900,000</h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </tr>
                                 </div>
                             </div>
                             <div class="row mt-4">
@@ -311,13 +314,16 @@
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h3 class="text-white opacity-9">Gear Box</h3>
-                                    <hr class="horizontal light mt-1 mb-3">
-                                    <div class="row text-center">
-                                        <div class="col-12">
-                                            <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,300,000</h6>
+                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 2}">
+                                        <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
+                                        <!--                                    <h3 class="text-white opacity-9">Gear Box</h3>-->
+                                        <hr class="horizontal light mt-1 mb-3">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,300,000</h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </tr>
                                 </div>
                             </div>
                             <div class="row mt-4">
@@ -378,13 +384,16 @@
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h3 class="text-white opacity-9">High Pressure Compressor</h3>
-                                    <hr class="horizontal light mt-1 mb-3">
-                                    <div class="row">
-                                        <div class="col-12 text-center">
-                                            <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,750,000</h6>
+                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 3 }">
+                                        <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
+                                        <!--                                    <h3 class="text-white opacity-9">High-Pressure Compressor</h3>-->
+                                        <hr class="horizontal light mt-1 mb-3">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,750,000</h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </tr>
                                 </div>
                             </div>
                             <div class="row mt-4">
@@ -455,27 +464,32 @@
 </div>
 
 
-
-<script>
+<script th:inline="javascript">
     $(document).ready(function () {
         // 추가하기 버튼 클릭 시
         $(".btn-outline-secondary").on("click", function () {
+
+            var Fanprice  = [[${Fanprice}]];
+            var Gearprice = [[${Gearprice}]];
+            var Highprice = [[${Highprice}]];
+            var price;                                                 // DB의 Material_Total_Price
+
+
             // 선택된 정보 가져오기
-            var partName = $(this).closest(".card").find("h3").text();
-            var area = $(this).closest(".card").find("select").val();
-            var num = $(this).closest(".card").find("input").val();
-            var price;
+            var partName = $(this).closest(".card").find("h3").text(); // DB의 material_seq
+            var area = $(this).closest(".card").find("select").val();  // DB의 region
+            var num = $(this).closest(".card").find("input").val();    // DB의 count
 
             // 각 부품에 따른 가격 설정
             switch (partName) {
-                case "Fan rotor":
-                    price = 900000 * num;
+                case "Fan Rotor":
+                    price = Fanprice * num;
                     break;
                 case "Gear Box":
-                    price = 1300000 * num;
+                    price = Gearprice * num;
                     break;
-                case "High Pressure Compressor":
-                    price = 1750000 * num;
+                case "High-Pressure Compressor":
+                    price = Highprice * num;
                     break;
                 default:
                     price = 0;
@@ -536,11 +550,49 @@
                 return;
             }
             else{
-                confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
-                window.location.href = "/sample/orderstatus";
+                // confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
+                // window.location.href = "/sample/orderstatus";
+                // 주문 데이터를 담을 배열
+                var orders = [];
+
+                ordertable.each(function () {
+                    var order = {
+                        materialSeq: getMaterialSeq($(this).find("td:eq(0)").text()), // 제품명을 통해 materialSeq 얻기
+                        count: parseInt($(this).find("td:eq(2)").text()), // 수량
+                        region: $(this).find("td:eq(1)").text(), // 지역
+                        materialTotalPrice: parseFloat($(this).find("td:eq(3)").text().replace('$', '')) // 총 가격
+                    };
+                    orders.push(order);
+                });
+                $.ajax({
+                    url: '/order/placeOrder', // 서버의 주문 처리 엔드포인트로 수정
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(orders),
+                    success: function (response) {
+                        confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
+                        window.location.href = "/sample/orderstatus";
+                    },
+                    error: function () {
+                        alert('주문 실패. 다시 시도하세요.');
+                    }
+                });
             }
         });
 
+// 제품명을 통해 materialSeq 얻기
+        function getMaterialSeq(partName) {
+            switch (partName) {
+                case "Fan Rotor":
+                    return 1;
+                case "Gear Box":
+                    return 2;
+                case "High-Pressure Compressor":
+                    return 3;
+                default:
+                    return 0;
+            }
+        }
     });
 </script>
 </body>
