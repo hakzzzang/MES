@@ -67,4 +67,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public List<UserVO> searchAllUsers() {
         return userMapper.searchAllUsers();
     }
+
+    public UserVO findUserByUserId(String userId) {
+        return userMapper.findUserByUserId(userId);
+    }
 }

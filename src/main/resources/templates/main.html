@@ -359,7 +359,13 @@
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:if="${session.user ne null}">
+                <a href="#" th:href="@{/user/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
+                    <img src="/static/img/Login.png" class="navbar-brand-img h-100">
+                    <span class="nav-link-text ms-2 ps-1">로그아웃</span>
+                </a>
+            </li>
+            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
                 <a href="/sample/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
@@ -533,90 +539,90 @@
     <p class="cont_subtit">
         <span>"고객 여러분의 요구 사항을 충족시키기 위해 업계를 선도하는 엔진 솔루션을 제공하며, 우수한 성능과 효율성을 자랑하는 최상의 제품을 제공하겠습니다. "</span>
     </p>
-        <br>
-        <div class="single-item">
-                <div class="business-part-new">
-                    <img src="/static/img/광고2.png" alt="Image 1">
-                    <div class="overlay">
-                        <h4>High-pressure compressor</h4>
-                        <p class="cont_subtit">
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>High-Pressure compressor</h4>
-                </div>
-                <div class="business-part-new">
-                    <img src="/static/img/광고3.png" alt="Image 2">
-                    <div class="overlay">
-                        <h4>Gearbox</h4>
-                        <p class="cont_subtit">
-                            <!-- Description for Product B -->
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>GearBox</h4>
-                </div>
-                <div class="business-part-new">
-                    <img src="/static/img/광고1.png" alt="Image 3">
-                    <div class="overlay">
-                        <h4>Fanrotor</h4>
-                        <p class="cont_subtit">
-                            <!-- Description for Product C -->
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>Fanrotor</h4>
-                </div>
-                <div class="business-part-new">
-                    <img src="/static/img/광고2.png" alt="Image 4">
-                    <div class="overlay">
-                        <h4>High-pressure compressor</h4>
-                        <p class="cont_subtit">
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>High-pressure compressor</h4>
-                </div>
-                <div class="business-part-new">
-                    <img src="/static/img/광고3.png" alt="Image 5">
-                    <div class="overlay">
-                        <h4>Gearbox</h4>
-                        <p class="cont_subtit">
-                            <!-- Description for Product B -->
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>GearBox</h4>
-                </div>
-                <div class="business-part-new">
-                    <img src="/static/img/광고1.png" alt="Image 6">
-                    <div class="overlay">
-                        <h4>Fanrotor</h4>
-                        <p class="cont_subtit">
-                            <!-- Description for Product C -->
-                        </p>
-                        <button onclick="window.location.href='/sample/order'">구매 하기</button>
-                    </div>
-                    <h4>Fanrotor</h4>
-                </div>
+    <br>
+    <div class="single-item">
+        <div class="business-part-new">
+            <img src="/static/img/광고2.png" alt="Image 1">
+            <div class="overlay">
+                <h4>High-pressure compressor</h4>
+                <p class="cont_subtit">
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
             </div>
-
-<footer>
-    <div class="footer-container">
-        <div class="footer-section">
-            <p>회사명: 2-Kang-in JET ENGINE</p>
+            <h4>High-Pressure compressor</h4>
         </div>
-        <div class="footer-section">
-            <p>연락처: 전화번호: 010-1577-1577</p>
+        <div class="business-part-new">
+            <img src="/static/img/광고3.png" alt="Image 2">
+            <div class="overlay">
+                <h4>Gearbox</h4>
+                <p class="cont_subtit">
+                    <!-- Description for Product B -->
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
+            </div>
+            <h4>GearBox</h4>
         </div>
-        <div class="footer-section">
-            <p>이메일: smartfactory @ naver.com</p>
+        <div class="business-part-new">
+            <img src="/static/img/광고1.png" alt="Image 3">
+            <div class="overlay">
+                <h4>Fanrotor</h4>
+                <p class="cont_subtit">
+                    <!-- Description for Product C -->
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
+            </div>
+            <h4>Fanrotor</h4>
         </div>
-        <div class="footer-section">
-            <p>주소: 경상북도 안동시 안동대 정보통신원</p>
+        <div class="business-part-new">
+            <img src="/static/img/광고2.png" alt="Image 4">
+            <div class="overlay">
+                <h4>High-pressure compressor</h4>
+                <p class="cont_subtit">
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
+            </div>
+            <h4>High-pressure compressor</h4>
+        </div>
+        <div class="business-part-new">
+            <img src="/static/img/광고3.png" alt="Image 5">
+            <div class="overlay">
+                <h4>Gearbox</h4>
+                <p class="cont_subtit">
+                    <!-- Description for Product B -->
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
+            </div>
+            <h4>GearBox</h4>
+        </div>
+        <div class="business-part-new">
+            <img src="/static/img/광고1.png" alt="Image 6">
+            <div class="overlay">
+                <h4>Fanrotor</h4>
+                <p class="cont_subtit">
+                    <!-- Description for Product C -->
+                </p>
+                <button onclick="window.location.href='/sample/order'">구매 하기</button>
+            </div>
+            <h4>Fanrotor</h4>
         </div>
     </div>
-</footer>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <p>회사명: 2-Kang-in JET ENGINE</p>
+            </div>
+            <div class="footer-section">
+                <p>연락처: 전화번호: 010-1577-1577</p>
+            </div>
+            <div class="footer-section">
+                <p>이메일: smartfactory @ naver.com</p>
+            </div>
+            <div class="footer-section">
+                <p>주소: 경상북도 안동시 안동대 정보통신원</p>
+            </div>
+        </div>
+    </footer>
 
 </div>
 </body>

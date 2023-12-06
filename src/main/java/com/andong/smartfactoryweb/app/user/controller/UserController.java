@@ -6,10 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -19,20 +22,38 @@ import java.util.List;
 @Slf4j
 public class UserController {
     private final UserService userService;
-    @RequestMapping(value="/login", method = RequestMethod.GET)
-    public String login(HttpServletResponse response, Principal principal){
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
 
-        if(principal == null) {
-            return "/login";
+        // DB에서 사용자 정보 가져오기
+        UserVO user = userService.findUserByUserId(userId);
+
+        if (user != null && password.equals(user.getPassword())) {
+            // 비밀번호 일치: 로그인 성공
+            log.info("로그인 성공: {}", userId);
+
+            // 세션에 사용자 정보 추가
+            request.getSession().setAttribute("user", user);
+            log.info("세션에 저장된 user: {}", request.getSession().getAttribute("user"));
+
+
+            // 여기에 성공 시의 처리를 추가하면 됩니다.
+            return "redirect:/sample/main";
+        } else {
+            // 비밀번호 불일치 또는 사용자가 존재하지 않음: 로그인 실패
+            log.info("로그인 실패: {}", userId);
+
+            // 실패 시의 처리를 추가하거나 에러 메시지를 표시할 수 있습니다.
+            return "redirect:/login?error";
         }
-
-        return "redirect:" + "/main";
     }
 
-    @RequestMapping(value="/sign-up", method = RequestMethod.POST)
+    @RequestMapping(value="/sign-up", method = RequestMethod.POST)//POSTMAPPING
     public String signUp(UserVO userVO){
         userService.signUp(userVO);
-        return "/";
+        return "redirect:/sample/login";
     }
 
     @RequestMapping(value="/users", method = RequestMethod.GET)
@@ -41,5 +62,16 @@ public class UserController {
         log.debug("");
         model.addAttribute("users", users);
         return "/main";
+    }
+
+    // 로그아웃을 처리하는 메서드
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // 세션을 무효화하여 사용자 정보를 삭제
+        session.removeAttribute("user");
+
+
+        // 로그아웃 후 리다이렉트할 경로를 지정 (예: 메인 페이지로 리다이렉트)
+        return "redirect:/sample/main";
     }
 }

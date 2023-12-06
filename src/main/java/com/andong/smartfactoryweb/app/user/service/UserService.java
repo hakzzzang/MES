@@ -9,5 +9,8 @@ public interface UserService {
     void signUp(UserVO userVO);
     void addUserAuth(UserAuthorityVO userAuthorityVO);
 
+    public UserVO findUserByUserId(String userId);
+
+
     List<UserVO> searchAllUsers();
 }
