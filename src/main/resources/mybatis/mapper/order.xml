@@ -60,4 +60,10 @@
             , #{region}
             , #{materialTotalPrice})
     </insert>
+
+    <update id="updateMaterialCount">
+        UPDATE material
+        SET material_remain_count = material_remain_count + #{quantity}
+        WHERE material_name = #{materialName}
+    </update>
 </mapper>

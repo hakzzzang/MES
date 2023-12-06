@@ -50,7 +50,6 @@ public class SampleController {
         return "orderstatus";
     }
 
-
     @GetMapping("/inventory")
     public String InventoryController(){
         return "inventory";

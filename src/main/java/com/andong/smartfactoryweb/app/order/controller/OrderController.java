@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +28,13 @@ public class OrderController {
         List<MaterialVO> material = orderService.productCount();
         model.addAttribute("material", material);
         return "inventory";
+    }
+
+    @RequestMapping(value = "/inventoryorder", method = RequestMethod.POST)
+    public String orderMaterial(@RequestParam("materialName") String materialName, @RequestParam("quantity") int quantity) {
+        // 발주 요청이 들어왔을 때 서비스를 호출
+        orderService.orderMaterial(materialName, quantity);
+        return "inventory"; // 적절한 리다이렉션 경로로 변경 // 에러
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)

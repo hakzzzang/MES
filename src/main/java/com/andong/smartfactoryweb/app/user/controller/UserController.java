@@ -86,4 +86,14 @@ public class UserController {
     public String MainController(){
         return "main";
     }
+
+    @GetMapping("/orderstatus")
+    public String OrderstatusController(){
+        return "orderstatus";
+    }
+
+    @GetMapping("/statistics")
+    public String StatisticsController(){
+        return "statistics";
+    }
 }

@@ -12,4 +12,7 @@ public interface OrderService {
 
     void saveOrders(List<OrderMaterialVO> orderMaterials); // 주문저장
 
+    public void orderMaterial(String materialName, int quantity);
+
+
 }

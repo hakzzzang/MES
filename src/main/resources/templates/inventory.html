@@ -131,6 +131,7 @@
     </script>
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+    <script src="/static/opensrc/jquery-3.6.0.js"></script>
 
 
 </head>
@@ -155,7 +156,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:if="${session ne null}">
-                <a href="#" th:href="@{/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
+                <a href="#" th:href="@{/SF/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그아웃</span>
                 </a>
@@ -320,11 +321,11 @@
                                 </td>
                                 <td>
                                     <!-- Input box for A 부품 stock -->
-                                    <input type="text" class="form-control" placeholder="재고 입력">
+                                    <input type="text" class="form-control" id="stockA" placeholder="재고 입력">
                                 </td>
                                 <td>
                                     <!-- Reorder button for A 부품 -->
-                                    <button class="btn btn-primary">발주</button>
+                                    <button class="btn btn-primary" href="/order/inventory" onclick="order('Fan Rotor', 'stockA')">발주</button>
                                 </td>
                             </tr>
                             <tr>
@@ -334,12 +335,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <!-- Input box for B 부품 stock -->
-                                    <input type="text" class="form-control" placeholder="재고 입력">
+                                    <!-- Input box for A 부품 stock -->
+                                    <input type="text" class="form-control" id="stockB" placeholder="재고 입력">
                                 </td>
                                 <td>
-                                    <!-- Reorder button for B 부품 -->
-                                    <button class="btn btn-primary">발주</button>
+                                    <!-- Reorder button for A 부품 -->
+                                    <button class="btn btn-primary" onclick="order('Gear Box', 'stockB')">발주</button>
                                 </td>
                             </tr>
                             <tr>
@@ -349,12 +350,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <!-- Input box for C 부품 stock -->
-                                    <input type="text" class="form-control" placeholder="재고 입력">
+                                    <!-- Input box for A 부품 stock -->
+                                    <input type="text" class="form-control" id="stockC" placeholder="재고 입력">
                                 </td>
                                 <td>
-                                    <!-- Reorder button for C 부품 -->
-                                    <button class="btn btn-primary">발주</button>
+                                    <!-- Reorder button for A 부품 -->
+                                    <button class="btn btn-primary" onclick="order('High-Pressure Compressor', 'stockC')">발주</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -365,5 +366,32 @@
         </div>
     </div>
 </div>
+<!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>-->
+<script>
+    function order(materialName, stockId) {
+        // 재고 입력값을 추출
+        var stockQuantity = $('#' + stockId).val();
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/SF/inventoryorder',
+            data: {
+                materialName: materialName,
+                quantity: stockQuantity
+            },
+            success: function(response) {
+                console.log('발주 성공', response);
+                window.location.href = '/SF/inventory';
+                $('#' + stockId).val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('발주 실패', error);
+                console.log(xhr.responseText);  // 서버에서 반환한 에러 메시지
+            }
+        });
+    }
+</script>
+
 </body>
 

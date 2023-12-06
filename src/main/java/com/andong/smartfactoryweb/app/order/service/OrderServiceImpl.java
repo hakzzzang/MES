@@ -34,5 +34,11 @@ public class OrderServiceImpl implements OrderService{
             orderMapper.insertOrder(orderMaterialVO);
         }
     }
+
+    @Transactional
+    public void orderMaterial(String materialName, int quantity) {
+        // 발주가 들어왔을 때 부품의 개수를 증가시키는 비즈니스 로직
+        orderMapper.updateMaterialCount(materialName, quantity);
+    }
 }
 
