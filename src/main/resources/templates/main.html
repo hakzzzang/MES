@@ -389,20 +389,20 @@
                     <span class="nav-link-text ms-2 ps-1">주문</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <a href="/SF/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Statistics.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">판매량 통계 및 분석</span>
                 </a>
             </li>
 
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <a href="/SF/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/OrderStatus.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문 현황</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <a href="/SF/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Inventory.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">재고 관리</span>
