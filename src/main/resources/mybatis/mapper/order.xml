@@ -66,4 +66,49 @@
         SET material_remain_count = material_remain_count + #{quantity}
         WHERE material_name = #{materialName}
     </update>
+
+
+    <resultMap id="OrderStatusResultMap" type="com.andong.smartfactoryweb.app.order.vo.OrderStatusVO">
+        <result property="productOrderSeq" column="product_order_seq" />
+        <result property="createAt" column="create_at" />
+        <result property="productStatus" column="product_status" />
+        <result property="userName" column="user_name" />
+        <!-- 나머지 컬럼과 프로퍼티 매핑 -->
+    </resultMap>
+
+    <!-- SELECT 쿼리 정의 -->
+    <select id="selectOrderStatus" resultMap="OrderStatusResultMap">
+        SELECT
+            po.product_order_seq AS product_order_seq,
+            po.order_date AS order_date,
+            po.product_status AS product_status,
+            u.user_name AS user_name
+        FROM
+            product_order po
+                LEFT JOIN user u ON po.user_seq = u.user_seq
+    </select>
+
+
+    <resultMap id="orderMaterialResultMap" type="com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO">
+        <result property="materialName" column="material_name" />
+        <result property="count" column="count" />
+        <result property="region" column="region" />
+        <result property="materialPrice" column="material_price" />
+        <result property="materialTotalPrice" column="material_total_price" />
+    </resultMap>
+
+    <select id="selectDetailStatus" resultMap="orderMaterialResultMap">
+        SELECT
+            om.product_order_seq,
+            m.material_name,
+            om.count,
+            om.region,
+            m.material_price,
+            om.material_total_price
+        FROM
+            material m
+                JOIN order_material om ON m.material_seq = om.material_seq
+    </select>
+
+
 </mapper>

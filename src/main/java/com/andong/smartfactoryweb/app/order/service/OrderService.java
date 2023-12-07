@@ -1,7 +1,9 @@
 package com.andong.smartfactoryweb.app.order.service;
 
 import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
 import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
 
 import java.util.List;
 
@@ -14,5 +16,8 @@ public interface OrderService {
 
     public void orderMaterial(String materialName, int quantity);
 
+    List<OrderStatusVO> getOrderStatus();
+
+    public List<OrderDetailStatusVO> getDetailStatus();
 
 }

@@ -1,7 +1,9 @@
 package com.andong.smartfactoryweb.app.order.service;
 
 import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
 import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
 import com.andong.smartfactoryweb.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,15 +17,16 @@ import java.util.List;
 @Slf4j
 @Transactional
 
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public List<MaterialVO> productCount(){
+    public List<MaterialVO> productCount() {
         return orderMapper.productCount();
     }
+
     @Override
-    public List<OrderMaterialVO> productOrder(){
+    public List<OrderMaterialVO> productOrder() {
         return orderMapper.productOrder();
     }
 
@@ -39,6 +42,16 @@ public class OrderServiceImpl implements OrderService{
     public void orderMaterial(String materialName, int quantity) {
         // 발주가 들어왔을 때 부품의 개수를 증가시키는 비즈니스 로직
         orderMapper.updateMaterialCount(materialName, quantity);
+    }
+
+    @Override
+    public List<OrderStatusVO> getOrderStatus()
+    {
+        return orderMapper.selectOrderStatus();
+    }
+
+    public List<OrderDetailStatusVO> getDetailStatus() {
+        return orderMapper.selectDetailStatus();
     }
 }
 

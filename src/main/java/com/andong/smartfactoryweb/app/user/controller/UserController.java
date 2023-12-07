@@ -113,10 +113,6 @@ public class UserController {
         return "main";
     }
 
-    @GetMapping("/orderstatus")
-    public String OrderstatusController(){
-        return "orderstatus";
-    }
 
     @GetMapping("/statistics")
     public String StatisticsController(){

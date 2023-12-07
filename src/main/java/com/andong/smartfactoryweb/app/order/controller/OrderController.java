@@ -2,7 +2,9 @@ package com.andong.smartfactoryweb.app.order.controller;
 
 import com.andong.smartfactoryweb.app.order.service.OrderService;
 import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
 import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
+import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
@@ -57,5 +59,15 @@ public class OrderController {
             log.error("주문 실패. 다시 시도하세요.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 실패. 다시 시도하세요.");
         }
+    }
+
+    @GetMapping("/orderstatus")
+    public String OrderStatusController(Model model) {
+        List<OrderStatusVO> orderStatusList = orderService.getOrderStatus();
+        List<OrderDetailStatusVO> orderDetailStatusList = orderService.getDetailStatus();
+        model.addAttribute("orderStatusList", orderStatusList);
+        model.addAttribute("orderDetailStatusList", orderDetailStatusList);
+
+        return "orderstatus";
     }
 }
