@@ -53,8 +53,28 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)//POSTMAPPING
-    public String signUp(UserVO userVO){
+    private boolean isEmpty(String... values) {
+        for (String value : values) {
+            if (value == null || value.trim().isEmpty()) {
+                return true; // If any field is empty, return true
+            }
+        }
+        return false; // All fields are non-empty
+    }
+
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public String signUp(UserVO userVO, Model model){
+
+        if (isEmpty(userVO.getUserName(), userVO.getUserId(), userVO.getPassword(), userVO.getPhoneNumber(), userVO.getEmail(), userVO.getRegion())) {
+            model.addAttribute("error", "All fields are required.");
+            return "signup";
+        }
+
+        if (userService.isUserIdExists(userVO.getUserId())) {
+            // Handle case where userId already exists
+            model.addAttribute("error", "User with this ID already exists. Please choose a different ID.");
+            return "signup";
+        }
         userService.signUp(userVO);
         return "redirect:/SF/login";
     }

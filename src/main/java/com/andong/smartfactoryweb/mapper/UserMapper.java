@@ -11,6 +11,8 @@ import java.util.List;
 public interface UserMapper {
     public LoginVO findUserByUserId(String userId);
 
+    public int isUserIdExists(String userId);
+
     public void insertNewUser(UserVO userVO);
     public void insertUserAuthority(UserAuthorityVO userAuthorityVO);
 

@@ -19,11 +19,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 		String errorCode = null;
 
-		if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
+		if (exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
 			errorCode = "BAD_CREDENTIALS";
-		} else if(exception instanceof DisabledException) {
+		} else if (exception instanceof DisabledException) {
 			errorCode = "USER_DISABLED";
-		} else if(exception instanceof CredentialsExpiredException) {
+		} else if (exception instanceof CredentialsExpiredException) {
 			errorCode = "CREDENTIAL_EXPIRED";
 		} else {
 			errorCode = "LOGIN_ERROR";

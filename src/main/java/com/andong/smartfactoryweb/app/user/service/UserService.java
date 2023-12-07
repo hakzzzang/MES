@@ -11,6 +11,7 @@ public interface UserService {
 
     public UserVO findUserByUserId(String userId);
 
-
     List<UserVO> searchAllUsers();
+
+    boolean isUserIdExists(String userId);
 }

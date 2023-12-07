@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return user;
     }
 
+    public boolean isUserIdExists(String userId) {
+        return userMapper.isUserIdExists(userId) > 0;
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void signUp(UserVO userVO) {
