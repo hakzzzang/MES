@@ -9,9 +9,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderMapper {
-    public List<MaterialVO> productCount();
+    public List<MaterialVO> productInfo();
 
-    public List<OrderMaterialVO> productOrder();
+    public List<OrderMaterialVO> orderInfo();
 
     void insertOrder(OrderMaterialVO orderMaterialVO);
 

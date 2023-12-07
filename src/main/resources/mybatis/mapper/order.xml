@@ -22,7 +22,7 @@
     </resultMap>
 
 
-    <select id="productCount" parameterType="LONG" resultMap="orderResultMap">
+    <select id="productInfo" parameterType="LONG" resultMap="orderResultMap">
         SELECT
             material_seq,
             material_name,
@@ -31,7 +31,7 @@
         FROM material
     </select>
 
-    <select id="productOrder" parameterType="LONG" resultMap="orderResultMap">
+    <select id="orderInfo" parameterType="LONG" resultMap="orderResultMap">
         SELECT
             order_material_seq,
             material_seq,

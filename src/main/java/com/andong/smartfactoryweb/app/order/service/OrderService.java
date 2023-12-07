@@ -8,9 +8,9 @@ import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
 import java.util.List;
 
 public interface OrderService {
-    List<MaterialVO> productCount();
+    List<MaterialVO> productInfo();
 
-    List<OrderMaterialVO> productOrder();
+    List<OrderMaterialVO> orderInfo();
 
     void saveOrders(List<OrderMaterialVO> orderMaterials); // 주문저장
 

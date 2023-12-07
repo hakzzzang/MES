@@ -27,7 +27,7 @@ public class OrderController {
     private final OrderService orderService;
     @RequestMapping(value = "/inventory" ,method = RequestMethod.GET)
     public String product(Model model){
-        List<MaterialVO> material = orderService.productCount();
+        List<MaterialVO> material = orderService.productInfo();
         model.addAttribute("material", material);
         return "inventory";
     }
@@ -41,8 +41,8 @@ public class OrderController {
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String productOrder(Model model){
-        List<MaterialVO> material = orderService.productCount();
-        List<OrderMaterialVO> orderMaterial = orderService.productOrder();
+        List<MaterialVO> material = orderService.productInfo();
+        List<OrderMaterialVO> orderMaterial = orderService.orderInfo();
         model.addAttribute("order", orderMaterial);
         model.addAttribute("material", material);
         model.addAttribute("Fanprice", 900000);

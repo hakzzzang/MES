@@ -21,13 +21,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public List<MaterialVO> productCount() {
-        return orderMapper.productCount();
+    public List<MaterialVO> productInfo() {
+        return orderMapper.productInfo();
     }
 
     @Override
-    public List<OrderMaterialVO> productOrder() {
-        return orderMapper.productOrder();
+    public List<OrderMaterialVO> orderInfo() {
+        return orderMapper.orderInfo();
     }
 
     @Override
