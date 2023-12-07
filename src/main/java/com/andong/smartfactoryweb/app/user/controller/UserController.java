@@ -56,7 +56,7 @@ public class UserController {
     @RequestMapping(value="/signup", method = RequestMethod.POST)//POSTMAPPING
     public String signUp(UserVO userVO){
         userService.signUp(userVO);
-        return "signup";
+        return "redirect:/SF/login";
     }
 
     @GetMapping("/signup")

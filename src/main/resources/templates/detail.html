@@ -256,19 +256,19 @@
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0" th:if="${session ne null}">
-                <a href="#" th:href="@{/SF/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
+            <li class="nav-item mb-2 mt-0" th:if="${session.user ne null}">
+                <a href="#" th:href="@{/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그아웃</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
+            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
                 <a href="/SF/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
+            <li class="nav-item mb-2 mt-0" th:unless="${session.user ne null}">
                 <a href="/SF/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>

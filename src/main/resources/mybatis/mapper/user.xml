@@ -50,7 +50,7 @@
             , email
             , region
             , create_at
-            , create_id
+            , update_at
         )VALUES (
             #{userId}
             , #{password}
@@ -59,7 +59,7 @@
             , #{email}
             , #{region}
             , now()
-            , #{userId}
+            , now()
         )
         <selectKey keyProperty="userSeq" resultType="long" order="AFTER">
             SELECT LAST_INSERT_ID()
@@ -71,11 +71,11 @@
             user_seq
             , authority
             , create_at
-            , create_id
         )VALUES(
             #{userSeq}
+            , #{authority}
             , now()
-            , #{createId}
+
         )
     </insert>
 
