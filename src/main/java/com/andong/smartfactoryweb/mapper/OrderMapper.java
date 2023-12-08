@@ -26,6 +26,20 @@ public interface OrderMapper {
 
     Long selectUserSeq(String userId);
 
+    int countOrdersForToday();
+
+    int countNewCustomersForToday();
+
+    int getCountSellMaterial1();
+
+    int getCountSellMaterial2();
+
+    int getCountSellMaterial3();
+
+    Integer countByRegion(String region);
+
+    List<VIPUserVO> selectVIPUser();
+
 
 
 

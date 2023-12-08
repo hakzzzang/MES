@@ -1,5 +1,7 @@
 package com.andong.smartfactoryweb.app.user.controller;
 
+import com.andong.smartfactoryweb.app.order.service.OrderService;
+import com.andong.smartfactoryweb.app.order.vo.VIPUserVO;
 import com.andong.smartfactoryweb.app.user.service.UserService;
 import com.andong.smartfactoryweb.app.user.vo.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 @Slf4j
 public class UserController {
     private final UserService userService;
+    private final OrderService orderService;
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public String login(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("username");
@@ -115,7 +118,46 @@ public class UserController {
 
 
     @GetMapping("/statistics")
-    public String StatisticsController(){
+    public String StatisticsController(Model model)
+    {
+
+        int countOrder = orderService.countOrdersForToday(); // 당일 방문 수 계산
+
+        int countNewCustomers = orderService.countNewCustomersForToday(); // 당일 새로운 고객 수 계산
+
+        /* 부품별 판매 비율 계산 로직 */
+        int countSellMaterial1 = orderService.getCountSellMaterial1();
+        int countSellMaterial2 = orderService.getCountSellMaterial2();
+        int countSellMaterial3 = orderService.getCountSellMaterial3();
+
+        int totalSellCount = countSellMaterial1 + countSellMaterial2 + countSellMaterial3;
+        double percentageSellMaterial1 = (countSellMaterial1 / (double)totalSellCount) * 100;
+        double percentageSellMaterial2 = (countSellMaterial2 / (double)totalSellCount) * 100;
+        double percentageSellMaterial3 = (countSellMaterial3 / (double)totalSellCount) * 100;
+
+        int roundedPercentageSellMaterial1 = (int) Math.round(percentageSellMaterial1);
+        int roundedPercentageSellMaterial2 = (int) Math.round(percentageSellMaterial2);
+        int roundedPercentageSellMaterial3 = (int) Math.round(percentageSellMaterial3);
+
+
+        // 지역별 개수 조회
+        Integer countCheongju = orderService.countByRegion("청주");
+        Integer countIncheon = orderService.countByRegion("인천");
+        Integer countUlsan = orderService.countByRegion("울산");
+
+        // VIP User 조회
+        List<VIPUserVO> VIPUserList = orderService.getVIPUser();
+
+        model.addAttribute("VIPUserList", VIPUserList);
+        model.addAttribute("countOrder", countOrder);
+        model.addAttribute("countNewCustomers", countNewCustomers);
+        model.addAttribute("roundedPercentageSellMaterial1", roundedPercentageSellMaterial1);
+        model.addAttribute("roundedPercentageSellMaterial2", roundedPercentageSellMaterial2);
+        model.addAttribute("roundedPercentageSellMaterial3", roundedPercentageSellMaterial3);
+        model.addAttribute("countCheongju", countCheongju);
+        model.addAttribute("countIncheon", countIncheon);
+        model.addAttribute("countUlsan", countUlsan);
+
         return "statistics";
     }
 

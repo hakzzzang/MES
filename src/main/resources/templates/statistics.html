@@ -131,6 +131,7 @@
     </script>
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+    <script src="/static/opensrc/jquery-3.6.0.js"></script>
 
 
 </head>
@@ -236,7 +237,7 @@
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">금일 이용자 현황</p>
-                        <h4 class="mb-0">2,300</h4>
+                        <h4 class="mb-0" th:text="${countOrder}"></h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -253,7 +254,7 @@
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">새 고객</p>
-                        <h4 class="mb-0">3,462</h4>
+                        <h4 class="mb-0" th:text="${countNewCustomers}"></h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -349,12 +350,12 @@
                                             <!--색상표현-->
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-2xl">High-Pressure Compressor</h6>
+                                            <h6 class="mb-0 text-2xl">Fan Rotor</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-lg font-weight-bold"> 25% </span>
+                                    <span class="text-lg font-weight-bold" th:text="${roundedPercentageSellMaterial1}+'%'"></span>
                                 </td>
                             </tr>
                             <tr>
@@ -373,7 +374,7 @@
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-lg font-weight-bold"> 13% </span>
+                                    <span class="text-lg font-weight-bold" th:text="${roundedPercentageSellMaterial2}+'%'"></span>
                                 </td>
                             </tr>
                             <tr>
@@ -387,12 +388,12 @@
                                             <!--색상표현-->
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-2xl">Fan Rotor</h6>
+                                            <h6 class="mb-0 text-2xl">High-Pressure Compressor</h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-lg font-weight-bold"> 12% </span>
+                                    <span class="text-lg font-weight-bold" th:text="${roundedPercentageSellMaterial3}+'%'"></span>
                                 </td>
                             </tr>
                             </tbody>
@@ -443,128 +444,28 @@
                         </thead>
                         <tbody>
                         <!--span class : text-success : 초록색 /////////  text-danger : 빨간색-->
-                        <tr>
+                        <tr th:each="vipUser : ${VIPUserList}">
                             <td>
                                 <div class="d-flex px-3 py-1">
                                     <div>
                                         <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/blue-shoe.jpg" class="avatar me-3" alt="image">
+
                                     </div>
                                     <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-lg">김OO1</h6>
-                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email2@gmail.com</span></p>
+                                        <h6 class="mb-0 text-lg" th:text="${vipUser.userName}"></h6>
+                                        <p class="text-sm font-weight-normal text-secondary mb-0" th:text="${vipUser.email}" ><span></span></p>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <p class="text-lg font-weight-normal mb-0">$130.992</p>
+                                <p class="text-lg font-weight-normal mb-0" th:text="${vipUser.money}" ></p>
                             </td>
                             <td class="align-middle text-center text-sm">
-                                <p class="text-lg font-weight-normal mb-0">23/12/04</p>
+                                <p class="text-lg font-weight-normal mb-0" th:text="${#calendars.format(vipUser.orderDate, 'MM월 dd일  HH시 mm분')}" ></p>
                             </td>
                             <td class="align-middle text-end">
                                 <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <p class="text-lg font-weight-normal mb-0">13</p>
-                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex px-3 py-1">
-                                    <div>
-                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-mug.jpg" class="avatar me-3" alt="image">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-lg">김OO2</h6>
-                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email2@gmail.com</span></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="text-lg font-weight-normal mb-0">$80.250</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-lg font-weight-normal mb-0">23/12/07</p>
-                            </td>
-                            <td class="align-middle text-end">
-                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <p class="text-lg font-weight-normal mb-0">40</p>
-                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex px-3 py-1">
-                                    <div>
-                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/black-chair.jpg" class="avatar me-3" alt="image">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-lg">김OO3</h6>
-                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email3@gmail.com</span></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="text-lg font-weight-normal mb-0">$40.600</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-lg font-weight-normal mb-0">23/12/07</p>
-                            </td>
-                            <td class="align-middle text-end">
-                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <p class="text-lg font-weight-normal mb-0">54</p>
-                                    <i class="ni ni-bold-up text-sm ms-1 text-danger"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex px-3 py-1">
-                                    <div>
-                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/bang-sound.jpg" class="avatar me-3" alt="image">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-lg">김OO4</h6>
-                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email4@gmail.com</span></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="text-lg font-weight-normal mb-0">$91.300</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-lg font-weight-normal mb-0">23/12/09</p>
-                            </td>
-                            <td class="align-middle text-end">
-                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <p class="text-lg font-weight-normal mb-0">5</p>
-                                    <i class="ni ni-bold-down text-sm ms-1 text-success"></i>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex px-3 py-1">
-                                    <div>
-                                        <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/photo-tools.jpg" class="avatar me-3" alt="image">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-lg">김OO5</h6>
-                                        <p class="text-sm font-weight-normal text-secondary mb-0"><span>email5@gmail.com</span></p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="text-lg font-weight-normal mb-0">$140.925</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-lg font-weight-normal mb-0">23/12/10</p>
-                            </td>
-                            <td class="align-middle text-end">
-                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                    <p class="text-lg font-weight-normal mb-0">121</p>
-                                    <i class="ni ni-bold-up text-sm ms-1 text-success"></i>
+                                    <p class="text-lg font-weight-normal mb-0" th:text="${vipUser.orderCount}" ></p>
                                 </div>
                             </td>
                         </tr>
@@ -656,14 +557,18 @@
 <script src="/static/js/plugins/dragula/dragula.min.js"></script>
 <script src="/static/js/plugins/jkanban/jkanban.js"></script>
 <script src="/static/js/plugins/chartjs.min.js"></script>
-<script>
+<script th:inline="javascript">
+
     // Doughnut chart
     var ctx3 = document.getElementById("doughnut-chart").getContext("2d");
+    var roundedPercentageSellMaterial1 = [[${roundedPercentageSellMaterial1}]];
+    var roundedPercentageSellMaterial2 = [[${roundedPercentageSellMaterial2}]];
+    var roundedPercentageSellMaterial3 = [[${roundedPercentageSellMaterial3}]];
 
     new Chart(ctx3, {
         type: "doughnut",
         data: {
-            labels: ['Jet Engine1', 'Jet Engine2', 'Jet Engine3'],
+            labels: ['Fan Rotor', 'Gear Box', 'High-Pressure Compressor'],
             datasets: [{
                 label: "Projects",
                 weight: 9,
@@ -672,7 +577,7 @@
                 pointRadius: 2,
                 borderWidth: 2,
                 backgroundColor: ['#FF0000', '#0000FF', '#00FF00'],  <!--차트 색상 변경 가능-->
-                data: [15, 20, 12], <!--차트에 값 설정 하는 부분-->
+                data: [roundedPercentageSellMaterial1, roundedPercentageSellMaterial2, roundedPercentageSellMaterial3], <!--차트에 값 설정 하는 부분-->
                 fill: false,
             }],
         },
@@ -719,17 +624,21 @@
     // 지역별 제품 판매 현황
     var ctx5 = document.getElementById("bar-chart").getContext("2d");
 
+    var countCheongju = [[${countCheongju}]];
+    var countIncheon = [[${countIncheon}]];
+    var countUlsan = [[${countUlsan}]];
+
     new Chart(ctx5, {
         type: "bar",
         data: {
-            labels: ['지역1', '지역2', '지역3'],
+            labels: ['청주', '인천', '울산'],
             datasets: [{
                 label: "Sales by age",
                 weight: 5,
                 borderWidth: 0,
                 borderRadius: 4,
                 backgroundColor: '#3A416F',
-                data: [15, 30, 12],
+                data: [countCheongju, countIncheon, countUlsan],
                 fill: false,
                 maxBarThickness: 70  // Bar 굵기
             }],

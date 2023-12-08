@@ -15,4 +15,18 @@ public interface OrderService {
     List<ProductOrderVO> getProductOrders();
     public Long getUserSeq(String userId);
 
+    int countOrdersForToday();
+
+    int countNewCustomersForToday();
+
+    int getCountSellMaterial1();
+
+    int getCountSellMaterial2();
+
+    int getCountSellMaterial3();
+
+    Integer countByRegion(String region);
+
+    List<VIPUserVO> getVIPUser();
+
 }

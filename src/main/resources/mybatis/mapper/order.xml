@@ -209,4 +209,57 @@
     </select>
 
 
+    <!-- 금일 이용자 현황: product_order 테이블의 order_date가 오늘 월, 일과 같은 행의 개수 추출 -->
+    <select id="countOrdersForToday" resultType="int">
+        SELECT COUNT(*)
+        FROM product_order
+        WHERE DATE(order_date) = CURDATE();
+    </select>
+
+    <!-- 새 고객: user 테이블의 create_at 날짜가 오늘의 월, 일과 같은 행의 개수 추출 -->
+    <select id="countNewCustomersForToday" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE DATE(create_at) = CURDATE();
+    </select>
+
+    <!-- material_seq가 1인 물품의 count를 가져오는 쿼리 -->
+    <select id="getCountSellMaterial1" resultType="java.lang.Integer">
+        SELECT SUM(count) FROM order_material WHERE material_seq = 1
+    </select>
+
+    <!-- material_seq가 2인 물품의 count를 가져오는 쿼리 -->
+    <select id="getCountSellMaterial2" resultType="java.lang.Integer">
+        SELECT SUM(count) FROM order_material WHERE material_seq = 2
+    </select>
+
+    <!-- material_seq가 3인 물품의 count를 가져오는 쿼리 -->
+    <select id="getCountSellMaterial3" resultType="java.lang.Integer">
+        SELECT SUM(count) FROM order_material WHERE material_seq = 3
+    </select>
+
+
+    <select id="countByRegion" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(*) FROM order_material WHERE region = #{region}
+    </select>
+
+    <select id="selectVIPUser" resultType="com.andong.smartfactoryweb.app.order.vo.VIPUserVO">
+        SELECT
+            u.user_name,
+            u.email,
+            SUM(om.material_total_price) AS money,
+            MAX(po.order_date) AS order_date,
+            COUNT(po.product_order_seq) AS order_count
+        FROM
+            user AS u
+                INNER JOIN product_order AS po ON u.user_seq = po.user_seq
+                INNER JOIN order_material AS om ON om.product_order_seq = po.product_order_seq
+        GROUP BY
+            u.user_name, u.email
+        ORDER BY
+            money DESC
+        LIMIT 5;
+
+    </select>
+
 </mapper>

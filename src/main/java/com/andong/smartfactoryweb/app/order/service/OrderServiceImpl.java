@@ -72,7 +72,38 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectUserSeq(userId);
     }
 
+    public int countOrdersForToday()
+    {
+        return orderMapper.countOrdersForToday();
+    }
 
+    public int countNewCustomersForToday()
+    {
+        return orderMapper.countNewCustomersForToday();
+    }
 
+    public int getCountSellMaterial1()
+    {
+        return orderMapper.getCountSellMaterial1();
+    }
+
+    public int getCountSellMaterial2()
+    {
+        return orderMapper.getCountSellMaterial2();
+    }
+
+    public int getCountSellMaterial3()
+    {
+        return orderMapper.getCountSellMaterial3();
+    }
+
+    public Integer countByRegion(String region) {
+        return orderMapper.countByRegion(region);
+    }
+
+    public List<VIPUserVO> getVIPUser()
+    {
+        return orderMapper.selectVIPUser();
+    }
 }
 
