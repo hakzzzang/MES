@@ -1,9 +1,6 @@
 package com.andong.smartfactoryweb.app.order.service;
 
-import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
+import com.andong.smartfactoryweb.app.order.vo.*;
 import com.andong.smartfactoryweb.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,5 +50,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDetailStatusVO> getDetailStatus() {
         return orderMapper.selectDetailStatus();
     }
+
+    public List<UserOrderStatusVO> getUserOrderStatus(String userId)
+    {
+        return orderMapper.selectUserOrderStatus(userId);
+    }
+
 }
 

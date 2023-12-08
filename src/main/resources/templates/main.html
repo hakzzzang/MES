@@ -389,6 +389,12 @@
                     <span class="nav-link-text ms-2 ps-1">주문</span>
                 </a>
             </li>
+            <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_GENERAL'')')}">
+                <a href="/SF/userorderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                    <img src="/static/img/Order.png" class="navbar-brand-img h-100">
+                    <span class="nav-link-text ms-2 ps-1">내 주문 조회하기</span>
+                </a>
+            </li>
             <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                 <a href="/SF/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Statistics.png" class="navbar-brand-img h-100">

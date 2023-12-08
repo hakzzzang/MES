@@ -1,10 +1,9 @@
 package com.andong.smartfactoryweb.app.order.controller;
 
 import com.andong.smartfactoryweb.app.order.service.OrderService;
-import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
+import com.andong.smartfactoryweb.app.order.vo.*;
+import com.andong.smartfactoryweb.app.user.service.UserService;
+import com.andong.smartfactoryweb.app.user.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -25,6 +25,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final UserService userService;
     @RequestMapping(value = "/inventory" ,method = RequestMethod.GET)
     public String product(Model model){
         List<MaterialVO> material = orderService.productInfo();
@@ -69,5 +70,20 @@ public class OrderController {
         model.addAttribute("orderDetailStatusList", orderDetailStatusList);
 
         return "orderstatus";
+    }
+
+    @GetMapping("/userorderstatus")
+    public String UserOrderStatusController(Model model, Principal principal) {
+        String userId = principal.getName();
+
+        List<UserOrderStatusVO> userOrderStatusList = orderService.getUserOrderStatus(userId);
+        List<OrderDetailStatusVO> orderDetailStatusList = orderService.getDetailStatus();
+
+        model.addAttribute("userOrderStatusList", userOrderStatusList);
+        model.addAttribute("orderDetailStatusList", orderDetailStatusList);
+
+
+
+        return "userorderstatus";
     }
 }

@@ -1,9 +1,6 @@
 package com.andong.smartfactoryweb.mapper;
 
-import com.andong.smartfactoryweb.app.order.vo.MaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderDetailStatusVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO;
-import com.andong.smartfactoryweb.app.order.vo.OrderStatusVO;
+import com.andong.smartfactoryweb.app.order.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +18,6 @@ public interface OrderMapper {
 
     List<OrderDetailStatusVO> selectDetailStatus();
 
+    List<UserOrderStatusVO> selectUserOrderStatus(String userId);
+    
 }

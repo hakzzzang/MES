@@ -111,4 +111,27 @@
     </select>
 
 
+
+
+    <resultMap id="UserOrderStatusResultMap" type="com.andong.smartfactoryweb.app.order.vo.UserOrderStatusVO">
+        <result property="productOrderSeq" column="product_order_seq" />
+        <result property="orderDate" column="order_date" />
+        <result property="productStatus" column="product_status" />
+        <result property="userName" column="user_name" />
+    </resultMap>
+
+    <select id="selectUserOrderStatus" resultMap="UserOrderStatusResultMap" parameterType="java.lang.String">
+        SELECT
+            po.product_order_seq AS product_order_seq,
+            po.order_date AS order_date,
+            po.product_status AS product_status,
+            u.user_name AS user_name
+        FROM
+            product_order po
+                LEFT JOIN
+            user u ON po.user_seq = u.user_seq
+        WHERE
+            u.user_id = #{userId}
+    </select>
+
 </mapper>
