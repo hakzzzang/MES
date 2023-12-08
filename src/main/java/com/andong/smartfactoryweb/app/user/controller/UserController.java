@@ -118,4 +118,9 @@ public class UserController {
     public String StatisticsController(){
         return "statistics";
     }
+
+    @GetMapping("/modify")
+    public String ModifyController(){
+        return "modify";
+    }
 }

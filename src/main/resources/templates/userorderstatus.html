@@ -260,8 +260,21 @@
                                 <tr th:each="order, orderStat : ${userOrderStatusList}">
                                     <td th:text="${orderStat.count}"></td>
                                     <td th:text="${#calendars.format(order.orderDate, 'MM월 dd일 HH시 mm분')}"></td>
-                                    <td th:text="${order.productStatus}"></td>
-                                    <td th:text="${order.userName}"></td>
+
+                                    <td>
+                                        <!-- 제품 상태에 따라 이미지 아이콘 로드 -->
+                                        <img th:if="${order.productStatus == '수주'}" src="/static/img/노랑.png" style="width: 20px; height: 20px;">
+                                        <img th:if="${order.productStatus == '납품'}" src="/static/img/초록.png" style="width: 20px; height: 20px;">
+                                        <img th:if="${order.productStatus == '제조중'}" src="/static/img/빨강.png" style="width: 20px; height: 20px;">
+
+                                        <span th:text="${order.productStatus}"></span> <!-- 제품 상태 텍스트 -->
+                                    </td>
+                                    <td>
+                                        <!-- 주문자 이름 앞에 이미지 아이콘 로드 -->
+                                        <img src="/static/img/User.png" style="width: 20px; height: 20px; vertical-align: middle;">
+                                        <span th:text="${order.userName}"></span> <!-- 주문자 이름 -->
+                                    </td>
+
                                     <td class="text-xs font-weight-normal">
                                         <!--                           <span class="my-2 text-xs">Nike Sport V2</span>     -->
                                         <button class="accordion-button border-bottom font-weight-bold collapsed"
