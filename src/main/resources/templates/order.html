@@ -475,6 +475,7 @@
         // 추가하기 버튼 클릭 시
         $(".btn-outline-secondary").on("click", function () {
 
+
             var Fanprice  = [[${Fanprice}]];
             var Gearprice = [[${Gearprice}]];
             var Highprice = [[${Highprice}]];
@@ -556,8 +557,6 @@
                 return;
             }
             else{
-                // confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
-                // window.location.href = "/SF/orderstatus";
                 // 주문 데이터를 담을 배열
                 var orders = [];
 
@@ -576,8 +575,22 @@
                     contentType: 'application/json',
                     data: JSON.stringify(orders),
                     success: function (response) {
+                        var productOrderSeq = response[0].productOrder;
+
+                        // 테이블의 각 행을 생성된 product_order_seq로 업데이트합니다.
+                        ordertable.each(function () {
+                            $(this).find("td:eq(4)").html(
+                                '<button class="btn btn-danger btn-sm cancelOrder" data-productOrderSeq="' +
+                                productOrderSeq +
+                                '">취소</button>'
+                            );
+                        });
+                        //     // 테이블에서 해당 행을 제거합니다.
+                            $(this).closest("tr").remove();
+                        // });
+
                         confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')
-                        window.location.href = "/SF/orderstatus";
+                        window.location.href = "/SF/userorderstatus";
                     },
                     error: function () {
                         alert('주문 실패. 다시 시도하세요.');

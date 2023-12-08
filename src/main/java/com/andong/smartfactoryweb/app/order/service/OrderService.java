@@ -9,7 +9,7 @@ public interface OrderService {
 
     List<OrderMaterialVO> orderInfo();
 
-    void saveOrders(List<OrderMaterialVO> orderMaterials); // 주문저장
+    void saveOrders(ProductOrderVO productOrderVO, List<OrderMaterialVO> orderMaterials);
 
     public void orderMaterial(String materialName, int quantity);
 
@@ -17,7 +17,10 @@ public interface OrderService {
 
     public List<OrderDetailStatusVO> getDetailStatus();
 
+
     List<UserOrderStatusVO> getUserOrderStatus(String userId);
 
+
+    List<ProductOrderVO> getProductOrders();
 
 }

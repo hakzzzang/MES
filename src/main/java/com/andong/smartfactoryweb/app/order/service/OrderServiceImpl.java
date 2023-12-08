@@ -4,6 +4,7 @@ import com.andong.smartfactoryweb.app.order.vo.*;
 import com.andong.smartfactoryweb.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +28,16 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderInfo();
     }
 
-    @Override
-    public void saveOrders(List<OrderMaterialVO> orderMaterials) {
+    @Transactional
+    public void saveOrders(ProductOrderVO productOrderVO, List<OrderMaterialVO> orderMaterials) {
+        // product_order_seq를 먼저 삽입
+        orderMapper.insertProductOrder(productOrderVO);
+
+        // 삽입된 product_order_seq를 가져와서 orderMaterials에 설정
+        Long productOrderSeq = productOrderVO.getProductOrderSeq();
         for (OrderMaterialVO orderMaterialVO : orderMaterials) {
-            // OrderMapper를 통해 데이터베이스에 주문 정보를 저장하는 메서드를 호출
-            orderMapper.insertOrder(orderMaterialVO);
+            orderMaterialVO.setProductOrderSeq(productOrderSeq);
+            orderMapper.insertOrderMaterial(orderMaterialVO);
         }
     }
 
@@ -54,6 +60,11 @@ public class OrderServiceImpl implements OrderService {
     public List<UserOrderStatusVO> getUserOrderStatus(String userId)
     {
         return orderMapper.selectUserOrderStatus(userId);
+    }
+
+    @Override
+    public List<ProductOrderVO> getProductOrders() {
+        return orderMapper.selectProductOrder();
     }
 
 }

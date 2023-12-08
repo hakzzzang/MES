@@ -14,7 +14,5 @@ public class UserVO {
     protected String email;
     protected String region;
     protected Date createAt;
-    protected String createId;
     protected Date updateAt;
-    protected String updateId;
 }

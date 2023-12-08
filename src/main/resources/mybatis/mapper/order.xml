@@ -19,6 +19,7 @@
             <result property="region" column="region"/>
             <result property="materialTotalPrice" column="material_total_price"/>
         </collection>
+
     </resultMap>
 
 
@@ -43,23 +44,45 @@
         FROM order_material
     </select>
 
-    <insert id="insertOrder" parameterType="com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO">
+    <insert id="insertProductOrder" parameterType="com.andong.smartfactoryweb.app.order.vo.ProductOrderVO" useGeneratedKeys="true" keyProperty="productOrderSeq">
         <!-- 적절한 INSERT 쿼리 작성 -->
-        INSERT INTO order_material (
-            material_seq,
-            product_order_seq,
-            count,
-            create_at,
-            region,
-            material_total_price
+        INSERT INTO product_order(
+            user_seq
+            , product_status
+            , order_date
+            , approval_id
+        )VALUES (
+            #{userSeq}
+            , #{productStatus}
+            , now()
+            , #{approvalId}
+        )
+        <selectKey keyProperty="productOrderSeq" resultType="long" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+    </insert>
+
+    <insert id="insertOrderMaterial" parameterType="com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO">
+        <!-- 적절한 INSERT 쿼리 작성 -->
+        INSERT INTO order_material(
+            material_seq
+            , product_order_seq
+            , count
+            , create_at
+            , material_total_price
+            , region
         )VALUES (
             #{materialSeq}
             , #{productOrderSeq}
             , #{count}
-            , NOW()
+            , now()
+            , #{materialTotalPrice}
             , #{region}
-            , #{materialTotalPrice})
+        )
+
     </insert>
+
 
     <update id="updateMaterialCount">
         UPDATE material
@@ -111,8 +134,6 @@
     </select>
 
 
-
-
     <resultMap id="UserOrderStatusResultMap" type="com.andong.smartfactoryweb.app.order.vo.UserOrderStatusVO">
         <result property="productOrderSeq" column="product_order_seq" />
         <result property="orderDate" column="order_date" />
@@ -133,5 +154,52 @@
         WHERE
             u.user_id = #{userId}
     </select>
+
+    <!-- resultMap 정의 -->
+    <resultMap id="getOrderInfo" type="com.andong.smartfactoryweb.app.order.vo.ProductOrderVO">
+        <id property="productOrderSeq" column="product_order_seq"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="productStatus" column="product_status"/>
+        <result property="approvalId" column="approval_id"/>
+        <!-- UserVO와의 관계 매핑 -->
+        <association property="user" javaType="com.andong.smartfactoryweb.app.user.vo.UserVO">
+            <id property="userSeq" column="user_seq"/>
+            <result property="userName" column="user_name"/>
+            <!-- 나머지 필요한 매핑 -->
+        </association>
+        <!-- OrderMaterialVO와의 1:N 관계 매핑 -->
+        <collection property="orderMaterials" javaType="java.util.List"
+                    ofType="com.andong.smartfactoryweb.app.order.vo.OrderMaterialVO">
+            <id property="orderMaterialSeq" column="order_material_seq"/>
+            <result property="materialSeq" column="material_seq"/>
+            <result property="productOrderSeq" column="product_order_seq"/>
+            <result property="count" column="count"/>
+            <result property="createAt" column="create_at"/>
+            <result property="region" column="region"/>
+        </collection>
+    </resultMap>
+
+    <!-- select 쿼리 정의 -->
+    <select id="selectProductOrder" resultMap="getOrderInfo">
+        SELECT
+            po.product_order_seq AS product_order_seq,
+            po.user_seq AS user_seq,
+            po.product_status AS product_status,
+            po.order_date AS order_date,
+            po.approval_id AS approval_id,
+            u.user_name AS user_name,
+            om.order_material_seq AS order_material_seq,
+            om.material_seq AS material_seq,
+            om.count AS count,
+        om.create_at AS create_at,
+        om.region AS region
+        FROM
+            product_order po
+            LEFT JOIN
+            user u ON po.user_seq = u.user_seq
+            LEFT JOIN
+            order_material om ON po.product_order_seq = om.product_order_seq
+    </select>
+
 
 </mapper>

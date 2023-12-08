@@ -6,11 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderMapper {
-    public List<MaterialVO> productInfo();
+    List<MaterialVO> productInfo();
 
-    public List<OrderMaterialVO> orderInfo();
+    List<OrderMaterialVO> orderInfo();
 
-    void insertOrder(OrderMaterialVO orderMaterialVO);
+    public int insertProductOrder(ProductOrderVO productOrderVO);
+
+    void insertOrderMaterial(OrderMaterialVO orderMaterialVO);
 
     void updateMaterialCount(@Param("materialName") String materialName, @Param("quantity") int quantity);
 
@@ -18,6 +20,13 @@ public interface OrderMapper {
 
     List<OrderDetailStatusVO> selectDetailStatus();
 
+
     List<UserOrderStatusVO> selectUserOrderStatus(String userId);
     
+
+    List<ProductOrderVO> selectProductOrder();
+
+
+
+
 }

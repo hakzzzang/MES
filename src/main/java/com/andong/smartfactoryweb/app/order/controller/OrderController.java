@@ -3,12 +3,9 @@ package com.andong.smartfactoryweb.app.order.controller;
 import com.andong.smartfactoryweb.app.order.service.OrderService;
 import com.andong.smartfactoryweb.app.order.vo.*;
 import com.andong.smartfactoryweb.app.user.service.UserService;
-import com.andong.smartfactoryweb.app.user.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,24 +34,30 @@ public class OrderController {
     public String orderMaterial(@RequestParam("materialName") String materialName, @RequestParam("quantity") int quantity) {
         // 발주 요청이 들어왔을 때 서비스를 호출
         orderService.orderMaterial(materialName, quantity);
-        return "inventory"; // 적절한 리다이렉션 경로로 변경 // 에러
+        return "inventory";
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String productOrder(Model model){
         List<MaterialVO> material = orderService.productInfo();
+        model.addAttribute("material", material);
+
         List<OrderMaterialVO> orderMaterial = orderService.orderInfo();
         model.addAttribute("order", orderMaterial);
-        model.addAttribute("material", material);
+
+        List<ProductOrderVO> productOrders = orderService.getProductOrders();
+        model.addAttribute("productOrders", productOrders);
+
+
         model.addAttribute("Fanprice", 900000);
         model.addAttribute("Gearprice", 1300000);
         model.addAttribute("Highprice", 1750000);
         return "order";
     }
     @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
-    public ResponseEntity<String> placeOrder(@RequestBody List<OrderMaterialVO> orderMaterials) {
+    public ResponseEntity<String> placeOrder(@RequestBody List<OrderMaterialVO> orderMaterials ,ProductOrderVO productOrderVO) {
         try {
-            orderService.saveOrders(orderMaterials);
+            orderService.saveOrders(productOrderVO, orderMaterials);
             return ResponseEntity.ok("주문이 성공적으로 완료되었습니다.");
         } catch (Exception e) {
             log.error("주문 실패. 다시 시도하세요.", e);

@@ -11,8 +11,7 @@ public class OrderMaterialVO {
     private Long productOrderSeq;
     private int count;
     private Date createAt;
-    private String region;
     private Long materialTotalPrice;
+    private String region;
 
-    private MaterialVO material;
 }
