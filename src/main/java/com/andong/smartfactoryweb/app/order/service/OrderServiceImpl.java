@@ -67,5 +67,12 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectProductOrder();
     }
 
+    public Long getUserSeq(String userId)
+    {
+        return orderMapper.selectUserSeq(userId);
+    }
+
+
+
 }
 

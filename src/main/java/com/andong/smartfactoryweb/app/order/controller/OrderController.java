@@ -55,7 +55,11 @@ public class OrderController {
         return "order";
     }
     @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
-    public ResponseEntity<String> placeOrder(@RequestBody List<OrderMaterialVO> orderMaterials ,ProductOrderVO productOrderVO) {
+    public ResponseEntity<String> placeOrder(@RequestBody List<OrderMaterialVO> orderMaterials ,ProductOrderVO productOrderVO, Principal principal) {
+        productOrderVO.setProductStatus("수주");
+        String userId = principal.getName();
+        Long userSeq = orderService.getUserSeq(userId);
+        productOrderVO.setUserSeq(userSeq);
         try {
             orderService.saveOrders(productOrderVO, orderMaterials);
             return ResponseEntity.ok("주문이 성공적으로 완료되었습니다.");

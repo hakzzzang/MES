@@ -201,5 +201,12 @@
             order_material om ON po.product_order_seq = om.product_order_seq
     </select>
 
+    <!-- 사용자 ID로 사용자 시퀀스 조회 -->
+    <select id="selectUserSeq" resultType="java.lang.Long" parameterType="java.lang.String">
+        SELECT user_seq
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
 
 </mapper>

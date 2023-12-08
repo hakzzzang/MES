@@ -20,11 +20,11 @@ public interface OrderMapper {
 
     List<OrderDetailStatusVO> selectDetailStatus();
 
-
     List<UserOrderStatusVO> selectUserOrderStatus(String userId);
-    
 
     List<ProductOrderVO> selectProductOrder();
+
+    Long selectUserSeq(String userId);
 
 
 
