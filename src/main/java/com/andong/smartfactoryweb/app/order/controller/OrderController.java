@@ -58,10 +58,19 @@ public class OrderController {
     @RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
     public ResponseEntity<String> placeOrder(@RequestBody List<OrderMaterialVO> orderMaterials ,ProductOrderVO productOrderVO, Principal principal) {
         productOrderVO.setProductStatus("수주");
+
         String userId = principal.getName();
         Long userSeq = orderService.getUserSeq(userId);
         productOrderVO.setUserSeq(userSeq);
         try {
+
+            for (OrderMaterialVO orderMaterialVO : orderMaterials)
+            {
+                Long materialSeq = orderMaterialVO.getMaterialSeq();
+                int count = orderMaterialVO.getCount();
+                orderService.minusProduct(materialSeq,count);
+            }
+
             orderService.saveOrders(productOrderVO, orderMaterials);
             return ResponseEntity.ok("주문이 성공적으로 완료되었습니다.");
         } catch (Exception e) {
@@ -127,9 +136,23 @@ public class OrderController {
         List<VIPUserVO> VIPUserList = orderService.getVIPUser();
 
         // 주간 매출현황
-        List<WeeklyVO> WeeklyList = orderService.getWeeklyData();
 
-        model.addAttribute("WeeklyList", WeeklyList);
+        int column0Money = orderService.selectMoney(1);
+        int column1Money = orderService.selectMoney(2);
+        int column2Money = orderService.selectMoney(3);
+        int column3Money = orderService.selectMoney(4);
+        int column4Money = orderService.selectMoney(5);
+        int column5Money = orderService.selectMoney(6);
+        int column6Money = orderService.selectMoney(7);
+
+        model.addAttribute("column0Money", column0Money);
+        model.addAttribute("column1Money", column1Money);
+        model.addAttribute("column2Money", column2Money);
+        model.addAttribute("column3Money", column3Money);
+        model.addAttribute("column4Money", column4Money);
+        model.addAttribute("column5Money", column5Money);
+        model.addAttribute("column6Money", column6Money);
+
         model.addAttribute("VIPUserList", VIPUserList);
         model.addAttribute("countOrder", countOrder);
         model.addAttribute("countNewCustomers", countNewCustomers);

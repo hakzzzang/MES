@@ -43,10 +43,10 @@ public interface OrderMapper {
 
     int selectPrice(String dayOfWeek);
 
-    List<WeeklyVO> selectWeeklyData();
-
     Long getDailySales(Date date);
     Long getTotalSales();
 
+    void minusProduct(@Param("materialSeq") Long materialSeq, @Param("count") int count);
 
+    int selectMoney(int columnNum);
 }

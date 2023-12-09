@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/static/img/Company.png">
@@ -23,37 +23,46 @@
     </title>
 
 
-    <link rel="canonical" href="https://www.creative-tim.com/product/material-dashboard-pro" />
+    <link rel="canonical" href="https://www.creative-tim.com/product/material-dashboard-pro"/>
 
-    <meta name="keywords" content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 5 dashboard, bootstrap 5, css3 dashboard, bootstrap 5 admin, material dashboard bootstrap 5 dashboard, frontend, responsive bootstrap 5 dashboard, material design, material dashboard bootstrap 5 dashboard">
-    <meta name="description" content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you.">
+    <meta name="keywords"
+          content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 5 dashboard, bootstrap 5, css3 dashboard, bootstrap 5 admin, material dashboard bootstrap 5 dashboard, frontend, responsive bootstrap 5 dashboard, material design, material dashboard bootstrap 5 dashboard">
+    <meta name="description"
+          content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you.">
 
     <meta name="twitter:card" content="product">
     <meta name="twitter:site" content="@creativetim">
     <meta name="twitter:title" content="Material Dashboard PRO by Creative Tim">
-    <meta name="twitter:description" content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you.">
+    <meta name="twitter:description"
+          content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you.">
     <meta name="twitter:creator" content="@creativetim">
-    <meta name="twitter:image" content="https://s3.amazonaws.com/creativetim_bucket/products/51/original/opt_mdp_bs5_thumbnail.jpg">
+    <meta name="twitter:image"
+          content="https://s3.amazonaws.com/creativetim_bucket/products/51/original/opt_mdp_bs5_thumbnail.jpg">
 
     <meta property="fb:app_id" content="655968634437471">
-    <meta property="og:title" content="Material Dashboard PRO by Creative Tim" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://demos.creative-tim.com/material-dashboard-pro/pages/dashboards/default.html" />
-    <meta property="og:image" content="https://s3.amazonaws.com/creativetim_bucket/products/51/original/opt_mdp_bs5_thumbnail.jpg" />
-    <meta property="og:description" content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you." />
-    <meta property="og:site_name" content="Creative Tim" />
+    <meta property="og:title" content="Material Dashboard PRO by Creative Tim"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url"
+          content="https://demos.creative-tim.com/material-dashboard-pro/pages/dashboards/default.html"/>
+    <meta property="og:image"
+          content="https://s3.amazonaws.com/creativetim_bucket/products/51/original/opt_mdp_bs5_thumbnail.jpg"/>
+    <meta property="og:description"
+          content="Material Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you."/>
+    <meta property="og:site_name" content="Creative Tim"/>
 
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
 
-    <link href="/static/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="/static/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="/static/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="/static/css/nucleo-svg.css" rel="stylesheet"/>
 
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="..."
+            crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
-    <link id="pagestyle" href="/static/css/material-dashboard.min.css?v=3.0.6" rel="stylesheet" />
+    <link id="pagestyle" href="/static/css/material-dashboard.min.css?v=3.0.6" rel="stylesheet"/>
 
     <style>
         .async-hide {
@@ -69,7 +78,7 @@
         }
 
         h1 {
-            margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
+            margin-top: 20px; /* h1 텍스트의 위 아래 조정 */
         }
 
         .your-table {
@@ -97,16 +106,16 @@
             font-size: 16px; /* Adjust the font size as needed */
         }
     </style>
-    
+
     <script>
-        (function(a, s, y, n, c, h, i, d, e) {
+        (function (a, s, y, n, c, h, i, d, e) {
             s.className += ' ' + y;
             h.start = 1 * new Date;
-            h.end = i = function() {
+            h.end = i = function () {
                 s.className = s.className.replace(RegExp(' ?' + y), '')
             };
             (a[n] = a[n] || []).hide = h;
-            setTimeout(function() {
+            setTimeout(function () {
                 i();
                 h.end = null
             }, c);
@@ -117,9 +126,9 @@
     </script>
 
     <script>
-        (function(i, s, o, g, r, a, m) {
+        (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
+            i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date();
             a = s.createElement(o),
@@ -140,7 +149,7 @@
 
 
     <script>
-        (function(w, d, s, l, i) {
+        (function (w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -160,9 +169,13 @@
     <script src="/static/opensrc/jquery-3.6.0.js"></script>
 </head>
 
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+</noscript>
 
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+       id="sidenav-main">
     <div class="sidenav-header">
         <a class="navbar-brand m-0">
             <img src="/static/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
@@ -173,62 +186,72 @@
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mb-2 mt-0">
-                <a href="/SF/main" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/main" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Main.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">메인</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:if="${session ne null}">
-                <a href="#" th:href="@{/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button" aria-expanded="false">
+                <a href="#" th:href="@{/logout}" class="nav-link text-white" aria-controls="LogoutNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그아웃</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
-                <a href="/SF/login" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/login" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Login.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">로그인</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:unless="${session ne null}">
-                <a href="/SF/signup" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/signup" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Signup.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">회원가입</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/SF/detail" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/detail" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Detail.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">상품 소개</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0">
-                <a href="/SF/order" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/order" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Order.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_GENERAL'')')}">
-                <a href="/SF/userorderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/userorderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Order.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">내 주문 조회하기</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                <a href="/SF/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/statistics" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Statistics.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">판매량 통계 및 분석</span>
                 </a>
             </li>
 
             <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                <a href="/SF/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/orderstatus" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/OrderStatus.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문 현황</span>
                 </a>
             </li>
             <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                <a href="/SF/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
+                <a href="/SF/inventory" class="nav-link text-white" aria-controls="LoginNav" role="button"
+                   aria-expanded="false">
                     <img src="/static/img/Inventory.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">재고 관리</span>
                 </a>
@@ -238,22 +261,26 @@
 </aside>
 
 <body class="g-sidenav-show  bg-gray-200">
-<div class="row mt-8"> <!--#################################################### Row 하나 ################################################################-->
-    <div class='col-lg-4'> <!--#################################################### Col 3등분 1 ################################################################-->
+<div class="row mt-8">
+    <!--#################################################### Row 하나 ################################################################-->
+    <div class='col-lg-4'>
+        <!--#################################################### Col 3등분 1 ################################################################-->
         <div class="pe-4">
             <div class="row mt-4">
                 <div class="card bg-gradient-dark" data-animation="true">
-                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute opacity-2 start-0 top-0 w-100">
+                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines"
+                         class="position-absolute opacity-2 start-0 top-0 w-100">
                     <div class="card-header p-0 position-relative z-index-2" style="background-color: transparent;">
-                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1" src="/static/img/m_Fan_rotor2.png" alt="car image" >
+                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1"
+                             src="/static/img/m_Fan_rotor2.png" alt="car image">
                     </div>
                     <div class="card-body px-5 z-index-1 bg-cover  pb-2">
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 1}">
+                                    <tr th:each="item : ${material}" th:if="${item.materialSeq == 1}">
                                         <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
-<!--                                    <h3 class="text-white opacity-9">Fan rotor</h3>-->
+                                        <!--                                    <h3 class="text-white opacity-9">Fan rotor</h3>-->
                                         <hr class="horizontal light mt-1 mb-3">
                                         <div class="row">
                                             <div class="col-12 text-center">
@@ -273,7 +300,8 @@
                                                 <div class="col-8">
                                                     <!--######################## 지역 선택 #########################-->
                                                     <div class="input-group input-group-static opacity-9 mb-4">
-                                                        <select class="form-control text-white fs-5 text-center" id="FanArea">
+                                                        <select class="form-control text-white fs-5 text-center"
+                                                                id="FanArea">
                                                             <option class="bg-gray-900">울산</option>
                                                             <option class="bg-gray-900">인천</option>
                                                             <option class="bg-gray-900">청주</option>
@@ -289,7 +317,9 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="FanNum" min="0" value="0">
+                                                        <input type="number"
+                                                               class="form-control text-white fs-5 text-center"
+                                                               id="FanNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -298,8 +328,12 @@
                                 </div>
                             </div>
                             <div class="row mt-2 mb-1">
-                                <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button id="FanInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                <div class="d-flex mx-auto justify-content-center">
+                                    <!--############# 추가 버튼 ##################-->
+                                    <button id="FanInput"
+                                            class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6"
+                                            type="button" name="button">추가하기
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -308,25 +342,29 @@
             </div>
         </div>
     </div>
-    <div class='col-lg-4'> <!--#################################################### Col 3등분 2 ################################################################-->
+    <div class='col-lg-4'>
+        <!--#################################################### Col 3등분 2 ################################################################-->
         <div class="pe-4">
             <div class="row mt-4">
                 <div class="card bg-gradient-dark" data-animation="true">
-                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute opacity-2 start-0 top-0 w-100">
+                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines"
+                         class="position-absolute opacity-2 start-0 top-0 w-100">
                     <div class="card-header p-0 position-relative z-index-2" style="background-color: transparent;">
-                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1" src="/static/img/m_Gearbox2.png" alt="car image">
+                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1"
+                             src="/static/img/m_Gearbox2.png" alt="car image">
                     </div>
                     <div class="card-body px-5 z-index-1 bg-cover  pb-2">
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 2}">
+                                    <tr th:each="item : ${material}" th:if="${item.materialSeq == 2}">
                                         <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
                                         <!--                                    <h3 class="text-white opacity-9">Gear Box</h3>-->
                                         <hr class="horizontal light mt-1 mb-3">
                                         <div class="row">
                                             <div class="col-12 text-center">
-                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,300,000</h6>
+                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$
+                                                    1,300,000</h6>
                                             </div>
                                         </div>
                                     </tr>
@@ -342,7 +380,8 @@
                                                 <div class="col-8">
                                                     <!--######################## 지역 선택 #########################-->
                                                     <div class="input-group input-group-static opacity-9 mb-4">
-                                                        <select class="form-control text-white fs-5 text-center" id="GearArea">
+                                                        <select class="form-control text-white fs-5 text-center"
+                                                                id="GearArea">
                                                             <option class="bg-gray-900">울산</option>
                                                             <option class="bg-gray-900">인천</option>
                                                             <option class="bg-gray-900">청주</option>
@@ -358,7 +397,9 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="GearNum" min="0" value="0">
+                                                        <input type="number"
+                                                               class="form-control text-white fs-5 text-center"
+                                                               id="GearNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -367,8 +408,12 @@
                                 </div>
                             </div>
                             <div class="row mt-2 mb-1">
-                                <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button id="GearInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                <div class="d-flex mx-auto justify-content-center">
+                                    <!--############# 추가 버튼 ##################-->
+                                    <button id="GearInput"
+                                            class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6"
+                                            type="button" name="button">추가하기
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -377,26 +422,30 @@
             </div>
         </div>
     </div>
-    <div class='col-lg-4'> <!--#################################################### Col 3등분 3 ################################################################-->
+    <div class='col-lg-4'>
+        <!--#################################################### Col 3등분 3 ################################################################-->
         <div class="pe-4">
             <div class="row mt-4">
                 <!--<div class="card bg-gradient-dark">-->
                 <div class="card bg-gradient-dark" data-animation="true">
-                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute opacity-2 start-0 top-0 w-100">
+                    <img src="/static/img/shapes/waves-white.svg" alt="pattern-lines"
+                         class="position-absolute opacity-2 start-0 top-0 w-100">
                     <div class="card-header p-0 position-relative z-index-2" style="background-color: transparent;">
-                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1" src="/static/img/m_High_Pressure_Compressor.png" alt="car image">
+                        <img class="w-75 mt-n7 mt-lg-n8 d-none d-md-block mx-auto z-index-1"
+                             src="/static/img/m_High_Pressure_Compressor.png" alt="car image">
                     </div>
                     <div class="card-body px-5 z-index-1 bg-cover  pb-2">
                         <div class="mt-n4">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <tr th:each = "item : ${material}" th:if="${item.materialSeq == 3 }">
+                                    <tr th:each="item : ${material}" th:if="${item.materialSeq == 3 }">
                                         <h3 class="text-white opacity-9" th:text="${item.materialName}"></h3>
                                         <!--                                    <h3 class="text-white opacity-9">High-Pressure Compressor</h3>-->
                                         <hr class="horizontal light mt-1 mb-3">
                                         <div class="row">
                                             <div class="col-12 text-center">
-                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$ 1,750,000</h6>
+                                                <h6 class="mb-0 text-white opacity-8 font-weight-normal">$
+                                                    1,750,000</h6>
                                             </div>
                                         </div>
                                     </tr>
@@ -412,7 +461,8 @@
                                                 <div class="col-8">
                                                     <!--######################## 지역 선택 #########################-->
                                                     <div class="input-group input-group-static opacity-9 mb-4">
-                                                        <select class="form-control text-white fs-5 text-center" id="HighArea">
+                                                        <select class="form-control text-white fs-5 text-center"
+                                                                id="HighArea">
                                                             <option class="bg-gray-900">울산</option>
                                                             <option class="bg-gray-900">인천</option>
                                                             <option class="bg-gray-900">청주</option>
@@ -428,7 +478,9 @@
                                                 <div class="col-8 mt-n3">
                                                     <!--######################## 수량 조정 #########################-->
                                                     <div class="input-group input-group-static my-3">
-                                                        <input type="number" class="form-control text-white fs-5 text-center" id="HighNum" min="0" value="0">
+                                                        <input type="number"
+                                                               class="form-control text-white fs-5 text-center"
+                                                               id="HighNum" min="0" value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -437,8 +489,12 @@
                                 </div>
                             </div>
                             <div class="row mt-2 mb-1">
-                                <div class="d-flex mx-auto justify-content-center"> <!--############# 추가 버튼 ##################-->
-                                    <button id="HighInput" class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6" type="button" name="button">추가하기</button>
+                                <div class="d-flex mx-auto justify-content-center">
+                                    <!--############# 추가 버튼 ##################-->
+                                    <button id="HighInput"
+                                            class="btn btn-outline-secondary mb-3 mb-md-0 border-2 fw-bolder fs-6"
+                                            type="button" name="button">추가하기
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -476,7 +532,7 @@
         $(".btn-outline-secondary").on("click", function () {
 
 
-            var Fanprice  = [[${Fanprice}]];
+            var Fanprice = [[${Fanprice}]];
             var Gearprice = [[${Gearprice}]];
             var Highprice = [[${Highprice}]];
             var price;                                                 // DB의 Material_Total_Price
@@ -501,9 +557,31 @@
                 default:
                     price = 0;
             }
+            var existingRow;
+            $(".your-table tbody tr").each(function () {
+                if (
+                    $(this).find("td:eq(0)").text() === partName &&
+                    $(this).find("td:eq(1)").text() === area
+                ) {
+                    existingRow = $(this);
+                    return false;
+                }
+            });
 
-            // 추가할 정보의 HTML 구조 정의
-            var newElement = `
+            if (existingRow) {
+                // 이미 존재하는 경우 해당 행의 수량과 가격 업데이트
+                var existingQuantity = parseInt(existingRow.find("td:eq(2)").text().split('개')[0]);
+                var existingPrice = parseFloat(existingRow.find("td:eq(3)").text().replace('$', ''));
+
+                var updatedQuantity = existingQuantity + parseInt(num);
+                var updatedPrice = price + existingPrice;
+
+                existingRow.find("td:eq(2)").text(updatedQuantity + "개");
+                existingRow.find("td:eq(3)").text("$" + updatedPrice.toFixed(2));
+            } else {
+
+                // 추가할 정보의 HTML 구조 정의
+                var newElement = `
                <tr>
                     <td class="text-center w-20">${partName}</td>
                     <td class="text-center w-20">${area}</td>
@@ -514,6 +592,30 @@
                    </td>
                </tr>
             `;
+
+                var existingRow = $(".your-table tbody tr").filter(function () {
+                    return (
+                        $(this).find("td:eq(0)").text() === partName &&
+                        $(this).find("td:eq(1)").text() === area
+                    );
+                });
+
+                if (existingRow.length > 0) {
+                    // 기존 행을 업데이트합니다.
+                    var existingQuantity = parseInt(existingRow.find("td:eq(2)").text().split('개')[0]);
+                    var existingPrice = parseFloat(existingRow.find("td:eq(3)").text().replace('$', ''));
+
+                    var updatedQuantity = existingQuantity + parseInt(num);
+                    var updatedPrice = price + existingPrice;
+
+                    existingRow.find("td:eq(2)").text(updatedQuantity + "개");
+                    existingRow.find("td:eq(3)").text("$" + updatedPrice.toFixed(2));
+                } else {
+                    // 새로운 행을 추가합니다.
+                }
+                //
+                //
+            }
 
             function handleInputEvent(input) {
                 // 입력된 값이 0보다 작은지 확인합니다.
@@ -528,23 +630,21 @@
                 handleInputEvent($(this));
             });
 
-            if(num === undefined || num <= 0){
+            if (num === undefined || num <= 0) {
                 alert('수량을 입력 해 주세요.')
                 return;
-            }
-            else
+            } else
                 // 정보를 추가할 테이블의 tbody에 새로운 엘리먼트 추가
                 ($(".your-table tbody").append(newElement));
 
         });
 
         // 취소하기 버튼 클릭 시 해당 행 삭제
-        $(".your-table tbody").on("click", ".cancel-button", function() {
+        $(".your-table tbody").on("click", ".cancel-button", function () {
             var confirmCancel = confirm('정말로 취소하시겠습니까?')
-            if (confirmCancel){
+            if (confirmCancel) {
                 $(this).closest("tr").remove();
-            }
-            else{
+            } else {
                 // 취소 철회
             }
         });
@@ -552,11 +652,10 @@
         // 주문하기 버튼 클릭 시
         $(".btn.bg-gradient-success").on("click", function () {
             var ordertable = $(".your-table tbody tr")
-            if(ordertable.length === 0){
+            if (ordertable.length === 0) {
                 alert('주문하실 상품과 수량을 선택 해 주세요.')
                 return;
-            }
-            else{
+            } else {
                 // 주문 데이터를 담을 배열
                 var orders = [];
 
@@ -586,7 +685,7 @@
                             );
                         });
                         //     // 테이블에서 해당 행을 제거합니다.
-                            $(this).closest("tr").remove();
+                        $(this).closest("tr").remove();
                         // });
 
                         confirm('주문이 완료 되었습니다. \n 주문 현황 페이지로 이동 하시겠습니까?')

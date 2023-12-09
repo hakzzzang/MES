@@ -32,10 +32,12 @@ public interface OrderService {
 
     int getPrice(String dayOfWeek);
 
-    List<WeeklyVO> getWeeklyData();
 
     Long getDailySales(Date date);
 
     Long getTotalSales();
 
+    public void minusProduct(Long materialSeq, int count);
+
+    public int selectMoney(int columnNum );
 }

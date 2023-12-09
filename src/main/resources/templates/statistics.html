@@ -710,12 +710,33 @@
     gradientStroke3.addColorStop(0.2, 'rgba(33,82,255,0.0)');
     gradientStroke3.addColorStop(0, 'rgba(33,82,255,0)'); //purple colors
 
+
+    // 동적으로 라벨을 생성하는 부분 추가
+    var today = new Date();
+    var dayOfWeek = today.getDay();
+    var daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+    var dynamicLabels = [];
+    for (var i = dayOfWeek + 1; i < 7; i++) {
+        dynamicLabels.push(daysOfWeek[i]);
+    }
+    for (var i = 0; i <= dayOfWeek; i++) {
+        dynamicLabels.push(daysOfWeek[i]);
+    }
+
+    var column0Money = [[${column0Money}]]
+    var column1Money = [[${column1Money}]]
+    var column2Money = [[${column2Money}]]
+    var column3Money = [[${column3Money}]]
+    var column4Money = [[${column4Money}]]
+    var column5Money = [[${column5Money}]]
+    var column6Money = [[${column6Money}]]
+
     new Chart(ctx3, {
         type: "line",
         data: {
-            labels: ["일", "월", "화", "수", "목", "금", "토"],
+            labels: dynamicLabels,
             datasets: [{
-                label: "일별 매출액",
+                label: dynamicLabels[0] + "별 매출액",
                 tension: 0,
                 pointRadius: 5,
                 pointBackgroundColor: "#E91E63",
@@ -723,7 +744,8 @@
                 borderColor: "#E91E63",
                 borderWidth: 4,
                 backgroundColor: "transparent",
-                data: [100, 500, 300, 400, 50, 200, 100],
+                // 주어진 데이터에 맞게 수정
+                data: [column0Money, column1Money, column2Money, column3Money, column4Money, column5Money, column6Money],
                 maxBarThickness: 6,
                 fill: true
             }],

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("OrderService")
 @RequiredArgsConstructor
@@ -112,10 +114,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectPrice(dayOfWeek);
     }
 
-    public List<WeeklyVO> getWeeklyData() {
-        return orderMapper.selectWeeklyData();
-    }
-
     @Override
     public Long getDailySales(Date date){
         return orderMapper.getDailySales(date);
@@ -124,6 +122,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Long getTotalSales(){
         return orderMapper.getTotalSales();
+    }
+
+    public void minusProduct(Long materialSeq, int count) {
+        orderMapper.minusProduct(materialSeq, count);
+    }
+
+    public int selectMoney(int columnNum)
+    {
+        return orderMapper.selectMoney(columnNum);
     }
 
 }

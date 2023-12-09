@@ -1,8 +1,6 @@
 package com.andong.smartfactoryweb.app.user.controller;
 
 import com.andong.smartfactoryweb.app.order.service.OrderService;
-import com.andong.smartfactoryweb.app.order.vo.VIPUserVO;
-import com.andong.smartfactoryweb.app.order.vo.WeeklyVO;
 import com.andong.smartfactoryweb.app.user.service.UserService;
 import com.andong.smartfactoryweb.app.user.vo.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
