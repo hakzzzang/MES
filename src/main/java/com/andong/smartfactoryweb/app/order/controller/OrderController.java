@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -93,4 +94,75 @@ public class OrderController {
 
         return "userorderstatus";
     }
+
+    @GetMapping("/statistics")
+    public String StatisticsController(Model model)
+    {
+
+        int countOrder = orderService.countOrdersForToday(); // 당일 방문 수 계산
+
+        int countNewCustomers = orderService.countNewCustomersForToday(); // 당일 새로운 고객 수 계산
+
+        /* 부품별 판매 비율 계산 로직 */
+        int countSellMaterial1 = orderService.getCountSellMaterial1();
+        int countSellMaterial2 = orderService.getCountSellMaterial2();
+        int countSellMaterial3 = orderService.getCountSellMaterial3();
+
+        int totalSellCount = countSellMaterial1 + countSellMaterial2 + countSellMaterial3;
+        double percentageSellMaterial1 = (countSellMaterial1 / (double)totalSellCount) * 100;
+        double percentageSellMaterial2 = (countSellMaterial2 / (double)totalSellCount) * 100;
+        double percentageSellMaterial3 = (countSellMaterial3 / (double)totalSellCount) * 100;
+
+        int roundedPercentageSellMaterial1 = (int) Math.round(percentageSellMaterial1);
+        int roundedPercentageSellMaterial2 = (int) Math.round(percentageSellMaterial2);
+        int roundedPercentageSellMaterial3 = (int) Math.round(percentageSellMaterial3);
+
+
+        // 지역별 개수 조회
+        Integer countCheongju = orderService.countByRegion("청주");
+        Integer countIncheon = orderService.countByRegion("인천");
+        Integer countUlsan = orderService.countByRegion("울산");
+
+        // VIP User 조회
+        List<VIPUserVO> VIPUserList = orderService.getVIPUser();
+
+        // 주간 매출현황
+        List<WeeklyVO> WeeklyList = orderService.getWeeklyData();
+
+        model.addAttribute("WeeklyList", WeeklyList);
+        model.addAttribute("VIPUserList", VIPUserList);
+        model.addAttribute("countOrder", countOrder);
+        model.addAttribute("countNewCustomers", countNewCustomers);
+        model.addAttribute("roundedPercentageSellMaterial1", roundedPercentageSellMaterial1);
+        model.addAttribute("roundedPercentageSellMaterial2", roundedPercentageSellMaterial2);
+        model.addAttribute("roundedPercentageSellMaterial3", roundedPercentageSellMaterial3);
+        model.addAttribute("countCheongju", countCheongju);
+        model.addAttribute("countIncheon", countIncheon);
+        model.addAttribute("countUlsan", countUlsan);
+
+
+        // 금일 매출액, 총 매출액
+
+        Date todaySales = new Date();
+        Long getDailySales = orderService.getDailySales(todaySales);
+        Long getTotalSales = orderService.getTotalSales();
+
+
+        if (getDailySales != null) {
+            model.addAttribute("getDailySales", getDailySales);
+        } else {
+            // 널 처리 또는 기본값 설정
+            model.addAttribute("getDailySales", "0$");
+        }
+
+        if (getTotalSales != null) {
+            model.addAttribute("getTotalSales", getTotalSales);
+        } else {
+            // 널 처리 또는 기본값 설정
+            model.addAttribute("getTotalSales", "0$");
+        }
+
+        return "statistics";
+    }
+
 }

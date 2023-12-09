@@ -220,7 +220,7 @@
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">금일 매출액</p>
-                        <h4 class="mb-0">$53k</h4>
+                        <h4 class="mb-0" th:text="('$') + ${#numbers.formatInteger(getDailySales, 3, 'COMMA')}"></h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -271,7 +271,7 @@
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">총 매출액</p>
-                        <h4 class="mb-0">$103,430</h4>
+                        <h4 class="mb-0" th:text="('$') + ${#numbers.formatInteger(getTotalSales, 3, 'COMMA')}"></h4>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -557,6 +557,9 @@
 <script src="/static/js/plugins/dragula/dragula.min.js"></script>
 <script src="/static/js/plugins/jkanban/jkanban.js"></script>
 <script src="/static/js/plugins/chartjs.min.js"></script>
+
+
+
 <script th:inline="javascript">
 
     // Doughnut chart
@@ -702,6 +705,7 @@
 
     var gradientStroke3 = ctx3.createLinearGradient(0, 230, 0, 50);
 
+
     gradientStroke3.addColorStop(1, 'rgba(33,82,255,0.1)');
     gradientStroke3.addColorStop(0.2, 'rgba(33,82,255,0.0)');
     gradientStroke3.addColorStop(0, 'rgba(33,82,255,0)'); //purple colors
@@ -719,7 +723,7 @@
                 borderColor: "#E91E63",
                 borderWidth: 4,
                 backgroundColor: "transparent",
-                data: [10000, 50000, 30000, 70000, 90000, 20000, 40000],
+                data: [100, 500, 300, 400, 50, 200, 100],
                 maxBarThickness: 6,
                 fill: true
             }],
@@ -785,6 +789,8 @@
     });
 
 </script>
+
+
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -3,6 +3,7 @@ package com.andong.smartfactoryweb.mapper;
 import com.andong.smartfactoryweb.app.order.vo.*;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
@@ -40,7 +41,12 @@ public interface OrderMapper {
 
     List<VIPUserVO> selectVIPUser();
 
+    int selectPrice(String dayOfWeek);
 
+    List<WeeklyVO> selectWeeklyData();
+
+    Long getDailySales(Date date);
+    Long getTotalSales();
 
 
 }

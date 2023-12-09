@@ -2,6 +2,7 @@ package com.andong.smartfactoryweb.app.order.service;
 
 import com.andong.smartfactoryweb.app.order.vo.*;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderService {
@@ -28,5 +29,13 @@ public interface OrderService {
     Integer countByRegion(String region);
 
     List<VIPUserVO> getVIPUser();
+
+    int getPrice(String dayOfWeek);
+
+    List<WeeklyVO> getWeeklyData();
+
+    Long getDailySales(Date date);
+
+    Long getTotalSales();
 
 }

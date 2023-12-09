@@ -8,6 +8,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("OrderService")
@@ -105,5 +106,25 @@ public class OrderServiceImpl implements OrderService {
     {
         return orderMapper.selectVIPUser();
     }
+
+    public int getPrice(String dayOfWeek)
+    {
+        return orderMapper.selectPrice(dayOfWeek);
+    }
+
+    public List<WeeklyVO> getWeeklyData() {
+        return orderMapper.selectWeeklyData();
+    }
+
+    @Override
+    public Long getDailySales(Date date){
+        return orderMapper.getDailySales(date);
+    }
+
+    @Override
+    public Long getTotalSales(){
+        return orderMapper.getTotalSales();
+    }
+
 }
 
