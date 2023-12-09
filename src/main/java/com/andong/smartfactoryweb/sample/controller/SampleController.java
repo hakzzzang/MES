@@ -1,15 +1,14 @@
 package com.andong.smartfactoryweb.sample.controller;
 
+import com.andong.smartfactoryweb.config.MQTTConfiguration.OutboundGateway;
 import com.andong.smartfactoryweb.sample.service.SampleService;
 import com.andong.smartfactoryweb.sample.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/sample")
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class SampleController {
     private final SampleService sampleService;
+    @Autowired
+    private OutboundGateway outboundGateway;
     @GetMapping("/getMapping")
     public String SampelGetMappingTest(/*@RequestParam String param, @RequestParam String param2, Model model*/) {
         // model.addAttribute("param1", param);
@@ -63,6 +64,18 @@ public class SampleController {
     @GetMapping("/detail")
     public String DetailController(){
         return "detail";
+    }
+
+    @GetMapping("/mqtt")
+    public String mqtt(){
+        try {
+            outboundGateway.sendToMqtt("{\n" +
+                    "  \"msg\": \"aaaaaaaaaaaaaaaaa\"\n" +
+                    "}", "TEST1");
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
+        return "";
     }
 
 
