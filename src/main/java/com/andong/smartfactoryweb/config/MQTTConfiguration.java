@@ -27,7 +27,6 @@ public class MQTTConfiguration {
     private static final String BROKER_URL = "tcp://222.106.31.248:1883";
     private static final String MQTT_PUB_CLIENT_ID = MqttAsyncClient.generateClientId();
     private static final String MQTT_SUB_CLIENT_ID = MqttAsyncClient.generateClientId();
-    private static final String TOPIC_FILTER = "TEST";
 
     private MqttConnectOptions connectOptions() {
         MqttConnectOptions options = new MqttConnectOptions();
@@ -52,7 +51,8 @@ public class MQTTConfiguration {
     @Bean
     public MessageProducer inboundChannel() {
         MqttPahoMessageDrivenChannelAdapter adapter =
-                new MqttPahoMessageDrivenChannelAdapter(BROKER_URL, MQTT_SUB_CLIENT_ID, TOPIC_FILTER);
+                new MqttPahoMessageDrivenChannelAdapter(BROKER_URL, MQTT_SUB_CLIENT_ID,
+                        "TEST");
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
@@ -84,16 +84,6 @@ public class MQTTConfiguration {
     public MessageChannel mqttOutboundChannel() {
         return new DirectChannel();
     }
-
-/*    @Bean
-    @ServiceActivator(inputChannel = "mqttOutboundChannel")
-    public MessageHandler mqttOutbound(DefaultMqttPahoClientFactory clientFactory) {
-        MqttPahoMessageHandler messageHandler =
-                new MqttPahoMessageHandler(MQTT_CLIENT_ID, clientFactory);
-        messageHandler.setAsync(true);
-        messageHandler.setDefaultQos(1);
-        return messageHandler;
-    }*/
 
     @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
     public interface OutboundGateway {
