@@ -50,6 +50,7 @@
 
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
+    <script src="/static/opensrc/jquery-3.6.0.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
@@ -312,7 +313,7 @@
 
 
 
-                            <button class="btn btn-icon btn-2 btn-primary" type="button">
+                            <button class="btn btn-icon btn-2 btn-primary" type="button" onclick="sendProductionRequest()">
                                 <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                             </button>
                         </td>
@@ -328,6 +329,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function sendProductionRequest() {
+        // Ajax를 사용하여 데이터를 서버로 전송
+        $.ajax({
+            type: "POST",
+            url: "/SF/mqtt",
+            data: {
+
+            },
+        });
+    }
+</script>
 
 </body>
 </html>

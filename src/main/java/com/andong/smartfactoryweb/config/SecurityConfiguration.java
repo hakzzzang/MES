@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity security) throws Exception{
 		security.csrf().disable().authorizeRequests()
-				.antMatchers("/SF/login","/SF/main","/SF/signup","/SF/detail", "/sample/**").permitAll()
+				.antMatchers("/SF/login","/SF/main","/SF/signup","/SF/detail", "/sample/**","/SF/mqtt").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()

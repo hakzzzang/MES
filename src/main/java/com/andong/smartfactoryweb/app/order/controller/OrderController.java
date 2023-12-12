@@ -3,9 +3,11 @@ package com.andong.smartfactoryweb.app.order.controller;
 import com.andong.smartfactoryweb.app.order.service.OrderService;
 import com.andong.smartfactoryweb.app.order.vo.*;
 import com.andong.smartfactoryweb.app.user.service.UserService;
+import com.andong.smartfactoryweb.config.MQTTConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class OrderController {
 
     private final OrderService orderService;
     private final UserService userService;
+    @Autowired
+    private MQTTConfiguration.OutboundGateway outboundGateway;
     @RequestMapping(value = "/inventory" ,method = RequestMethod.GET)
     public String product(Model model){
         List<MaterialVO> material = orderService.productInfo();
@@ -186,6 +190,16 @@ public class OrderController {
         }
 
         return "statistics";
+    }
+
+    @PostMapping("/mqtt")
+    public String mqtt(){
+        try {
+            outboundGateway.sendToMqtt("MQTT TEST SEND", "WEB");
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
+        return "";
     }
 
 }

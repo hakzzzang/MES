@@ -21,8 +21,8 @@ import org.springframework.messaging.handler.annotation.Header;
 @Configuration
 @Slf4j
 public class MQTTConfiguration {
-    private static final String MQTT_USERNAME = "username";
-    private static final String MQTT_PASSWORD = "password";
+    private static final String MQTT_USERNAME = "haksu";
+    private static final String MQTT_PASSWORD = "1234";
 
     private static final String BROKER_URL = "tcp://222.106.31.248:1883";
     private static final String MQTT_PUB_CLIENT_ID = MqttAsyncClient.generateClientId();
@@ -31,8 +31,8 @@ public class MQTTConfiguration {
     private MqttConnectOptions connectOptions() {
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(true);
-        //options.setUserName(MQTT_USERNAME);
-        //options.setPassword(MQTT_PASSWORD.toCharArray());
+        // options.setUserName(MQTT_USERNAME);
+        // options.setPassword(MQTT_PASSWORD.toCharArray());
         return options;
     }
 
@@ -52,7 +52,7 @@ public class MQTTConfiguration {
     public MessageProducer inboundChannel() {
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(BROKER_URL, MQTT_SUB_CLIENT_ID,
-                        "TEST");
+                        "WEB");
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
