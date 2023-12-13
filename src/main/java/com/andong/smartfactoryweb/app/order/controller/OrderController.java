@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/SF")
@@ -202,13 +204,32 @@ public class OrderController {
     }
 
     @PostMapping("/mqtt")
-    public String mqtt(){
+    public String mqtt(@RequestBody Map<String, Object> payload) {
         try {
-            outboundGateway.sendToMqtt("MQTT TEST SEND", "WEB");
-        }catch(Exception e){
+            // orderData가 ArrayList 형태로 전달되었다고 가정
+            ArrayList<Map<String, Object>> orderDataList = (ArrayList<Map<String, Object>>) payload.get("orderData");
+
+            // orderDataList를 순회하며 필요한 작업 수행
+            for (Map<String, Object> orderData : orderDataList) {
+                // 각 orderData에서 필요한 값을 추출
+                String purchaseItem = (String) orderData.get("purchaseItem");
+                String quantity = (String) orderData.get("quantity");
+                String region = (String) orderData.get("region");
+
+                // 추출한 값을 가지고 원하는 작업 수행
+                String formattedOrderData = String.format("Purchase Item: %s, Quantity: %s, Region: %s", purchaseItem, quantity, region);
+                //String OrderData = String.format(purchaseItem, quantity, region);
+
+                // 원하는 처리를 할 수 있도록 outboundGateway에 전달
+                outboundGateway.sendToMqtt(formattedOrderData, "WEB");
+                //outboundGateway.sendToMqtt(OrderData, "WEB");
+            }
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
-        return "";
+
+        // 리다이렉트 시킬 경로를 반환
+        return "redirect:/SF/mqtt";
     }
 
 }

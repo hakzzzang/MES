@@ -12,7 +12,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -241,86 +241,88 @@
                 <div class="table-responsive">
                     <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns"><div class="dataTable-top"><div class="dataTable-dropdown"><label><select class="dataTable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select> entries per page</label></div><div class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div></div>
                         <div class="dataTable-container">
-                        <table class="table table-flush dataTable-table" id="datatable-search">
-                        <thead class="thead-light">
-                        <tr>
-                            <th data-sortable="" style="width: 17.0324%;"><a href="#" class="dataTable-sorter">Id</a></th>
-                            <th data-sortable="" style="width: 15.883%;"><a href="#" class="dataTable-sorter">날짜</a></th>
-                            <th data-sortable="" style="width: 15.465%;"><a href="#" class="dataTable-sorter">제품상태</a></th>
-                            <th data-sortable="" style="width: 19.3312%;"><a href="#" class="dataTable-sorter">주문자</a></th>
-                            <th data-sortable="" style="width: 21.2121%;"><a href="#" class="dataTable-sorter">제품</a></th>
-                            <th data-sortable="" style="width: 11.0763%;"><a href="#" class="dataTable-sorter"> </a></th></tr>
-                        </thead>
+                            <table class="table table-flush dataTable-table" id="datatable-search">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th data-sortable="" style="width: 17.0324%;"><a href="#" class="dataTable-sorter">Id</a></th>
+                                    <th data-sortable="" style="width: 15.883%;"><a href="#" class="dataTable-sorter">날짜</a></th>
+                                    <th data-sortable="" style="width: 15.465%;"><a href="#" class="dataTable-sorter">제품상태</a></th>
+                                    <th data-sortable="" style="width: 19.3312%;"><a href="#" class="dataTable-sorter">주문자</a></th>
+                                    <th data-sortable="" style="width: 21.2121%;"><a href="#" class="dataTable-sorter">제품</a></th>
+                                    <th data-sortable="" style="width: 11.0763%;"><a href="#" class="dataTable-sorter"> </a></th></tr>
+                                </thead>
 
-                        <tbody>
-                        <tr th:each="order : ${orderStatusList}">
-                            <td th:text="${order.productOrderSeq}"></td>
-                            <td th:text="${#calendars.format(order.orderDate, 'MM월 dd일  HH시 mm분')}"></td>
-                            <td>
-                                <!-- 제품 상태에 따라 이미지 아이콘 로드 -->
-                                <img th:if="${order.productStatus == '수주'}" src="/static/img/노랑.png" style="width: 20px; height: 20px;">
-                                <img th:if="${order.productStatus == '납품'}" src="/static/img/초록.png" style="width: 20px; height: 20px;">
-                                <img th:if="${order.productStatus == '제조중'}" src="/static/img/빨강.png" style="width: 20px; height: 20px;">
+                                <tbody>
+                                <tr th:each="order : ${orderStatusList}">
+                                    <td th:text="${order.productOrderSeq}"></td>
+                                    <td th:text="${#calendars.format(order.orderDate, 'MM월 dd일  HH시 mm분')}"></td>
+                                    <td>
+                                        <!-- 제품 상태에 따라 이미지 아이콘 로드 -->
+                                        <img th:if="${order.productStatus == '수주'}" src="/static/img/노랑.png" style="width: 20px; height: 20px;">
+                                        <img th:if="${order.productStatus == '납품'}" src="/static/img/초록.png" style="width: 20px; height: 20px;">
+                                        <img th:if="${order.productStatus == '제조중'}" src="/static/img/빨강.png" style="width: 20px; height: 20px;">
 
-                                <span th:text="${order.productStatus}"></span> <!-- 제품 상태 텍스트 -->
-                            </td>
-                            <td>
-                                <!-- 주문자 이름 앞에 이미지 아이콘 로드 -->
-                                <img src="/static/img/User.png" style="width: 20px; height: 20px; vertical-align: middle;">
-                                <span th:text="${order.userName}"></span> <!-- 주문자 이름 -->
-                            </td>
+                                        <span th:text="${order.productStatus}"></span> <!-- 제품 상태 텍스트 -->
+                                    </td>
+                                    <td>
+                                        <!-- 주문자 이름 앞에 이미지 아이콘 로드 -->
+                                        <img src="/static/img/User.png" style="width: 20px; height: 20px; vertical-align: middle;">
+                                        <span th:text="${order.userName}"></span> <!-- 주문자 이름 -->
+                                    </td>
 
-                            <td class="text-xs font-weight-normal">
-                                <!--                           <span class="my-2 text-xs">Nike Sport V2</span>     -->
-                                <button class="accordion-button border-bottom font-weight-bold collapsed"
-                                        type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapseOne' + ${order.productOrderSeq}"
-                                        aria-expanded="false" th:aria-controls="'collapseOne' + ${order.productOrderSeq}">
-                                    상세보기
-                                    <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
-                                       aria-hidden="true"></i>
-                                </button>
-                                <div th:id="'collapseOne' + ${order.productOrderSeq}" class="accordion-collapse collapse"
-                                     aria-labelledby="'headingOne' + ${order.productOrderSeq}" data-bs-parent="#accordionRental">
-                                    <div class="accordion-body text-sm opacity-8">
+                                    <td class="text-xs font-weight-normal">
+                                        <!--                           <span class="my-2 text-xs">Nike Sport V2</span>     -->
+                                        <button class="accordion-button border-bottom font-weight-bold collapsed"
+                                                type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapseOne' + ${order.productOrderSeq}"
+                                                aria-expanded="false" th:aria-controls="'collapseOne' + ${order.productOrderSeq}"
+                                                onclick="parseDetailTableData(this)">
+                                            상세보기
+                                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+                                               aria-hidden="true"></i>
+                                        </button>
 
-                                        <table class="table receipt-table text-right">
-                                            <!-- 영수증 테이블 내용 -->
-                                            <thead>
-                                            <tr>
-                                                <th scope="col" class="pe-2 text-start ps-2">구입 물품</th>
-                                                <th scope="col" class="pe-2">수량</th>
-                                                <th scope="col" class="pe-2">지역</th>
-                                                <th scope="col" class="pe-2">가격</th>
-                                                <th scope="col" class="pe-2">합계</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <!-- 상세 정보를 Thymeleaf 반복문을 사용하여 표시 -->
-                                            <tr th:each="detail : ${orderDetailStatusList}" th:if="${detail.productOrderSeq eq order.productOrderSeq}">
-                                                <td th:text="${detail.materialName}"></td>
-                                                <td th:text="${detail.count}"></td>
-                                                <td th:text="${detail.region}"></td>
-                                                <td th:text="${detail.materialPrice}"></td>
-                                                <td th:text="${detail.materialTotalPrice}"></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </td>
-                        <td class="text-xs font-weight-normal">
-<!--                            <span class="my-2 text-xs">$140,20</span>              -->
+                                        <div th:id="'collapseOne' + ${order.productOrderSeq}" class="accordion-collapse collapse"
+                                             aria-labelledby="'headingOne' + ${order.productOrderSeq}" data-bs-parent="#accordionRental">
+                                            <div class="accordion-body text-sm opacity-8">
+
+                                                <table class="table receipt-table text-right">
+                                                    <!-- 영수증 테이블 내용 -->
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col" class="pe-2 text-start ps-2">구입 물품</th>
+                                                        <th scope="col" class="pe-2">수량</th>
+                                                        <th scope="col" class="pe-2">지역</th>
+                                                        <th scope="col" class="pe-2">가격</th>
+                                                        <th scope="col" class="pe-2">합계</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <!-- 상세 정보를 Thymeleaf 반복문을 사용하여 표시 -->
+                                                    <tr th:each="detail : ${orderDetailStatusList}" th:if="${detail.productOrderSeq eq order.productOrderSeq}">
+                                                        <td th:text="${detail.materialName}"></td>
+                                                        <td th:text="${detail.count}"></td>
+                                                        <td th:text="${detail.region}"></td>
+                                                        <td th:text="${detail.materialPrice}"></td>
+                                                        <td th:text="${detail.materialTotalPrice}"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-xs font-weight-normal">
+                                        <!--                            <span class="my-2 text-xs">$140,20</span>              -->
 
 
 
-                            <button class="btn btn-icon btn-2 btn-primary" type="button" onclick="sendProductionRequest()">
-                                <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
-                            </button>
-                        </td>
-                        </tr>
-                        </tbody>
+                                        <button class="btn btn-icon btn-2 btn-primary" type="button" onclick="sendProductionRequest(this)">
+                                            <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
 
-                        </table>
+                            </table>
 
                         </div>
                     </div>
@@ -331,14 +333,64 @@
 </div>
 
 <script>
-    function sendProductionRequest() {
+    function parseDetailTableData(button) {
+        // 현재 클릭된 버튼이 속한 행을 찾기
+        var row = button.closest('tr');
+
+        // 행에서 주문 번호 추출
+        var orderId = row.querySelector('td:nth-child(1)').innerText.trim();
+
+        // 해당 주문 번호에 대한 상세 정보의 표의 ID
+        var detailTableId = '#collapseOne' + orderId;
+
+        // 해당 표에서 원하는 데이터 추출
+        var detailRows = document.querySelectorAll(detailTableId + ' table.receipt-table.text-right tbody tr');
+
+        // 데이터를 담을 객체
+        var dataToLog = [];
+
+        // 각 행에 대해 반복
+        detailRows.forEach(function(detailRow) {
+            // 각 행에서 원하는 데이터 추출
+            var purchaseItem = detailRow.querySelector('td:nth-child(1)').innerText.trim();
+            var quantity = detailRow.querySelector('td:nth-child(2)').innerText.trim();
+            var region = detailRow.querySelector('td:nth-child(3)').innerText.trim();
+
+            // 추출한 데이터를 객체에 추가
+            dataToLog.push({
+                purchaseItem: purchaseItem,
+                quantity: quantity,
+                region: region,
+            });
+        });
+
+        // 반환
+        return dataToLog;
+    }
+
+    function sendProductionRequest(button) {
+        // 데이터 파싱 함수 호출
+        var dataToLog = parseDetailTableData(button);
+
+        // JSON 형식의 문자열로 변환
+        // var jsonData = JSON.stringify({orderData: dataToLog});
+
+        // 콘솔에 데이터 출력
+        console.log("생산버튼 데이터:", dataToLog);
+
         // Ajax를 사용하여 데이터를 서버로 전송
         $.ajax({
             type: "POST",
             url: "/SF/mqtt",
-            data: {
-
+            contentType: "application/json", // JSON 형식으로 전송
+            data: JSON.stringify({ orderData: dataToLog }),
+            // data : jsonData,
+            success: function(response) {
+                console.log("데이터 전송 성공:", response);
             },
+            error: function(error) {
+                console.error("데이터 전송 실패:", error);
+            }
         });
     }
 </script>
