@@ -141,13 +141,22 @@ public class OrderController {
 
         // 주간 매출현황
 
-        int column0Money = orderService.selectMoney(1);
+        /*int column0Money = orderService.selectMoney(1);
         int column1Money = orderService.selectMoney(2);
         int column2Money = orderService.selectMoney(3);
         int column3Money = orderService.selectMoney(4);
         int column4Money = orderService.selectMoney(5);
         int column5Money = orderService.selectMoney(6);
-        int column6Money = orderService.selectMoney(7);
+        int column6Money = orderService.selectMoney(7);*/
+
+        List<Integer> columnMoney = orderService.selectMoney();
+        int column0Money = columnMoney.get(0);
+        int column1Money = columnMoney.get(1);
+        int column2Money = columnMoney.get(2);
+        int column3Money = columnMoney.get(3);
+        int column4Money = columnMoney.get(4);
+        int column5Money = columnMoney.get(5);
+        int column6Money = columnMoney.get(6);
 
         model.addAttribute("column0Money", column0Money);
         model.addAttribute("column1Money", column1Money);

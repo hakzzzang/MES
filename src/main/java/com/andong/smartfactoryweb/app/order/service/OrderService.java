@@ -39,5 +39,6 @@ public interface OrderService {
 
     public void minusProduct(Long materialSeq, int count);
 
-    public int selectMoney(int columnNum );
+    //public int selectMoney(int columnNum );
+    public List<Integer> selectMoney();
 }

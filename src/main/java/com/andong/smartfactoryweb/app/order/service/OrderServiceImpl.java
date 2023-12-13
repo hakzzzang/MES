@@ -128,9 +128,12 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.minusProduct(materialSeq, count);
     }
 
-    public int selectMoney(int columnNum)
+    /*public int selectMoney(int columnNum)
     {
         return orderMapper.selectMoney(columnNum);
+    }*/
+    public List<Integer> selectMoney(){
+        return orderMapper.selectMoney();
     }
 
 }

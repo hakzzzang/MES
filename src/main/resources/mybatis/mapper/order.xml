@@ -263,7 +263,7 @@
     </select>
 
 
-    <select id="selectMoney" parameterType="int" resultType="int">
+    <!--<select id="selectMoney" parameterType="int" resultType="int">
         WITH RECURSIVE DateTable AS (
             SELECT CURDATE() - INTERVAL 7 DAY AS date_column
         UNION ALL
@@ -279,9 +279,27 @@
         WHERE
             d.date_column > CURDATE() - INTERVAL 7 DAY
           AND DAYOFWEEK(d.date_column) = #{dayOfWeek}
+    </select>-->
+
+    <select id="selectMoney" resultType="int">
+        WITH RECURSIVE DateTable AS (
+        SELECT CURDATE() - INTERVAL 20 DAY AS date_column
+        UNION ALL
+        SELECT DATE_ADD(date_column, INTERVAL 1 DAY)
+        FROM DateTable
+        WHERE CURDATE() >= date_column
+        )
+        SELECT
+        COALESCE(SUM(om.material_total_price), 0) AS total_price
+        FROM
+        DateTable d
+        LEFT JOIN
+        order_material AS om ON d.date_column = DATE(om.create_at)
+        WHERE
+        d.date_column > CURDATE() - INTERVAL 7 DAY
+        GROUP BY
+        d.date_column
     </select>
-
-
 
     <!--통계 분석 페이지에 사용되는 금일 매출액 및 총 매출액 쿼리-->
     <select id="getDailySales" resultType="Long" parameterType="java.util.Date">

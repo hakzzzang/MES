@@ -48,5 +48,6 @@ public interface OrderMapper {
 
     void minusProduct(@Param("materialSeq") Long materialSeq, @Param("count") int count);
 
-    int selectMoney(int columnNum);
+    //int selectMoney(int columnNum);
+    List<Integer> selectMoney();
 }
