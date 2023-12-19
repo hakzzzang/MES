@@ -133,6 +133,54 @@
 
     <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#datatable-search').DataTable({
+                paging: true,
+                searching: true
+            });
+
+            $('.dataTable-selector').change(function () {
+                table.page.len($(this).val()).draw();
+            });
+
+            $('.dataTable-input').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+            var customElement = '<div class="custom-element">Custom Element</div>';
+            $('.dataTable-top').append(customElement);
+
+        });
+        // 필터 클릭 시 동작할 함수
+        function applyFilter(status) {
+            // DataTable 객체 가져오기
+            var table = $('#datatable-search').DataTable();
+
+            // 특정 열의 데이터에 따라 필터링
+            table.column(2).search(status).draw();
+        }
+
+        // 필터 클릭 이벤트 핸들러 등록
+        $('.dropdown-menu a.dropdown-item').on('click', function () {
+            var status = $(this).text().split(': ')[1]; // 클릭된 요소의 텍스트에서 "Status: "를 제외한 부분 추출
+            applyFilter(status);
+        });
+
+        // "Remove Filter" 클릭 시 모든 필터 제거
+        $('.dropdown-menu .text-danger').on('click', function () {
+            // DataTable 객체 가져오기
+            var table = $('#datatable-search').DataTable();
+
+            // 검색 기능 초기화
+            table.search('').draw();
+        });
+    </script>
+
 
 </head>
 
@@ -239,7 +287,9 @@
                     </p>
                 </div>
                 <div class="table-responsive">
-                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns"><div class="dataTable-top"><div class="dataTable-dropdown"><label><select class="dataTable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select> entries per page</label></div><div class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div></div>
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+
+                        </div>
                         <div class="dataTable-container">
                             <table class="table table-flush dataTable-table" id="datatable-search">
                                 <thead class="thead-light">
@@ -332,7 +382,11 @@
     </div>
 </div>
 
+
+
+
 <script>
+
     function parseDetailTableData(button) {
         // 현재 클릭된 버튼이 속한 행을 찾기
         var row = button.closest('tr');
