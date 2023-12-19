@@ -53,5 +53,4 @@ public interface OrderMapper {
 
     void updateProductStatus(@Param("orderSeq") int orderSeq);
 
-    void updateProductStatusIng(@Param("orderSeq") int orderSeq);
 }

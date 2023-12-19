@@ -141,10 +141,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateProductStatus(orderSeq);
     }
 
-    public void updateProductStatusIng(@Param("orderSeq") int orderSeq)
-    {
-        orderMapper.updateProductStatusIng(orderSeq);
-    }
+
 
 }
 

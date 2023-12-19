@@ -25,6 +25,9 @@ import org.springframework.messaging.handler.annotation.Header;
 public class MQTTConfiguration {
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    private OrderStatusPublisher orderStatusPublisher;
     private static final String MQTT_USERNAME = "haksu";
     private static final String MQTT_PASSWORD = "1234";
 
@@ -74,9 +77,11 @@ public class MQTTConfiguration {
             // Assuming that the payload is a String representing the orderSeq
             String orderSeqStr = (String) message.getPayload();
 
+
             try {
                 int orderSeq = Integer.parseInt(orderSeqStr);
                 orderService.updateProductStatus(orderSeq);
+                orderStatusPublisher.publishOrderStatusUpdate(orderSeq); // 웹 소켓을 통해 '생산완료' 메시지 전송
                 log.info("OrderSeq: " + orderSeq);
             } catch (NumberFormatException e) {
                 log.error("Failed to parse OrderSeq as an integer: " + orderSeqStr, e);

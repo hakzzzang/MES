@@ -45,5 +45,4 @@ public interface OrderService {
 
     public void updateProductStatus(int orderSeq);
 
-    void updateProductStatusIng(@Param("orderSeq") int orderSeq);
 }

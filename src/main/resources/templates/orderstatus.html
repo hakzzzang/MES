@@ -72,6 +72,29 @@
         h1 {
             margin-top: 20px;    /* h1 텍스트의 위 아래 조정 */
         }
+
+        .confirmation-box {
+            position: fixed;
+            top: 50%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 40px; /* 수정된 부분: 내용과의 간격을 조절하기 위해 padding을 늘림 */
+            width: 800px; /* 수정된 부분: 네모 박스의 폭을 조절함 */
+            height: 500px; /* 수정된 부분: 네모 박스의 높이를 조절함 */
+            z-index: 9999;
+        }
+
+        .gif-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .gif-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
     </style>
     <script>
         (function(a, s, y, n, c, h, i, d, e) {
@@ -267,9 +290,8 @@
                     Filters
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2" data-popper-placement="left-start">
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: 수주</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: 납품</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Status: 제조중</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Status:수주</a></li>
+                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Status:납품완료</a></li>
                     <li>
                         <hr class="horizontal dark my-2">
                     </li>
@@ -370,6 +392,16 @@
                                         <button class="btn btn-icon btn-2 btn-primary" type="button" onclick="sendProductionRequest(this)">
                                             <span class="btn-inner--icon"><i class="lmateria-icons">생산</i></span>
                                         </button>
+
+                                        <div id="confirmationBox" class="confirmation-box text-md-center pt-0" style="display: none;">
+                                            <div class="gif-container text-md-center pt-0">
+                                                <img src="/static/img/loading.gif" alt="GIF" class="gif-image">
+                                                <h3>제품 생산 중 ...</h3>
+                                            </div>
+<!--                                            <button class="btn btn-icon btn-2 btn-primary top-10" type="button" onclick="confirmProduction()">-->
+<!--                                                <span class="btn-inner&#45;&#45;icon"><i class="lmateria-icons">확인</i></span>-->
+<!--                                            </button>-->
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -385,6 +417,38 @@
 </div>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+    var socket = new SockJS('/ws');
+    var stompClient = Stomp.over(socket);
+
+    var isFirstMessage = true; // 변수를 사용하여 처음 메시지 도착 여부를 추적
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        // Subscribe to the topic
+        stompClient.subscribe('/topic/orderStatusUpdate', function (response) {
+            var message = response.body;
+            console.log('Received message:', message);
+
+            // 첫 번째 메시지만 처리하고 이후에는 무시
+            if (isFirstMessage) {
+                var confirmMessage = confirm(message)
+                isFirstMessage = false; // 변수를 업데이트하여 다음 메시지를 무시
+                if (confirmMessage){
+                    document.getElementById('confirmationBox').style.display = 'none';
+                    window.location.href = "/SF/orderstatus"
+                }
+                // confirm(message);
+                // isFirstMessage = false; // 변수를 업데이트하여 다음 메시지를 무시
+            }
+            setTimeout(() => isFirstMessage = true, 5000);
+        });
+    });
+</script>
 
 
 <script>
@@ -426,6 +490,13 @@
     }
 
     function sendProductionRequest(button) {
+
+        // document.getElementById('confirmationBox').style.display = 'block';
+
+        var confirmationBox = document.getElementById('confirmationBox');
+        confirmationBox.style.display = 'block';
+
+
         // 데이터 파싱 함수 호출
         var dataToLog = parseDetailTableData(button);
 
@@ -434,6 +505,7 @@
 
         // 콘솔에 데이터 출력
         console.log("생산버튼 데이터:", dataToLog);
+
 
         // Ajax를 사용하여 데이터를 서버로 전송
         $.ajax({
@@ -449,7 +521,17 @@
                 console.error("데이터 전송 실패:", error);
             }
         });
+
+
     }
+
+
+    // 확인 버튼 클릭 시 실행되는 함수
+    // function confirmProduction() {
+    //
+    //     // 네모 박스 숨김
+    //     document.getElementById('confirmationBox').style.display = 'none';
+    // }
 
     // 페이지 로딩 시 실행되도록 설정
     $(document).ready(function() {

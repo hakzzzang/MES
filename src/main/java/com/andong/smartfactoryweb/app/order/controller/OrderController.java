@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -93,6 +95,16 @@ public class OrderController {
         model.addAttribute("orderDetailStatusList", orderDetailStatusList);
 
         return "orderstatus";
+    }
+
+    @Controller
+    public class OrderStatusWebSocketController {
+
+        @MessageMapping("/updateOrderStatus")
+        @SendTo("/topic/orderStatusUpdate")
+        public String updateOrderStatus(String message) {
+            return message;
+        }
     }
 
     @GetMapping("/userorderstatus")
@@ -221,11 +233,6 @@ public class OrderController {
                 // 추출한 값을 가지고 원하는 작업 수행
                 String formattedOrderData = String.format("Purchase Item: %s, Quantity: %s, Region: %s, orderSeq: %s", purchaseItem, quantity, region, orderSeq);
                 //String OrderData = String.format(purchaseItem, quantity, region);
-
-                // 제품 상태를 제조중 으로 변경
-                int intorderSeq = Integer.parseInt(orderSeq);
-                orderService.updateProductStatusIng(intorderSeq);
-
 
                 // 원하는 처리를 할 수 있도록 outboundGateway에 전달
                 outboundGateway.sendToMqtt(formattedOrderData, "WEB");

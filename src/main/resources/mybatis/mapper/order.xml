@@ -336,11 +336,6 @@
         WHERE product_order_seq = #{orderSeq}
     </update>
 
-    <update id="updateProductStatusIng" parameterType="int">
-        UPDATE product_order
-        SET product_status = '제조중'
-        WHERE product_order_seq = #{orderSeq}
-    </update>
 
 
 </mapper>
