@@ -50,4 +50,8 @@ public interface OrderMapper {
 
     //int selectMoney(int columnNum);
     List<Integer> selectMoney();
+
+    void updateProductStatus(@Param("orderSeq") int orderSeq);
+
+    void updateProductStatusIng(@Param("orderSeq") int orderSeq);
 }

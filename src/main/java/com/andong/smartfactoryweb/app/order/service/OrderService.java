@@ -1,6 +1,7 @@
 package com.andong.smartfactoryweb.app.order.service;
 
 import com.andong.smartfactoryweb.app.order.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -41,4 +42,8 @@ public interface OrderService {
 
     //public int selectMoney(int columnNum );
     public List<Integer> selectMoney();
+
+    public void updateProductStatus(int orderSeq);
+
+    void updateProductStatusIng(@Param("orderSeq") int orderSeq);
 }

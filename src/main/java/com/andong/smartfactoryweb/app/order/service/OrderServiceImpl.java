@@ -4,6 +4,7 @@ import com.andong.smartfactoryweb.app.order.vo.*;
 import com.andong.smartfactoryweb.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,6 +135,15 @@ public class OrderServiceImpl implements OrderService {
     }*/
     public List<Integer> selectMoney(){
         return orderMapper.selectMoney();
+    }
+
+    public void updateProductStatus(int orderSeq) {
+        orderMapper.updateProductStatus(orderSeq);
+    }
+
+    public void updateProductStatusIng(@Param("orderSeq") int orderSeq)
+    {
+        orderMapper.updateProductStatusIng(orderSeq);
     }
 
 }

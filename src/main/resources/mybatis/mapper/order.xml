@@ -109,6 +109,7 @@
         FROM
             product_order po
                 LEFT JOIN user u ON po.user_seq = u.user_seq
+        ORDER BY po.product_order_seq DESC
     </select>
 
 
@@ -329,6 +330,17 @@
     </update>
 
 
+    <update id="updateProductStatus" parameterType="int">
+        UPDATE product_order
+        SET product_status = '납품완료'
+        WHERE product_order_seq = #{orderSeq}
+    </update>
+
+    <update id="updateProductStatusIng" parameterType="int">
+        UPDATE product_order
+        SET product_status = '제조중'
+        WHERE product_order_seq = #{orderSeq}
+    </update>
 
 
 </mapper>

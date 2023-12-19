@@ -215,10 +215,17 @@ public class OrderController {
                 String purchaseItem = (String) orderData.get("purchaseItem");
                 String quantity = (String) orderData.get("quantity");
                 String region = (String) orderData.get("region");
+                String orderSeq = (String) orderData.get("orderSeq");
+
 
                 // 추출한 값을 가지고 원하는 작업 수행
-                String formattedOrderData = String.format("Purchase Item: %s, Quantity: %s, Region: %s", purchaseItem, quantity, region);
+                String formattedOrderData = String.format("Purchase Item: %s, Quantity: %s, Region: %s, orderSeq: %s", purchaseItem, quantity, region, orderSeq);
                 //String OrderData = String.format(purchaseItem, quantity, region);
+
+                // 제품 상태를 제조중 으로 변경
+                int intorderSeq = Integer.parseInt(orderSeq);
+                orderService.updateProductStatusIng(intorderSeq);
+
 
                 // 원하는 처리를 할 수 있도록 outboundGateway에 전달
                 outboundGateway.sendToMqtt(formattedOrderData, "WEB");

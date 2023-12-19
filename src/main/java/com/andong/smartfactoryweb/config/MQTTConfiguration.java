@@ -1,8 +1,10 @@
 package com.andong.smartfactoryweb.config;
 
+import com.andong.smartfactoryweb.app.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.MessagingGateway;
@@ -21,6 +23,8 @@ import org.springframework.messaging.handler.annotation.Header;
 @Configuration
 @Slf4j
 public class MQTTConfiguration {
+    @Autowired
+    OrderService orderService;
     private static final String MQTT_USERNAME = "haksu";
     private static final String MQTT_PASSWORD = "1234";
 
@@ -65,8 +69,20 @@ public class MQTTConfiguration {
     public MessageHandler inboundMessageHandler() {
         return message -> {
             String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
-            log.debug("Topic:" + topic);
-            log.debug("Payload" + message.getPayload());
+            log.info("Topic:" + topic);
+            log.info("Payload: " + message.getPayload());
+            // Assuming that the payload is a String representing the orderSeq
+            String orderSeqStr = (String) message.getPayload();
+
+            try {
+                int orderSeq = Integer.parseInt(orderSeqStr);
+                orderService.updateProductStatus(orderSeq);
+                log.info("OrderSeq: " + orderSeq);
+            } catch (NumberFormatException e) {
+                log.error("Failed to parse OrderSeq as an integer: " + orderSeqStr, e);
+                // Handle the error as needed
+            }
+
         };
     }
 
