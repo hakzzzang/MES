@@ -113,10 +113,4 @@ public class UserController {
     public String MainController(){
         return "main";
     }
-
-
-    @GetMapping("/modify")
-    public String ModifyController(){
-        return "modify";
-    }
 }

@@ -179,7 +179,7 @@
                     <span class="nav-link-text ms-2 ps-1">상품 소개</span>
                 </a>
             </li>
-            <li class="nav-item mb-2 mt-0">
+            <li class="nav-item mb-2 mt-0" th:if="${#authorization.expression('hasRole(''ROLE_GENERAL'')')}">
                 <a href="/SF/order" class="nav-link text-white" aria-controls="LoginNav" role="button" aria-expanded="false">
                     <img src="/static/img/Order.png" class="navbar-brand-img h-100">
                     <span class="nav-link-text ms-2 ps-1">주문</span>
